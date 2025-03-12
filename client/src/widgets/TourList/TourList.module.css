@@ -1,0 +1,23 @@
+.tourList {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.noTours {
+  text-align: center;
+  font-size: 18px;
+  color: #888888;
+  margin-top: 20px;
+}
