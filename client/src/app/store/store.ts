@@ -1,12 +1,16 @@
-import { configureStore } from "@reduxjs/toolkit";
-import { tourReducer } from "../../entities/tour/slice";
+import { configureStore } from '@reduxjs/toolkit';
+import { tourReducer } from '../../entities/tour/slice';
+import { userReducer } from '@/entities/user/slice/userSlice';
+import { authModalreducer } from '@/features/auth/slice/authModalSlice';
 
 const store = configureStore({
   reducer: {
-    tour: tourReducer
-  }
-})
+    tour: tourReducer,
+    user: userReducer,
+    authModal: authModalreducer,
+  },
+});
 
-export default store
-export type RootState = ReturnType<typeof store.getState>
-export type AppDispatch = typeof store.dispatch
+export default store;
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
