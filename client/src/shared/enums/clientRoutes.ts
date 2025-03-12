@@ -1,4 +1,8 @@
 export enum CLIENT_ROUTES {
-	TOUR = '/tour',
-	NOT_FOUND = '*',
+  MAIN = "/",
+  TOUR = "/tour",
+  EQUIPMENT = "/equipment",
+  // ADD_EQUIPMENT = "/add",
+
+  NOT_FOUND = "*",
 }
