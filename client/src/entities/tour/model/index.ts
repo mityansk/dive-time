@@ -2,6 +2,7 @@ export interface IAddTourData {
 	location_name: string
 	description: string
 	date: string
+	author_id: number
 	//! ФОТО ЛОКАЦИИ
 }
 
@@ -11,13 +12,12 @@ export interface IAddTourDataWithId extends IAddTourData {
 
 
 export interface ITour extends IAddTourDataWithId {
-	author_id: number
+	isDone: boolean
 	createdAt: Date
 	updatedAt: Date
 	author: {
 		id: number
 		username: string
-		email: string
 	}
 }
 

@@ -1,9 +1,11 @@
 const router = require('express').Router();
 const authRoutes = require('./auth.routes');
-const tourRoutes = require('./tour.routes')
+const diveLocationRoutes = require('./diveLocation.routes');
 const formatResponse = require('../utils/formatResponse');
+const tourRoutes = require('./tour.routes')
 
 router.use('/auth', authRoutes);
+router.use('/diveLocation', diveLocationRoutes);
 router.use('/tour', tourRoutes);
 
 router.use('*', (req, res) => {

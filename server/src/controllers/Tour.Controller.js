@@ -85,7 +85,7 @@ class TourController {
 		const { user } = res.locals
 
 		if (!isValidId(id)) {
-			return res.status(400).json(formatResponse(400, 'Invalid task ID'))
+			return res.status(400).json(formatResponse(400, 'Invalid tour ID'))
 		}
 
 		const { isValid, error } = TourValidator.validate({
