@@ -82,7 +82,7 @@ class TourController {
 	static async updateTour(req, res) {
 		const { id } = req.params
 		const { location_name, description, date } = req.body
-		//! const { location } = res.locals НЕ ЗАБЫТЬ ДОСТАТЬ ЛОКАЦИЮ
+		const { user } = res.locals
 
 		if (!isValidId(id)) {
 			return res.status(400).json(formatResponse(400, 'Invalid task ID'))
@@ -106,13 +106,13 @@ class TourController {
 				return res.status(404).json(formatResponse(404, 'Tour not found'))
 			}
 
-			//! if (existingTour.author_id !== user.id) {
-			//! 	return res
-			//!		.status(400)
-			//! 		.json(
-			//! 			formatResponse(400, "You don't have permission to update this tour")
-			//! 		)
-			//! } НУЖНО АВТОРСТВО ДЛЯ ОБНОВЛЕНИЯ ТУРА
+			if (existingTour.author_id !== user.id) {
+				return res
+					.status(400)
+					.json(
+						formatResponse(400, "You don't have permission to update this tour")
+					)
+			}
 
 			const updatedTour = await TourService.update(+id, {
 				location_name,
@@ -130,7 +130,7 @@ class TourController {
 
 	static async deleteTour(req, res) {
 		const { id } = req.params
-		//! const { user } = res.locals ПРАВА НА УДАЛЕНИЯ ТОЛЬКО У СОЗДАТЕЛЯ?
+		const { user } = res.locals
 
 		if (!isValidId(id)) {
 			return res.status(400).json(formatResponse(400, 'Invalid tour ID'))
@@ -143,13 +143,13 @@ class TourController {
 				return res.status(404).json(formatResponse(404, 'Tour not found'))
 			}
 
-			//! if (existingTour.author_id !== user.id) {
-			//! 	return res
-			//! 		.status(400)
-			//! 		.json(
-			//! 			formatResponse(400, "You don't have permission to delete this tour")
-			//! 		)
-			//! } ПРОВЕРКА ДОСТУПА НА УДАЛЕНИЯ 
+			if (existingTour.author_id !== user.id) {
+				return res
+					.status(400)
+					.json(
+						formatResponse(400, "You don't have permission to delete this tour")
+					)
+			}
 
 			await TourService.delete(+id)
 			res.status(200).json(formatResponse(200, 'Tour successfully deleted'))
