@@ -1,7 +1,7 @@
 import { IServerResponse } from '../../../shared/types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import { IAddTourData, IAddTourDataWithId, TourArrayType } from '../model'
-import { axiosInstance } from '../../../shared/lib/axiosInstanse'
+import { axiosInstance } from '@/shared/lib/axiosInstance'
 import { handleAxiosError } from '../../../shared/utils/handleAxiosError'
 
 export const TOUR_API_ENDPOINT = '/tour' as const
