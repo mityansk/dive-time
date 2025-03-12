@@ -9,6 +9,10 @@ const env = process.env.NODE_ENV || 'development';
 const config = require(__dirname + '/../config/database.json')[env];
 const db = {};
 
+require('dotenv').config({
+	path: path.resolve(__dirname, '..', '..', '..', '.env'),
+})
+
 let sequelize;
 if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
@@ -41,3 +45,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+
+
+// npx sequelize model:generate --name DiveLocation --attributes name:string,coordinateX:float,coordinateY:float,description:string,complexity:string,deep:string
