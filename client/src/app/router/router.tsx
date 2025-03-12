@@ -1,0 +1,22 @@
+import { SignInPage } from "@/pages/SignInPage/SignInPage";
+import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
+import { ReactElement } from "react";
+import { BrowserRouter, Route, Routes } from "react-router";
+import Layout from "../layout/Layout";
+import { SignUpPage } from "@/pages/SignUpPage/SignUpPage";
+
+export default function Router(): ReactElement {
+  return (
+    <BrowserRouter>
+        <Routes>
+        <Route path={CLIENT_ROUTES.MAIN} element={<Layout />}>
+        <Route path={CLIENT_ROUTES.SIGN_IN} element={<SignInPage />} />
+        <Route path={CLIENT_ROUTES.SIGN_UP} element={<SignUpPage />} />
+        </Route>
+
+        </Routes>
+    
+    </BrowserRouter>
+    
+  )
+}
