@@ -1,4 +1,3 @@
-"use strict";
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -40,16 +39,16 @@ module.exports = {
         onUpdate: "CASCADE",
         onDelete: "CASCADE",
       },
-      // location_id: {
-      //   type: Sequelize.INTEGER,
-      //   allowNull: false,
-      //   references: {
-      //     model: "Locations",
-      //     key: "id",
-      //   },
-      //   onUpdate: "CASCADE",
-      //   onDelete: "CASCADE",
-      // },
+      diveLocation_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: "DiveLocations",
+          key: "id",
+        },
+        onUpdate: "CASCADE",
+        onDelete: "CASCADE",
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

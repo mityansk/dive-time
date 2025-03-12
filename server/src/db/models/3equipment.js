@@ -2,14 +2,14 @@
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Equipment extends Model {
-    static associate({ User }) {
+    static associate({ User, DiveLocation }) {
       this.belongsTo(User, {
         foreignKey: "user_id",
         as: "owner",
       });
-      // Equipment.belongsTo(Location, {
-      //   foreignKey: "location_id",
-      // });
+      this.belongsTo(DiveLocation, {
+        foreignKey: "diveLocation_id",
+      });
     }
   }
   Equipment.init(
@@ -20,7 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.STRING,
       isRented: DataTypes.BOOLEAN,
       user_id: DataTypes.INTEGER,
-      // location_id: DataTypes.INTEGER,
+      diveLocation_id: DataTypes.INTEGER,
     },
     {
       sequelize,
