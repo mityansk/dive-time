@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { closeModal } from '@/features/auth/slice/authModalSlice';
 import { signInThunk, signUpThunk } from '@/entities/user/api';
 import styles from './AuthModal.module.css';
+import { useNavigate } from 'react-router';
 
 const AuthModal: React.FC = () => {
   const INITIAL_INPUTS_DATA = {
@@ -12,8 +13,9 @@ const AuthModal: React.FC = () => {
   };
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const isOpen = useAppSelector((state) => state.authModal.isOpen);
-  const { isLoading, error } = useAppSelector((state) => state.user);
+  const { isLoading, error, user } = useAppSelector((state) => state.user);
 
   const [isRegister, setIsRegister] = useState(false);
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
@@ -22,8 +24,8 @@ const AuthModal: React.FC = () => {
     setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
     const { username, email, password } = inputs;
 
     if (isRegister) {
@@ -33,6 +35,15 @@ const AuthModal: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (user) {
+      setInputs(INITIAL_INPUTS_DATA);
+      dispatch(closeModal());
+      navigate('/');
+    }
+
+  }, [user, dispatch, INITIAL_INPUTS_DATA, navigate]);
+  
   if (!isOpen) return null;
 
   return (
