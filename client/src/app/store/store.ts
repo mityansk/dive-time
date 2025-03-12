@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { tourReducer } from '../../entities/tour/slice';
 import { userReducer } from '@/entities/user/slice/userSlice';
-import { authModalreducer } from '@/features/auth/slice/authModalSlice';
+import { authModalReducer } from '@/features/auth/slice/authModalSlice';
 
 const store = configureStore({
   reducer: {
     tour: tourReducer,
     user: userReducer,
-    authModal: authModalreducer,
+    authModal: authModalReducer,
   },
 });
 
