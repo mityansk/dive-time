@@ -11,12 +11,13 @@
 }
 
 .modalContent {
-  background: white;
+  background: rgb(23, 29, 139);
   padding: 20px;
   border-radius: 10px;
   text-align: center;
   min-width: 300px;
   position: relative;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
 }
 
 .actionButton {
@@ -28,14 +29,14 @@
 .linkButton {
   background: none;
   border: none;
-  color: rgb(0, 83, 167);
+  color: rgb(9, 117, 225);
   text-decoration: underline;
   cursor: pointer;
   font-size: inherit;
   outline: none;
 }
 .linkButton:hover {
-  color: darkblue;
+  color: rgb(161, 188, 43);
 }
 .linkButton:focus {
   outline: none;
@@ -53,7 +54,7 @@
   color: black;
 }
 .modalCloseButton:hover {
-  color: red;
+  color: rgb(161, 188, 43);
 }
 
 .inputField {
