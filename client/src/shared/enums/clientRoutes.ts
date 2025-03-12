@@ -1,7 +1,5 @@
 export enum CLIENT_ROUTES {
-	MAIN = '/',
-	SIGN_IN = '/signin',
-	SIGN_UP = 'signup',
-	TOUR = '/tour',
-	NOT_FOUND = '*',
+  MAIN = '/',
+  TOUR = '/tour',
+  NOT_FOUND = '*',
 }

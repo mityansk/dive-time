@@ -5,12 +5,12 @@ import { authModalReducer } from '@/features/auth/slice/authModalSlice';
 import { locationReducer } from '@/entities/location/slice/locationSlice';
 
 const store = configureStore({
-	reducer: {
+  reducer: {
     tour: tourReducer,
-		user: userReducer,
-		locationReducer: locationReducer,
-		authModal: authModalReducer,
-	},
+    user: userReducer,
+    locationReducer: locationReducer,
+    authModal: authModalReducer,
+  },
 });
 
 export default store;

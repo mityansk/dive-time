@@ -41,9 +41,8 @@ const AuthModal: React.FC = () => {
       dispatch(closeModal());
       navigate('/');
     }
+  }, [user, dispatch, navigate]);
 
-  }, [user, dispatch, INITIAL_INPUTS_DATA, navigate]);
-  
   if (!isOpen) return null;
 
   return (
