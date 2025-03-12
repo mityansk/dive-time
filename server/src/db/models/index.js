@@ -41,3 +41,7 @@ db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
 module.exports = db;
+
+
+
+// npx sequelize model:generate --name DiveLocation --attributes name:string,coordinateX:float,coordinateY:float,description:string,complexity:string,deep:string
