@@ -1,10 +1,15 @@
+import { Provider } from "react-redux"
+import Router from "./router/router"
+import store from "./store/store"
 
 function App() {
 
 
   return (
     <>
-      <h1>Vite + React</h1>
+      <Provider store={store}>
+        <Router />
+      </Provider>
     </>
   )
 }
