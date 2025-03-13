@@ -4,6 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Modal from './Modal';
+import { useAppSelector } from '@/shared/hooks/reduxHooks';
 
 export default function TourForm() {
   const INITIAL_INPUTS_DATA = {
@@ -13,7 +14,8 @@ export default function TourForm() {
   };
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user.user)
+  const user = useAppSelector((state) => state.user.user);
+
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
