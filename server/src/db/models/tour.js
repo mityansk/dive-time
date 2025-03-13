@@ -18,7 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     location_id: DataTypes.INTEGER,
     author_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
     }
   }, {
     sequelize,
