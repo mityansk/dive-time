@@ -6,9 +6,9 @@ import { useEffect } from 'react';
 import { LocationCard } from '@/entities/location/ui/LocationCard/CardLocation';
 import { Link } from 'react-router';
 export function LocationPage() {
-	const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
 
-	const state = useAppSelector(state => state.location.locations);
+  const state = useAppSelector((state) => state.location.locations);
 
 	useEffect(() => {
 		dispatch(getLocation());
