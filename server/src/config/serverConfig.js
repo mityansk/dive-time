@@ -32,9 +32,9 @@ const serverConfig = (app) => {
 
   //* настройка статики, папка public ассоциирована с маршрутом запроса
   app.use(
-    '/static/images',
-    express.static(path.resolve(__dirname, '..', 'public', 'images'))
-  );
+		'/public/images',
+		express.static(path.resolve(__dirname, '..', 'public', 'images'))
+	);
 };
 
 module.exports = serverConfig;
