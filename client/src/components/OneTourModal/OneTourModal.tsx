@@ -1,8 +1,7 @@
-// components/TourModal/TourModal.tsx
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { getTourByIdThunk } from '@/entities/tour/api'
-import { Modal, Spin } from 'antd' // Используем Ant Design для модального окна
+import { Modal, Spin } from 'antd'
 
 interface TourModalProps {
 	tourId: number

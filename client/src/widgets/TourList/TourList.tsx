@@ -9,20 +9,20 @@ import OneTourModal from '@/components/OneTourModal/OneTourModal'
 
 export default function TourList(): JSX.Element {
 	const tours = useAppSelector(state => state.tour.tour)
-	const { one_tour, isLoading, error } = useAppSelector(state => state.tour) //!experement
+	const { one_tour, isLoading, error } = useAppSelector(state => state.tour)
 	const dispatch = useAppDispatch()
 
-	const [isModalOpen, setIsModalOpen] = useState(false) //!experement
-	const [selectedTourId, setSelectedTourId] = useState<number | null>(null) //!experement
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [selectedTourId, setSelectedTourId] = useState<number | null>(null)
 
 	useEffect(() => {
 		dispatch(getTourThunk())
 	}, [dispatch])
 
 	const handleTourClick = (id: number) => {
-		setSelectedTourId(id) // Устанавливаем ID выбранного тура
-		setIsModalOpen(true) // Открываем модальное окно
-		dispatch(getTourByIdThunk(id)) // Загружаем данные о туре
+		setSelectedTourId(id)
+		setIsModalOpen(true) 
+		dispatch(getTourByIdThunk(id)) 
 	}
 
 	const handleCloseModal = () => {
@@ -41,18 +41,17 @@ export default function TourList(): JSX.Element {
 						<TourCard
 							key={tour_el.id}
 							tour={tour_el}
-							onClick={() => handleTourClick(tour_el.id)} // Передаем обработчик клика
+							onClick={() => handleTourClick(tour_el.id)}
 						/>
 					))}
 				</div>
 			)}
 
-			{/* Модальное окно */}
 			{selectedTourId && (
 				<OneTourModal
 					isOpen={isModalOpen}
 					onClose={handleCloseModal}
-					tour={one_tour} // Передаем данные о туре
+					tour={one_tour}
 					isLoading={isLoading}
 					error={error}
 				/>
