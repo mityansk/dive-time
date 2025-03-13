@@ -16,7 +16,7 @@ export default function Router(): ReactElement {
           <Route path={CLIENT_ROUTES.MAIN} element={<MainPage />} />
           <Route path={CLIENT_ROUTES.TOUR} element={<TourPage />} />
           <Route path={CLIENT_ROUTES.LOCATIONS} element={<LocationPage />} />
-          {/* <Route path={CLIENT_ROUTES.EQUIPMENT} element={<EquipmentPage />} /> */}
+          <Route path={CLIENT_ROUTES.EQUIPMENT} element={<EquipmentPage />} />
           <Route
             path={CLIENT_ROUTES.LOCATIONS_INFO}
             element={<LocationInfoPage />}
