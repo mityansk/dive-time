@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { ILocation } from '../index';
+import { LocationArrayType } from '../index';
 import { getLocation } from '../index';
 
 interface LocationState {
-	locations: ILocation[];
+	locations: LocationArrayType;
 	loading: boolean;
 	error: string | null;
 }
@@ -26,7 +26,8 @@ const locationSlice = createSlice({
 			.addCase(getLocation.fulfilled, (state, action) => {
 				state.loading = false;
 				state.error = null;
-				state.locations = action.payload.data;
+				state.locations = action.payload;
+				console.log(action.payload, 'Список локаций получен успешно');
 			})
 			.addCase(getLocation.rejected, (state, action) => {
 				state.loading = false;

@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { tourReducer } from '../../entities/tour/slice';
+import { tourReducer } from '@/entities/tour/slice';
 import { userReducer } from '@/entities/user/slice/userSlice';
 import { authModalReducer } from '@/features/auth/slice/authModalSlice';
 import { locationReducer } from '@/entities/location/slice/locationSlice';
