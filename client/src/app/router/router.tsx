@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router";
 import Layout from "../layout/Layout";
 import TourPage from "@/pages/TourPage/TourPage";
 import MainPage from "@/pages/MainPage/MainPage";
-import EquipmentPage from "@/pages/EquipmentPage/EquipmentPage";
+import { EquipmentPage } from "@/pages/EquipmentPage/EquipmentPage";
 import { LocationPage } from "@/pages/LocationPage/LocationPage";
 
 export default function Router(): ReactElement {

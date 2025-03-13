@@ -1,9 +1,9 @@
-import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
+import { useAppDispatch } from "@/shared/hooks/reduxHooks";
 import { useEffect } from "react";
 import { getEquipmentThunk } from "@/entities/equipment/api/index";
 
 export default function EquipmentList() {
-  const equipments = useAppSelector((state) => state.equipments.equipments);
+  //   const equipments = useAppSelector((state) => state.equipments.equipments);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
