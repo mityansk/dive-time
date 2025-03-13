@@ -1,15 +1,19 @@
 .container {
-  display: flex;
-  gap: 1em
+	display: flex;
+	gap: 1em;
 }
 
 .map {
-  border: 5px solid black;
+	border: 5px solid black;
 }
 
 .box {
-   border: 5px solid black;
+  display: flex;
+	border: 5px solid black;
+	img {
+		height: 5em;
+	}
 }
 .location {
-  border: 5px solid rgb(215, 165, 16);
+	border: 5px solid rgb(215, 165, 16);
 }

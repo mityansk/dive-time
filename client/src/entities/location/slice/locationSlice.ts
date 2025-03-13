@@ -31,7 +31,7 @@ const locationSlice = createSlice({
 			})
 			.addCase(getLocation.rejected, (state, action) => {
 				state.loading = false;
-				state.error = action.payload?.message || 'Failed to fetch locations';
+				state.error = action.payload?.message || 'Ошибка при нахождении локаций';
 			});
 	},
 });
