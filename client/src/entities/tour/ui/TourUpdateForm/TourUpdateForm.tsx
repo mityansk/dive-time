@@ -16,16 +16,19 @@ export default function TourUpdateForm({
   const dispatch = useAppDispatch();
   const [locationName, setLocationName] = useState(tour.location_name);
   const [description, setDescription] = useState(tour.description);
-  const [date, setDate] = useState(tour.date);
+  const [start_date, setStart_Date] = useState(tour.start_date);
+  const [end_date, setEnd_date] = useState(tour.end_date);
 
   const handleSave = async () => {
     try {
       await dispatch(
         updateTourThunk({
+          image: tour.image,
           id: tour.id,
           location_name: locationName,
           description,
-          date,
+          start_date,
+          end_date,
           author_id: tour.author_id,
         })
       ).unwrap();
@@ -37,6 +40,13 @@ export default function TourUpdateForm({
 
   return (
     <div className={styles.card}>
+      <img
+        style={{
+          width: '239px',
+        }}
+        alt="Фотография карточки тура"
+        src={`http://localhost:3000/${tour.image}`}
+      />
       <input
         type="text"
         value={locationName}
@@ -50,8 +60,14 @@ export default function TourUpdateForm({
       />
       <input
         type="date"
-        value={date}
-        onChange={(e) => setDate(e.target.value)}
+        value={start_date}
+        onChange={(e) => setStart_Date(e.target.value)}
+        className={styles.input}
+      />
+      <input
+        type="date"
+        value={end_date}
+        onChange={(e) => setEnd_date(e.target.value)}
         className={styles.input}
       />
       <button onClick={handleSave} className={styles.button}>

@@ -12,8 +12,8 @@ export default function TourCard({
   tour,
   onClick,
 }: TourCardProps): JSX.Element {
-  const { location_name, description, date } = tour;
-  //! const author = tour.author.username
+  const { image, location_name, description, start_date, end_date } = tour;
+  // const author = tour.author.username
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -26,11 +26,17 @@ export default function TourCard({
         <TourUpdateForm tour={tour} onSave={handleSave} />
       ) : (
         <div className={styles.card} onClick={onClick}>
+          <img
+            style={{
+              width: '239px',
+            }}
+            alt="Фотография карточки тура"
+            src={`http://localhost:3000/${image}`}
+          />
           <span className={styles.location}>Локация: {location_name}</span>
-          <span className={styles.description}>
-            Описание: {description}
-          </span>
-          <span className={styles.date}>Дата: {date}</span>
+          <span className={styles.description}>Описание: {description}</span>
+          <span className={styles.date}>Дата начала тура: {start_date}</span>
+          <span className={styles.date}>Дата конца тура: {end_date}</span>
           {/* <span>Автор тура: {author}</span> */}
           <span className={styles.author}>Автор тура: Pupkin</span>
           <button

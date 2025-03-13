@@ -28,7 +28,7 @@ export default function TourForm() {
     try {
       const sendData = { ...inputs, author_id: user!.id };
       dispatch(addTourThunk(sendData));
-      navigate(CLIENT_ROUTES.NOT_FOUND); //!ВРЕМЕННО НАВИГИРУЕТ НА 404
+      navigate(CLIENT_ROUTES.TOUR);
       setIsModalOpen(false);
     } catch (error) {
       alert(error);

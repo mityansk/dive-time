@@ -15,7 +15,7 @@ module.exports = {
 					start_date: '22.02.2001',
 					end_date: '29.02.2001',
 					location_id: 1,
-					author_id: 1,
+					author_id: 3,
 				},
 			],
 			{}

@@ -21,24 +21,33 @@ const OneTourModal: React.FC<TourModalProps> = ({ tourId, isOpen, onClose }) => 
 	}, [isOpen, tourId, dispatch])
 
 	return (
-		<Modal
-			title='Информация о туре'
-			open={isOpen}
-			onCancel={onClose}
-			footer={null}
-		>
-			{isLoading && <Spin />}
-			{error && <div style={{ color: 'red' }}>{error}</div>}
-			{one_tour && (
-				<div>
-					<h2>{one_tour.location_name}</h2>
-					<p>{one_tour.description}</p>
-					<p>Дата: {(one_tour.date)}</p>
-					{/* <p>Автор: {one_tour.author.username}</p> */}
-				</div>
-			)}
-		</Modal>
-	)
+    <Modal
+      title="Информация о туре"
+      open={isOpen}
+      onCancel={onClose}
+      footer={null}
+    >
+      {isLoading && <Spin />}
+      {error && <div style={{ color: 'red' }}>{error}</div>}
+      {one_tour && (
+        <div>
+          <img
+            style={{
+              width: '472px',
+            }}
+            alt="Фотография карточки тура"
+            src={`http://localhost:3000/${one_tour.image}`}
+          />
+          <h2>{one_tour.location_name}</h2>
+          <p>{one_tour.description}</p>
+          <p>Дата начала тура: {one_tour.start_date}</p>
+          <p>Дата конца тура: {one_tour.end_date}</p>
+          {/* <p>Автор: {one_tour.author.username}</p> */}
+          <p>Автор тура: Pupkin</p>
+        </div>
+      )}
+    </Modal>
+  );
 }
 
 export default OneTourModal
