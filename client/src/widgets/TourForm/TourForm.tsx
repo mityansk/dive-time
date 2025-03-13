@@ -1,6 +1,6 @@
 import { addTourThunk } from '@/entities/tour/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
-import { useAppDispatch } from '@/shared/hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Modal from './Modal';
