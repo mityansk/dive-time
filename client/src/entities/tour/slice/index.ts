@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 import {
 	addTourThunk,
 	deleteTourThunk,
@@ -100,4 +100,4 @@ const tourSlice = createSlice({
 	},
 })
 
-export const tourReducer = tourSlice.reducer
+export const tourReducer = tourSlice.reducer;

@@ -5,7 +5,8 @@ export interface ILocationRowData {
 	description: string;
 	complexity: string;
 	deep: string;
-	// image: string; добавить поле для фото
+	image: string; 
+	arrayImage: []; 
 }
 
 export interface ILocation extends ILocationRowData {

@@ -1,0 +1,13 @@
+.container {
+	gap: 1em;
+
+	.mainImage {
+		height: 20em;
+	}
+  .containerImage {
+    display: flex;
+  }
+	.extraImage {
+    width: 10em;
+	}
+}

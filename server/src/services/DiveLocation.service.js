@@ -5,6 +5,9 @@ class DiveLocationService {
 	static async getAll() {
 		return await DiveLocation.findAll();
 	}
+	static async getById(id) {
+		return await DiveLocation.findByPk(id);
+	}
 }
 
 module.exports = DiveLocationService;
