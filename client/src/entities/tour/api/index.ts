@@ -1,6 +1,6 @@
 import { IServerResponse } from '@/shared/types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import { IAddTourData, IAddTourDataWithId, TourArrayType } from '../model'
+import { IAddTourData, IAddTourDataWithId, ITour, TourArrayType } from '../model'
 import { axiosInstance } from '@/shared/lib/axiosInstance'
 import { handleAxiosError } from '@/shared/utils/handleAxiosError'
 
@@ -27,7 +27,7 @@ export const getTourThunk = createAsyncThunk<
 })
 
 export const addTourThunk = createAsyncThunk<
-	IServerResponse<TourArrayType>,
+	IServerResponse<ITour>,
 	IAddTourData,
 	{ rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.ADD_TOUR, async (tourData, { rejectWithValue }) => {
@@ -40,13 +40,13 @@ export const addTourThunk = createAsyncThunk<
 })
 
 export const updateTourThunk = createAsyncThunk<
-	IServerResponse<TourArrayType>,
+	IServerResponse<ITour>,
 	IAddTourDataWithId,
 	{ rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.UPDATE_TOUR, async (tourData, { rejectWithValue }) => {
 	try {
 		const { data } = await axiosInstance.put(
-			`TOUR_API_ENDPOINT/${tourData.id}`,
+			`${TOUR_API_ENDPOINT}/${tourData.id}`,
 			tourData
 		)
 		return data
@@ -56,7 +56,7 @@ export const updateTourThunk = createAsyncThunk<
 })
 
 export const deleteTourThunk = createAsyncThunk<
-	IServerResponse<TourArrayType>,
+	IServerResponse<ITour>,
 	IAddTourDataWithId,
 	{ rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.DELETE_TOUR, async (tourData, { rejectWithValue }) => {
