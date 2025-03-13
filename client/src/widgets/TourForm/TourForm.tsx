@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Modal from './Modal';
-import { useAppSelector } from '@/shared/hooks/reduxHooks';
 
 export default function TourForm() {
   const INITIAL_INPUTS_DATA = {

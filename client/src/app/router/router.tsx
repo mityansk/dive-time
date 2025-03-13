@@ -1,7 +1,7 @@
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import { ReactElement } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Layout from "@/app/layout/layout";
+import Layout from "@/app/layout/Layout";
 import TourPage from "@/pages/TourPage/TourPage";
 import MainPage from "@/pages/MainPage/MainPage";
 import { EquipmentPage } from "@/pages/EquipmentPage/EquipmentPage";
