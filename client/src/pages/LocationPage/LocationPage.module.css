@@ -5,6 +5,10 @@
 
 .map {
 	border: 5px solid black;
+	.mapDisplay {
+		width: 700px;
+		height: 500px;
+	}
 }
 
 .box {
