@@ -1,17 +1,18 @@
-import { JSX } from "react";
-import { ITour } from "../model";
+import { JSX } from 'react'
+import { ITour } from '../../model'
 import styles from './TourCard.module.css'
 
 interface TourCardProps {
-  tour: ITour
+	tour: ITour
+	onClick: () => void
 }
 
-export default function TourCard({tour}: TourCardProps): JSX.Element {
-  const { location_name, description, date } = tour
-  //! const author = tour.author.username
-  return (
+export default function TourCard({ tour, onClick }: TourCardProps): JSX.Element {
+	const { location_name, description, date } = tour
+	// const author = tour.author.username
+	return (
 		<>
-			<div className={styles.card}>
+			<div className={styles.card} onClick={onClick}>
 				<span className={styles.location}>Локация: {location_name}</span>
 				<span className={styles.description}>Описание: {description}</span>
 				<span className={styles.date}>Дата: {date}</span>
