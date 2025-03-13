@@ -1,16 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { tourReducer } from '../../entities/tour/slice';
+import { tourReducer } from '@/entities/tour/slice';
 import { userReducer } from '@/entities/user/slice/userSlice';
-import { authModalreducer } from '@/features/auth/slice/authModalSlice';
+import { authModalReducer } from '@/features/auth/slice/authModalSlice';
 import { locationReducer } from '@/entities/location/slice/locationSlice';
 
 const store = configureStore({
-	reducer: {
+  reducer: {
     tour: tourReducer,
-		user: userReducer,
-		location: locationReducer,
-		authModal: authModalreducer,
-	},
+    user: userReducer,
+    locationReducer: locationReducer,
+    authModal: authModalReducer,
+  },
 });
 
 export default store;
