@@ -1,20 +1,20 @@
-import { IServerResponse } from "@/shared/types";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { IServerResponse } from '@/shared/types';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import {
   IAddEquipmentData,
   IUpdateEquipmentData,
   EquipmentArrayType,
-} from "../model";
-import { axiosInstance } from "@/shared/lib/axiosInstance";
-import { handleAxiosError } from "@/shared/utils/handleAxiosError";
+} from '../model';
+import { axiosInstance } from '@/shared/lib/axiosInstance';
+import { handleAxiosError } from '@/shared/utils/handleAxiosError';
 
-export const EQUIPMENT_API_ENDPOINT = "/equipment";
+export const EQUIPMENT_API_ENDPOINT = '/equipment';
 
 enum EQUIPMENTS_THUNK_TYPES {
-  ADD_EQUIPMENT = "equipment/create",
-  GET_EQUIPMENTS = "equipments/get",
-  UPDATE_EQUIPMENT = "equipment/update",
-  DELETE_EQUIPMENT = "equipment/delete",
+  ADD_EQUIPMENT = 'equipment/create',
+  GET_EQUIPMENTS = 'equipments/get',
+  UPDATE_EQUIPMENT = 'equipment/update',
+  DELETE_EQUIPMENT = 'equipment/delete',
 }
 
 export const getEquipmentThunk = createAsyncThunk<
