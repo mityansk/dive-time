@@ -1,6 +1,6 @@
 import { addTourThunk } from '@/entities/tour/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
-import { useAppDispatch } from '@/shared/hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import Modal from './Modal';
@@ -9,12 +9,11 @@ export default function TourForm() {
   const INITIAL_INPUTS_DATA = {
     location_name: '',
     description: '',
-    data: '',
+    date: '',
   };
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  //! const user = useAppSelector((state) => state.user.user) ЗАПУЛИТЬ ЮЗЕРА НАДА
-
+  const user = useAppSelector((state) => state.user.user)
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
