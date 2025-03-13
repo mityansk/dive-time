@@ -1,8 +1,8 @@
-import { IServerResponse } from "@/shared/types";
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { IAddTourData, IAddTourDataWithId, TourArrayType } from "../model";
-import { axiosInstance } from "@/shared/lib/axiosInstance";
-import { handleAxiosError } from "@/shared/utils/handleAxiosError";
+import { IServerResponse } from '@/shared/types'
+import { createAsyncThunk } from '@reduxjs/toolkit'
+import { IAddTourData, IAddTourDataWithId, ITour, TourArrayType } from '../model'
+import { axiosInstance } from '@/shared/lib/axiosInstance'
+import { handleAxiosError } from '@/shared/utils/handleAxiosError'
 
 export const TOUR_API_ENDPOINT = "/tour" as const;
 
@@ -27,9 +27,10 @@ export const getTourThunk = createAsyncThunk<
 });
 
 export const addTourThunk = createAsyncThunk<
-  IServerResponse<TourArrayType>,
-  IAddTourData,
-  { rejectValue: IServerResponse }
+
+	IServerResponse<ITour>,
+	IAddTourData,
+	{ rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.ADD_TOUR, async (tourData, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.post(TOUR_API_ENDPOINT, tourData);
@@ -40,25 +41,27 @@ export const addTourThunk = createAsyncThunk<
 });
 
 export const updateTourThunk = createAsyncThunk<
-  IServerResponse<TourArrayType>,
-  IAddTourDataWithId,
-  { rejectValue: IServerResponse }
+
+	IServerResponse<ITour>,
+	IAddTourDataWithId,
+	{ rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.UPDATE_TOUR, async (tourData, { rejectWithValue }) => {
-  try {
-    const { data } = await axiosInstance.put(
-      `TOUR_API_ENDPOINT/${tourData.id}`,
-      tourData
-    );
-    return data;
-  } catch (error) {
-    return rejectWithValue(handleAxiosError(error));
-  }
-});
+	try {
+		const { data } = await axiosInstance.put(
+			`${TOUR_API_ENDPOINT}/${tourData.id}`,
+			tourData
+		)
+		return data
+	} catch (error) {
+		return rejectWithValue(handleAxiosError(error))
+	}
+})
 
 export const deleteTourThunk = createAsyncThunk<
-  IServerResponse<TourArrayType>,
-  IAddTourDataWithId,
-  { rejectValue: IServerResponse }
+	IServerResponse<ITour>,
+	IAddTourDataWithId,
+	{ rejectValue: IServerResponse }
+
 >(TOUR_THUNK_TYPES.DELETE_TOUR, async (tourData, { rejectWithValue }) => {
   try {
     const { data } = await axiosInstance.delete(
