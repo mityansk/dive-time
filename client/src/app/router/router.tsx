@@ -1,11 +1,11 @@
 import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes";
 import { ReactElement } from "react";
 import { BrowserRouter, Route, Routes } from "react-router";
-import Layout from "../layout/Layout";
 import TourPage from "@/pages/TourPage/TourPage";
 import MainPage from "@/pages/MainPage/MainPage";
 import { EquipmentPage } from "@/pages/EquipmentPage/EquipmentPage";
 import { LocationPage } from "@/pages/LocationPage/LocationPage";
+import Layout from "../layout/layout";
 
 export default function Router(): ReactElement {
   return (
