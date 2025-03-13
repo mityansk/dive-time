@@ -2,19 +2,22 @@ import { createSlice } from '@reduxjs/toolkit'
 import {
 	addTourThunk,
 	deleteTourThunk,
+	getTourByIdThunk,
 	getTourThunk,
 	updateTourThunk,
 } from '../api'
-import { TourArrayType } from '../model'
+import { ITour, TourArrayType } from '../model'
 
 type TourState = {
 	tour: TourArrayType
+	one_tour: ITour | null
 	error: string | null
 	isLoading: boolean
 }
 
 const initialState: TourState = {
 	tour: [],
+	one_tour: null,
 	error: null,
 	isLoading: false,
 }
@@ -34,6 +37,19 @@ const tourSlice = createSlice({
 				state.tour = action.payload.data
 			})
 			.addCase(getTourThunk.rejected, (state, action) => {
+				state.isLoading = false
+				state.error =
+					action.payload!.error ?? 'Неизвестная ошибка при получении туров!'
+			})
+			.addCase(getTourByIdThunk.pending, state => {
+				state.isLoading = true
+			})
+			.addCase(getTourByIdThunk.fulfilled, (state, action) => {
+				state.isLoading = false
+				state.error = null
+				state.one_tour = action.payload.data
+			})
+			.addCase(getTourByIdThunk.rejected, (state, action) => {
 				state.isLoading = false
 				state.error =
 					action.payload!.error ?? 'Неизвестная ошибка при получении туров!'

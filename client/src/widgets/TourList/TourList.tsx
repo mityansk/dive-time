@@ -1,8 +1,8 @@
-import { JSX, useEffect } from "react";
-import { ITour } from "@/entities/tour/model";
-import TourCard from "@/entities/tour/ui/TourCard";
-import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks";
-import { getTourThunk } from "@/entities/tour/api";
+import { JSX, useEffect } from 'react'
+import { ITour } from '@/entities/tour/model'
+import TourCard from '@/entities/tour/ui/TourCard/TourCard'
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
+import { getTourThunk } from '@/entities/tour/api'
 import styles from './TourList.module.css'
 
 export default function TourList(): JSX.Element {

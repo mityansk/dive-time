@@ -3,7 +3,7 @@ import { CLIENT_ROUTES } from "@/shared/enums/clientRoutes"
 import { useAppDispatch, useAppSelector } from "@/shared/hooks/reduxHooks"
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import Modal from './Modal'
+import TourFormModal from '@/components/TourFormModal/TourFormModal'
 
 export default function TourForm() {
   const INITIAL_INPUTS_DATA = {
@@ -13,7 +13,7 @@ export default function TourForm() {
 	}
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  //! const user = useAppSelector((state) => state.user.user) ЗАПУЛИТЬ ЮЗЕРА НАДА
+  const user = useAppSelector((state) => state.user.user)
 
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA)
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -37,7 +37,6 @@ export default function TourForm() {
 
   return (
 		<div>
-			{/* Кнопка для открытия модального окна */}
 			<button
 				onClick={() => setIsModalOpen(true)}
 				style={{
@@ -52,8 +51,7 @@ export default function TourForm() {
 				Создать тур
 			</button>
 
-			{/* Модальное окно с формой */}
-			<Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+			<TourFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
 				<form onSubmit={onSubmitHandler}>
 					<div style={{ marginBottom: '16px' }}>
 						<label>Название локации:</label>
@@ -121,7 +119,7 @@ export default function TourForm() {
 						Создать
 					</button>
 				</form>
-			</Modal>
+			</TourFormModal>
 		</div>
 	)
 }
