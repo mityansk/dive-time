@@ -3,6 +3,7 @@ import styles from './LocationPage.module.css';
 import { getLocation } from '@/entities/location';
 import { useEffect } from 'react';
 import { LocationCard } from '@/entities/location/ui/LocationCard/CardLocation';
+import { Link } from 'react-router';
 export function LocationPage() {
 	const dispatch = useAppDispatch();
 
@@ -17,8 +18,11 @@ export function LocationPage() {
 			<div className={styles.map}>КАРТА</div>
 			<div className={styles.box}>
 				<h2>Места дайвинга</h2>
+
 				{state?.map(location => (
-					<LocationCard key={location.id} location={location} />
+					<Link to={`/locations/${location.id}`} className={styles.card}>
+						<LocationCard key={location.id} location={location} />
+					</Link>
 				))}
 			</div>
 		</div>
