@@ -6,7 +6,6 @@ import TourPage from '@/pages/TourPage/TourPage';
 import MainPage from '@/pages/MainPage/MainPage';
 import { LocationPage } from '@/pages/LocationPage/LocationPage';
 
-
 export default function Router(): ReactElement {
   return (
     <BrowserRouter>
@@ -19,3 +18,4 @@ export default function Router(): ReactElement {
       </Routes>
     </BrowserRouter>
   );
+}
