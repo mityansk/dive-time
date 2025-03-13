@@ -9,7 +9,7 @@ const store = configureStore({
   reducer: {
     tour: tourReducer,
     user: userReducer,
-    locationReducer: locationReducer,
+    location: locationReducer,
     authModal: authModalReducer,
     equipments: equipmentsReducer,
   },
