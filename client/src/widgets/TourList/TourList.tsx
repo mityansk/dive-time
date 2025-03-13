@@ -9,7 +9,6 @@ import OneTourModal from '@/components/OneTourModal/OneTourModal'
 
 export default function TourList(): JSX.Element {
 	const tours = useAppSelector(state => state.tour.tour)
-	const { one_tour, isLoading, error } = useAppSelector(state => state.tour)
 	const dispatch = useAppDispatch()
 
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -31,31 +30,29 @@ export default function TourList(): JSX.Element {
 	}
 
 	return (
-		<div>
-			<h1 className={styles.header}>Список туров</h1>
-			{tours.length === 0 ? (
-				<div className={styles.noTours}>Туры не найдены</div>
-			) : (
-				<div className={styles.tourList}>
-					{tours.map((tour_el: ITour) => (
-						<TourCard
-							key={tour_el.id}
-							tour={tour_el}
-							onClick={() => handleTourClick(tour_el.id)}
-						/>
-					))}
-				</div>
-			)}
+    <div>
+      <h1 className={styles.header}>Список туров</h1>
+      {tours.length === 0 ? (
+        <div className={styles.noTours}>Туры не найдены</div>
+      ) : (
+        <div className={styles.tourList}>
+          {tours.map((tour_el: ITour) => (
+            <TourCard
+              key={tour_el.id}
+              tour={tour_el}
+              onClick={() => handleTourClick(tour_el.id)}
+            />
+          ))}
+        </div>
+      )}
 
-			{selectedTourId && (
-				<OneTourModal
-					isOpen={isModalOpen}
-					onClose={handleCloseModal}
-					tour={one_tour}
-					isLoading={isLoading}
-					error={error}
-				/>
-			)}
-		</div>
-	)
+      {selectedTourId && (
+        <OneTourModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          tourId={selectedTourId}
+        />
+      )}
+    </div>
+  );
 }

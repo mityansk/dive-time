@@ -67,7 +67,6 @@ export const updateTourThunk = createAsyncThunk<
 	try {
 		const { data } = await axiosInstance.put(
 			`${TOUR_API_ENDPOINT}/${tourData.id}`,
-			`${TOUR_API_ENDPOINT}/${tourData.id}`,
 			tourData
 		)
 		return data
@@ -77,7 +76,6 @@ export const updateTourThunk = createAsyncThunk<
 })
 
 export const deleteTourThunk = createAsyncThunk<
-	IServerResponse<ITour>,
 	IServerResponse<ITour>,
 	IAddTourDataWithId,
 	{ rejectValue: IServerResponse }

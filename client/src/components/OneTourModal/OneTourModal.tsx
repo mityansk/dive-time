@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
 import { getTourByIdThunk } from '@/entities/tour/api'
 import { Modal, Spin } from 'antd'
 
+
 interface TourModalProps {
 	tourId: number
 	isOpen: boolean

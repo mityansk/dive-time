@@ -11,13 +11,6 @@ export default function TourForm() {
     description: '',
     date: '',
   };
-  const navigate = useNavigate();
-  const dispatch = useAppDispatch();
-  const user = useAppSelector((state) => state.user.user);
-		location_name: '',
-		description: '',
-    data: '',
-	}
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const user = useAppSelector((state) => state.user.user)
