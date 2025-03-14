@@ -9,7 +9,9 @@ export default function TourForm() {
   const INITIAL_INPUTS_DATA = {
     location_name: '',
     description: '',
-    date: '',
+    start_date: '',
+    end_date: '',
+    image: '',
   };
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
@@ -28,7 +30,7 @@ export default function TourForm() {
     try {
       const sendData = { ...inputs, author_id: user!.id };
       dispatch(addTourThunk(sendData));
-      navigate(CLIENT_ROUTES.NOT_FOUND); //!ВРЕМЕННО НАВИГИРУЕТ НА 404
+      navigate(CLIENT_ROUTES.TOUR);
       setIsModalOpen(false);
     } catch (error) {
       alert(error);
@@ -36,44 +38,44 @@ export default function TourForm() {
   };
 
   return (
-		<div>
-			<button
-				onClick={() => setIsModalOpen(true)}
-				style={{
-					padding: '10px 20px',
-					backgroundColor: '#1890ff',
-					color: 'white',
-					border: 'none',
-					borderRadius: '4px',
-					cursor: 'pointer',
-				}}
-			>
-				Создать тур
-			</button>
+    <div>
+      <button
+        onClick={() => setIsModalOpen(true)}
+        style={{
+          padding: '10px 20px',
+          backgroundColor: '#1890ff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          cursor: 'pointer',
+        }}
+      >
+        Создать тур
+      </button>
 
-			<TourFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-				<form onSubmit={onSubmitHandler}>
-					<div style={{ marginBottom: '16px' }}>
-						<label>Название локации:</label>
-						<input
-							type='text'
-							name='location_name'
-							value={inputs.location_name}
-							onChange={onChangeHandler}
-							required
-							style={{
-								width: '100%',
-								padding: '8px',
-								borderRadius: '4px',
-								border: '1px solid #ddd',
-							}}
-						/>
-					</div>
+      <TourFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <form onSubmit={onSubmitHandler}>
+          <div style={{ marginBottom: '16px' }}>
+            <label>Название локации:</label>
+            <input
+              type="text"
+              name="location_name"
+              value={inputs.location_name}
+              onChange={onChangeHandler}
+              required
+              style={{
+                width: '100%',
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd',
+              }}
+            />
+          </div>
 
           <div style={{ marginBottom: '16px' }}>
             <label>Описание:</label>
             <textarea
-              name='description'
+              name="description"
               value={inputs.description}
               onChange={onChangeHandler}
               required
@@ -90,9 +92,9 @@ export default function TourForm() {
           <div style={{ marginBottom: '16px' }}>
             <label>Дата:</label>
             <input
-              type='date'
-              name='date'
-              value={inputs.date}
+              type="date"
+              name="date"
+              value={inputs.start_date}
               onChange={onChangeHandler}
               required
               style={{
@@ -104,22 +106,39 @@ export default function TourForm() {
             />
           </div>
 
-					<button
-						type='submit'
-						style={{
-							width: '100%',
-							padding: '10px',
-							backgroundColor: '#1890ff',
-							color: 'white',
-							border: 'none',
-							borderRadius: '4px',
-							cursor: 'pointer',
-						}}
-					>
-						Создать
-					</button>
-				</form>
-			</TourFormModal>
-		</div>
-	)
+          <div style={{ marginBottom: '16px' }}>
+            <label>Дата:</label>
+            <input
+              type="date"
+              name="date"
+              value={inputs.end_date}
+              onChange={onChangeHandler}
+              required
+              style={{
+                width: '100%',
+                padding: '8px',
+                borderRadius: '4px',
+                border: '1px solid #ddd',
+              }}
+            />
+          </div>
+
+          <button
+            type="submit"
+            style={{
+              width: '100%',
+              padding: '10px',
+              backgroundColor: '#1890ff',
+              color: 'white',
+              border: 'none',
+              borderRadius: '4px',
+              cursor: 'pointer',
+            }}
+          >
+            Создать
+          </button>
+        </form>
+      </TourFormModal>
+    </div>
+  );
 }

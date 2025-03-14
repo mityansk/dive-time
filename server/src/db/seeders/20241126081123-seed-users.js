@@ -8,25 +8,32 @@ module.exports = {
     const password2 = await bcrypt.hash('Qwerty123@', 10);
 
     await queryInterface.bulkInsert(
-      'Users',
-      [
-        {
-          username: 'Пупа',
-          email: 'pupa@pupa.com',
-          password: password1,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          username: 'Лупа',
-          email: 'lupa@lupa.com',
-          password: password2,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {}
-    );
+			'Users',
+			[
+				{
+					username: 'Пупа',
+					email: 'pupa@pupa.com',
+					password: "password1",
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					username: 'Лупа',
+					email: 'lupa@lupa.com',
+					password: "password2",
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					username: 'Павел Подвохов',
+					email: 'pavel.scam@scam.com',
+					password: "Qwerty1234!",
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			],
+			{}
+		)
   },
 
   async down(queryInterface) {

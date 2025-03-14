@@ -21,7 +21,8 @@ class TourService {
 		}
 		tour.location_name = data.location_name
 		tour.description = data.description
-		tour.date = data.date
+		tour.start_date = data.start_date
+		tour.end_date = data.end_date
 		await tour.save()
 		return tour
 	}
