@@ -23,10 +23,17 @@ export const AppHeader: React.FC = () => {
   };
 
   return (
-<Header style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#001529', padding: '0 20px' }}>
-
-      <Title 
-        level={3} 
+    <Header
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        background: '#001529',
+        padding: '0 20px',
+      }}
+    >
+      <Title
+        level={3}
         style={{ color: 'white', margin: '0', cursor: 'pointer' }}
         onClick={() => navigate(CLIENT_ROUTES.MAIN)}
       >
@@ -34,13 +41,25 @@ export const AppHeader: React.FC = () => {
       </Title>
 
       <Space size="large">
-        <Button type="text" style={{ color: 'white' }} onClick={() => navigate(CLIENT_ROUTES.LOCATIONS)}>
+        <Button
+          type="text"
+          style={{ color: 'white' }}
+          onClick={() => navigate(CLIENT_ROUTES.LOCATIONS)}
+        >
           Места для погружений
         </Button>
-        <Button type="text" style={{ color: 'white' }} onClick={() => navigate(CLIENT_ROUTES.TOUR)}>
+        <Button
+          type="text"
+          style={{ color: 'white' }}
+          onClick={() => navigate(CLIENT_ROUTES.TOUR)}
+        >
           Туры
         </Button>
-        <Button type="text" style={{ color: 'white' }} onClick={() => navigate(CLIENT_ROUTES.EQUIPMENT)}>
+        <Button
+          type="text"
+          style={{ color: 'white' }}
+          onClick={() => navigate(CLIENT_ROUTES.EQUIPMENT)}
+        >
           Снаряжение
         </Button>
       </Space>
