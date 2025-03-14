@@ -1,26 +1,38 @@
-import React, { useEffect } from 'react'
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks'
-import { getTourByIdThunk } from '@/entities/tour/api'
-import { Modal, Spin } from 'antd'
-
+import React, { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
+import { getTourByIdThunk } from '@/entities/tour/api';
+import { Modal, Spin } from 'antd';
+import { useNavigate } from 'react-router';
 
 interface TourModalProps {
-	tourId: number
-	isOpen: boolean
-	onClose: () => void
+  tourId: number;
+  isOpen: boolean;
+  onClose: () => void;
 }
 
-const OneTourModal: React.FC<TourModalProps> = ({ tourId, isOpen, onClose }) => {
-	const dispatch = useAppDispatch()
-	const { one_tour, isLoading, error } = useAppSelector(state => state.tour)
+const OneTourModal: React.FC<TourModalProps> = ({
+  tourId,
+  isOpen,
+  onClose,
+}) => {
+  const dispatch = useAppDispatch();
+  const { one_tour, isLoading, error } = useAppSelector((state) => state.tour);
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		if (isOpen && tourId) {
-			dispatch(getTourByIdThunk(tourId)) 
-		}
-	}, [isOpen, tourId, dispatch])
+  useEffect(() => {
+    if (isOpen && tourId) {
+      dispatch(getTourByIdThunk(tourId));
+    }
+  }, [isOpen, tourId, dispatch]);
 
-	return (
+  const handleLocationClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (one_tour) {
+      navigate(`/locations/${one_tour.location_id}`);
+    }
+  };
+
+  return (
     <Modal
       title="Информация о туре"
       open={isOpen}
@@ -38,7 +50,9 @@ const OneTourModal: React.FC<TourModalProps> = ({ tourId, isOpen, onClose }) => 
             alt="Фотография карточки тура"
             src={`http://localhost:3000/${one_tour.image}`}
           />
-          <h2>{one_tour.location_name}</h2>
+          <h2 onClick={handleLocationClick}>
+            {one_tour.location_name} ⬅ Узнать подробнее
+          </h2>
           <p>{one_tour.description}</p>
           <p>Дата начала тура: {one_tour.start_date}</p>
           <p>Дата конца тура: {one_tour.end_date}</p>
@@ -48,6 +62,6 @@ const OneTourModal: React.FC<TourModalProps> = ({ tourId, isOpen, onClose }) => 
       )}
     </Modal>
   );
-}
+};
 
-export default OneTourModal
+export default OneTourModal;

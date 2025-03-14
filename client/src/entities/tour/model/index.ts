@@ -14,6 +14,7 @@ export interface IAddTourDataWithId extends IAddTourData {
 
 export interface ITour extends IAddTourDataWithId {
   isDone: boolean;
+  location_id: number
   createdAt: Date;
   updatedAt: Date;
   author: {
