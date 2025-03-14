@@ -31,7 +31,9 @@ export default function EquipmentList() {
   };
 
   const handleDelete = (equipment: IEquipmentData) => {
-    dispatch(deleteEquipmentThunk(equipment));
+    dispatch(deleteEquipmentThunk(equipment)).then(() =>
+      dispatch(getEquipmentThunk())
+    );
   };
 
   const handleCloseModal = () => {
