@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
@@ -9,6 +10,10 @@ module.exports = {
 				primaryKey: true,
 				type: Sequelize.INTEGER,
 			},
+			image: {
+				type: Sequelize.STRING,
+				allowNull: false,
+			},
 			location_name: {
 				type: Sequelize.STRING,
 				allowNull: false,
@@ -17,7 +22,11 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
-			date: {
+			start_date: {
+				type: Sequelize.STRING,
+				allowNull: false,
+			},
+			end_date: {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
@@ -28,10 +37,10 @@ module.exports = {
 				type: Sequelize.INTEGER,
 				references: {
 					model: 'Users',
-					key: 'id'
+					key: 'id',
 				},
 				onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+				onDelete: 'CASCADE',
 			},
 			createdAt: {
 				allowNull: false,

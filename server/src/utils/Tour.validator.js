@@ -1,6 +1,6 @@
 class TourValidator {
 	static validate(data) {
-		const { location_name, description, date } = data
+		const { location_name, description, start_date, end_date } = data
 		if (
 			!location_name ||
 			typeof location_name !== 'string' ||
@@ -23,7 +23,18 @@ class TourValidator {
 			}
 		}
 
-		if (!date || typeof date !== 'string' || date.trim() === '') {
+		if (
+			!start_date ||
+			typeof start_date !== 'string' ||
+			start_date.trim() === ''
+		) {
+			return {
+				isValid: false,
+				error: 'Date is required and must be a non-empty string.',
+			}
+		}
+
+		if (!end_date || typeof end_date !== 'string' || end_date.trim() === '') {
 			return {
 				isValid: false,
 				error: 'Date is required and must be a non-empty string.',
