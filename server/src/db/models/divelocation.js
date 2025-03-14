@@ -4,8 +4,8 @@ module.exports = (sequelize, DataTypes) => {
   class DiveLocation extends Model {
     static associate({ Equipment }) {
       this.hasMany(Equipment, {
-        foreignKey: "diveLocation_id",
-      });
+				foreignKey: 'location_id',
+			})
     }
   }
   DiveLocation.init(
