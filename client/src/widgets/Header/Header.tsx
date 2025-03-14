@@ -28,7 +28,12 @@ export const AppHeader: React.FC = () => {
     <Header className={styles.header}>
       <Title
         level={3}
-        style={{ color: 'white', margin: '0', cursor: 'pointer', whiteSpace: 'nowrap'}}
+        style={{
+          color: 'white',
+          margin: '0',
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+        }}
         onClick={() => navigate(CLIENT_ROUTES.MAIN)}
       >
         DIVE TIME
@@ -56,22 +61,12 @@ export const AppHeader: React.FC = () => {
       </div>
 
       {!user ? (
-        <Button
-        
-         
-          onClick={() => dispatch(openModal())}
-        >
-          Войти
-        </Button>
+        <Button onClick={() => dispatch(openModal())}>Войти</Button>
       ) : (
         <div className={styles.rightContainer}>
           <Avatar shape="square" icon={<UserOutlined />} />
-
-          <span className={styles.buttonReg}
-          onClick={signOutHandler}
-        >
-        
-          Выйти
+          <span className={styles.buttonReg} onClick={signOutHandler}>
+            Выйти
           </span>
         </div>
       )}

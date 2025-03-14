@@ -8,7 +8,7 @@
 .buttonsCenter {
   display: flex;
   justify-content: center;
-  gap: 35px;
+  gap: 30px;
 }
 .rightContainer {
   white-space: nowrap;
