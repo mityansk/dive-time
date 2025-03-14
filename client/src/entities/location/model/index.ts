@@ -16,3 +16,4 @@ export interface ILocation extends ILocationRowData {
 }
 
 export type LocationArrayType = ILocation[];
+

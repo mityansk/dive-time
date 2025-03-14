@@ -5,7 +5,7 @@ const formatResponse = require("../utils/formatResponse");
 const tourRoutes = require("./tour.routes");
 
 router.use("/auth", authRoutes);
-router.use("/diveLocation", diveLocationRoutes);
+router.use("/locations", diveLocationRoutes);
 router.use("/tour", tourRoutes);
 
 router.use("*", (req, res) => {
