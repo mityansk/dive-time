@@ -5,8 +5,8 @@ import TaskForm from "@/widgets/TourForm/TourForm";
 export default function TourPage(): JSX.Element {
   return (
     <div>
-      <TourList />
       <TaskForm />
+      <TourList />
     </div>
   )
 }

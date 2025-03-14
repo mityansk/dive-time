@@ -1,7 +1,7 @@
-const TourService = require("../services/Tour.service")
-const formatResponse = require("../utils/formatResponse")
-const isValidId = require("../utils/isValidId")
-const TourValidator = require("../utils/Tour.validator")
+const TourService = require('../services/Tour.service')
+const formatResponse = require('../utils/formatResponse')
+const isValidId = require('../utils/isValidId')
+const TourValidator = require('../utils/Tour.validator')
 
 class TourController {
 	static async getAllTour(req, res) {
@@ -43,12 +43,13 @@ class TourController {
 	}
 
 	static async createTour(req, res) {
-		const { location_name, description, date } = req.body
+		const { location_name, description, start_date, end_date } = req.body
 		//* const { location } = res.locals //! НЕ ЗАБЫТЬ ДОСТАТЬ ЛОКАЦИЮ
 		const { isValid, error } = TourValidator.validate({
 			location_name,
 			description,
-			date,
+			start_date,
+			end_date,
 		})
 		if (!isValid) {
 			return res
@@ -60,7 +61,8 @@ class TourController {
 			const newTour = await TourService.create({
 				location_name,
 				description,
-				date,
+				start_date,
+				end_date,
 				//! НЕ ЗАБЫТЬ ДОБАВИТЬ ID ЛОКАЦИИ location_id: location.id
 			})
 
@@ -81,7 +83,7 @@ class TourController {
 
 	static async updateTour(req, res) {
 		const { id } = req.params
-		const { location_name, description, date } = req.body
+		const { location_name, description, start_date, end_date } = req.body
 		const { user } = res.locals
 
 		if (!isValidId(id)) {
@@ -91,7 +93,8 @@ class TourController {
 		const { isValid, error } = TourValidator.validate({
 			location_name,
 			description,
-			date,
+			start_date,
+			end_date,
 		})
 		if (!isValid) {
 			return res
@@ -117,7 +120,8 @@ class TourController {
 			const updatedTour = await TourService.update(+id, {
 				location_name,
 				description,
-				date,
+				start_date,
+				end_date,
 			})
 			res.status(200).json(formatResponse(200, 'success', updatedTour))
 		} catch ({ message }) {

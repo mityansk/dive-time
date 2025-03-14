@@ -6,7 +6,7 @@ const tourRoutes = require('./tour.routes');
 const equipmentRoutes = require('./equipment.routes');
 
 router.use('/auth', authRoutes);
-router.use('/diveLocation', diveLocationRoutes);
+router.use('/locations', diveLocationRoutes);
 router.use('/tour', tourRoutes);
 router.use('/equipment', equipmentRoutes);
 
