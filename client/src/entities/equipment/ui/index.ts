@@ -1,12 +1,12 @@
 export type {
   IAddEquipmentData,
-  IUpdateEquipmentData,
+  IEquipmentData as IUpdateEquipmentData,
   EquipmentArrayType,
-} from "../model";
+} from '../model';
 export {
   getEquipmentThunk,
   addEquipmentThunk,
   updateEquipmentThunk,
   deleteEquipmentThunk,
-} from "../api";
-export { equipmentsReducer } from "../slice";
+} from '../api';
+export { equipmentsReducer } from '../slice';
