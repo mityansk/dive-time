@@ -1,0 +1,54 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #13a4ed;
+  padding: 0 20px;
+}
+.buttonsCenter {
+  display: flex;
+  justify-content: center;
+  gap: 35px;
+}
+.rightContainer {
+  white-space: nowrap;
+  color: rgb(255, 255, 255);
+  border-radius: 0px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.username {
+  padding: 0px 10px 0px 10px;
+  font-weight: 400;
+  border-right: solid;
+  border-right-width: 1px;
+  transition: transform 0.2s ease-in-out;
+}
+.username:hover {
+  transform: scale(1.05);
+}
+
+.buttonReg {
+  color: rgb(255, 255, 255);
+  background-color: #13a4ed;
+  border-radius: 0px;
+  margin-left: 10px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.button {
+  color: rgb(255, 255, 255);
+  background-color: rgb(31, 119, 220);
+  border-radius: 20px;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+.button:hover {
+  transform: scale(1.15);
+}
