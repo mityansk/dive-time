@@ -57,8 +57,8 @@ export const AppHeader: React.FC = () => {
 
       {!user ? (
         <Button
-          type="link"
-          className={styles.buttonReg}
+        
+         
           onClick={() => dispatch(openModal())}
         >
           Войти
