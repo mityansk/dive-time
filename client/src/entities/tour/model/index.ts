@@ -1,4 +1,4 @@
-// import { Dayjs } from 'dayjs';
+
 export interface IAddTourData {
   image: string;
   location_name: string;
@@ -17,6 +17,8 @@ export interface IAddTourDataWithId {
   start_date: string;
   end_date: string;
 }
+
+export type DeleteTourIdType = number
 
 export interface ITour extends IAddTourDataWithId {
   isDone: boolean;

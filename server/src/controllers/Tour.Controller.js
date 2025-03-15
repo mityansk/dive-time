@@ -161,7 +161,7 @@ class TourController {
 			}
 
 			await TourService.delete(+id)
-			res.status(200).json(formatResponse(200, 'Tour successfully deleted'))
+			res.status(200).json(formatResponse(200, 'Tour successfully deleted', +id))
 		} catch ({ message }) {
 			console.error(message)
 			res

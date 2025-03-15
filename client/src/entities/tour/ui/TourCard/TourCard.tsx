@@ -7,23 +7,23 @@ import dayjs from 'dayjs';
 interface TourCardProps {
   tour: ITour;
   onClick: () => void;
+  onDelete: (id: number) => void
 }
 
 export default function TourCard({
   tour,
   onClick,
+  onDelete,
 }: TourCardProps): JSX.Element {
   const { image, location_name, description, start_date, end_date } = tour;
   const startDate = dayjs(start_date).format('DD.MM.YYYY')
   const endDate = dayjs(end_date).format('DD.MM.YYYY')
-  
-  
-
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = () => {
     setIsEditing(false);
   };
+
   return (
     <>
       {isEditing ? (
@@ -53,6 +53,15 @@ export default function TourCard({
             className={styles.editButton}
           >
             Редактировать
+          </button>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(tour.id)
+            }}
+            className={styles.editButton}
+          >
+            Удалить тур
           </button>
         </div>
       )}

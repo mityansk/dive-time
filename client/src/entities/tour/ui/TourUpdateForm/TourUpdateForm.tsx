@@ -32,6 +32,7 @@ export default function TourUpdateForm({
         })
       ).unwrap();
       onSave();
+
     } catch (error) {
       console.error('Ошибка при обновлении тура:', error);
     }

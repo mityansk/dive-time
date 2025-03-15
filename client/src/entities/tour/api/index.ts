@@ -1,6 +1,7 @@
 import { IServerResponse } from '@/shared/types'
 import { createAsyncThunk } from '@reduxjs/toolkit'
 import {
+  DeleteTourIdType,
 	IAddTourData,
 	IAddTourDataWithId,
 	ITour,
@@ -96,17 +97,16 @@ export const updateTourThunk = createAsyncThunk<
 })
 
 export const deleteTourThunk = createAsyncThunk<
-	IServerResponse<ITour>,
-	IAddTourDataWithId,
-	{ rejectValue: IServerResponse }
-
+  IServerResponse<DeleteTourIdType>,
+  DeleteTourIdType,
+  { rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.DELETE_TOUR, async (tourData, { rejectWithValue }) => {
-	try {
-		const { data } = await axiosInstance.delete(
-			`${TOUR_API_ENDPOINT}/${tourData.id}`
-		)
-		return data
-	} catch (error) {
-		return rejectWithValue(handleAxiosError(error))
-	}
-})
+  try {
+    const { data } = await axiosInstance.delete(
+      `${TOUR_API_ENDPOINT}/${tourData}`
+    );
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
