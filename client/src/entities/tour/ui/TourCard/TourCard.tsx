@@ -2,6 +2,7 @@ import { JSX, useState } from 'react';
 import { ITour } from '../../model';
 import styles from './TourCard.module.css';
 import TourUpdateForm from '../TourUpdateForm/TourUpdateForm';
+import dayjs from 'dayjs';
 
 interface TourCardProps {
   tour: ITour;
@@ -13,7 +14,10 @@ export default function TourCard({
   onClick,
 }: TourCardProps): JSX.Element {
   const { image, location_name, description, start_date, end_date } = tour;
-  // const author = tour.author.username
+  const startDate = dayjs(start_date).format('DD.MM.YYYY')
+  const endDate = dayjs(end_date).format('DD.MM.YYYY')
+  
+  
 
   const [isEditing, setIsEditing] = useState(false);
 
@@ -35,10 +39,12 @@ export default function TourCard({
           />
           <span className={styles.location}>Локация: {location_name}</span>
           <span className={styles.description}>Описание: {description}</span>
-          <span className={styles.date}>Дата начала тура: {start_date}</span>
-          <span className={styles.date}>Дата конца тура: {end_date}</span>
-          {/* <span>Автор тура: {author}</span> */}
-          <span className={styles.author}>Автор тура: Pupkin</span>
+          <span className={styles.date}>Дата начала тура: {startDate}</span>
+          <span className={styles.date}>Дата конца тура: {endDate}</span>
+          <span>
+            Автор тура:{' '}
+            {tour.author ? tour.author.username : 'Автор неизвестен'}
+          </span>
           <button
             onClick={(e) => {
               e.stopPropagation();

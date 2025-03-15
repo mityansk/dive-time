@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { getTourByIdThunk } from '@/entities/tour/api';
 import { Modal, Spin } from 'antd';
 import { useNavigate } from 'react-router';
+import dayjs from 'dayjs';
 
 interface TourModalProps {
   tourId: number;
@@ -18,6 +19,9 @@ const OneTourModal: React.FC<TourModalProps> = ({
   const dispatch = useAppDispatch();
   const { one_tour, isLoading, error } = useAppSelector((state) => state.tour);
   const navigate = useNavigate();
+    const startDate = dayjs(one_tour?.start_date).format('DD.MM.YYYY')
+    const endDate = dayjs(one_tour?.end_date).format('DD.MM.YYYY');
+  
 
   useEffect(() => {
     if (isOpen && tourId) {
@@ -54,10 +58,9 @@ const OneTourModal: React.FC<TourModalProps> = ({
             {one_tour.location_name} ⬅ Узнать подробнее
           </h2>
           <p>{one_tour.description}</p>
-          <p>Дата начала тура: {one_tour.start_date}</p>
-          <p>Дата конца тура: {one_tour.end_date}</p>
-          {/* <p>Автор: {one_tour.author.username}</p> */}
-          <p>Автор тура: Pupkin</p>
+          <p>Дата начала тура: {startDate}</p>
+          <p>Дата конца тура: {endDate}</p>
+          <p>Автор: {one_tour.author.username}</p>
         </div>
       )}
     </Modal>

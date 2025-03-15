@@ -29,7 +29,6 @@ export default function TourUpdateForm({
           description,
           start_date,
           end_date,
-          author_id: tour.author_id,
         })
       ).unwrap();
       onSave();

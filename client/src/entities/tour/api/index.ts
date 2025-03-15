@@ -46,29 +46,49 @@ export const getTourByIdThunk = createAsyncThunk<
 })
 
 export const addTourThunk = createAsyncThunk<
-IServerResponse<ITour>,
-	IAddTourData,
-	{ rejectValue: IServerResponse } >
-		(TOUR_THUNK_TYPES.ADD_TOUR,
-		async (tourData, { rejectWithValue }) => {
-			try {
-				const { data } = await axiosInstance.post(TOUR_API_ENDPOINT, tourData)
-				return data
-			} catch (error) {
-				return rejectWithValue(handleAxiosError(error))
-			}
-		})
+  IServerResponse<ITour>,
+  IAddTourData,
+  { rejectValue: IServerResponse }
+>(TOUR_THUNK_TYPES.ADD_TOUR, async (tourData, { rejectWithValue }) => {
+  const params = new URLSearchParams();
+  for (const k of Object.keys(tourData) as (keyof IAddTourData)[]) {
+    params.append(k, String(tourData[k]));
+  }
+  try {
+    const { data } = await axiosInstance.post(TOUR_API_ENDPOINT, params, {
+      headers: {
+        ['Content-Type']: 'application/x-www-form-urlencoded',
+        Accept: '*/*',
+        'accept-encoding': 'gzip, deflate, br',
+      },
+    });
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
 
 export const updateTourThunk = createAsyncThunk<
 	IServerResponse<ITour>,
 	IAddTourDataWithId,
 	{ rejectValue: IServerResponse }
 >(TOUR_THUNK_TYPES.UPDATE_TOUR, async (tourData, { rejectWithValue }) => {
+	const params = new URLSearchParams();
+				for (const k of Object.keys(tourData) as (keyof IAddTourDataWithId)[]) {
+          params.append(k, String(tourData[k]));
+        }
 	try {
 		const { data } = await axiosInstance.put(
-			`${TOUR_API_ENDPOINT}/${tourData.id}`,
-			tourData
-		)
+      `${TOUR_API_ENDPOINT}/${tourData.id}`,
+      params,
+      {
+        headers: {
+          ['Content-Type']: 'application/x-www-form-urlencoded',
+          Accept: '*/*',
+          'accept-encoding': 'gzip, deflate, br',
+        },
+      }
+    );
 		return data
 	} catch (error) {
 		return rejectWithValue(handleAxiosError(error))
