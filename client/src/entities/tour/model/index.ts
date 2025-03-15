@@ -1,10 +1,10 @@
-import { Dayjs } from 'dayjs';
+// import { Dayjs } from 'dayjs';
 export interface IAddTourData {
   image: string;
   location_name: string;
   description: string;
-  start_date: Dayjs;
-  end_date: Dayjs;
+  start_date: string;
+  end_date: string;
   author_id: number;
   //! ФОТО ЛОКАЦИИ
 }

@@ -16,15 +16,15 @@ export default function TourForm() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [fileList, setFileList] = useState<File[]>([]);
+  //! const [fileList, setFileList] = useState<File[]>([]);
 
   const onFinish = async (values: IAddTourData) => {
     try {
       const formData = new FormData();
       formData.append('location_name', values.location_name);
       formData.append('description', values.description);
-      formData.append('start_date', values.start_date.format('DD-MM-YYYY'));
-      formData.append('end_date', values.end_date.format('DD-MM-YYYY'));
+      formData.append('start_date', values.start_date);
+      formData.append('end_date', values.end_date);
       formData.append('author_id', user!.id.toString());
       //! if (fileList.length > 0) {
       //!   formData.append('image', fileList[0].originFileObj);
