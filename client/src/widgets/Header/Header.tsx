@@ -8,7 +8,6 @@ import { signOutThunk } from '@/entities/user/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
 import { Link, useNavigate } from 'react-router';
 import styles from './Header.module.css';
-import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 
 const { Header } = Layout;
 const { Title } = Typography;
