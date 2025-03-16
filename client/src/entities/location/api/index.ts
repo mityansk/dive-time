@@ -4,7 +4,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
 import { ILocation, LocationArrayType } from '@/entities/location/index';
 
-export const LOCATIONS_ENDPOINT = '/diveLocation' as const;
+export const LOCATIONS_ENDPOINT = '/locations' as const;
 
 export enum LOCATION_THUNK_TYPES {
   GET_LOCATION = 'getLocation',

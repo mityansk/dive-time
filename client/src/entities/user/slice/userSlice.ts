@@ -12,12 +12,14 @@ type UserState = {
   user: IUser | null;
   error: string | null;
   isLoading: boolean;
+  isAuthenticated: boolean;
 };
 
 const initialState: UserState = {
   user: null,
   error: null,
   isLoading: false,
+  isAuthenticated: false,
 };
 
 const userSLice = createSlice({
@@ -34,11 +36,13 @@ const userSLice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = action.payload.data.user;
+        state.isAuthenticated = true;
       })
       .addCase(refreshTokensThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       })
 
       ///* signInThunk
@@ -49,11 +53,13 @@ const userSLice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = action.payload.data.user;
+        state.isAuthenticated = true;
       })
       .addCase(signInThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       })
 
       ///* signUpThunk
@@ -64,11 +70,13 @@ const userSLice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = action.payload.data.user;
+        state.isAuthenticated = true;
       })
       .addCase(signUpThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       })
 
       ///* signOutThunk
@@ -79,11 +87,13 @@ const userSLice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = null;
+        state.isAuthenticated = false;
       })
       .addCase(signOutThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       });
   },
 });

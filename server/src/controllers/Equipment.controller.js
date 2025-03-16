@@ -6,7 +6,9 @@ const EquipmentValidator = require('../utils/Equipment.validator');
 class EquipmentController {
   static async getAll(req, res) {
     try {
-      const equipments = await EquipmentService.getAll();
+      const { user } = res.locals;
+      const userId = user ? user.id : null;
+      const equipments = await EquipmentService.getAll(userId);
       if (equipments.length === 0) {
         return res
           .status(200)
@@ -48,7 +50,7 @@ class EquipmentController {
     }
   }
   static async create(req, res) {
-    const { name, price, description, image, isRented, diveLocation_id } =
+    const { name, price, description, image, isRented, address, coordinates } =
       req.body;
 
     const { user } = res.locals;
@@ -59,6 +61,8 @@ class EquipmentController {
       description,
       image,
       isRented,
+      address,
+      coordinates,
     });
     if (!isValid) {
       return res
@@ -73,7 +77,8 @@ class EquipmentController {
         description,
         image,
         isRented,
-        diveLocation_id,
+        address,
+        coordinates,
         user_id: user.id,
       });
       if (!newEquipment) {
@@ -94,7 +99,7 @@ class EquipmentController {
   }
   static async update(req, res) {
     const { id } = req.params;
-    const { name, price, description, image, isRented, diveLocation_id } =
+    const { name, price, description, image, isRented, address, coordinates } =
       req.body;
 
     const { user } = res.locals;
@@ -109,8 +114,9 @@ class EquipmentController {
       description,
       image,
       isRented,
+      address,
+      coordinates,
       user_id: user.id,
-      diveLocation_id,
     });
     if (!isValid) {
       return res
@@ -142,7 +148,8 @@ class EquipmentController {
         description,
         image,
         isRented,
-        diveLocation_id,
+        address,
+        coordinates,
       });
       res.status(200).json(formatResponse(200, 'Success', updatedEquipment));
     } catch ({ message }) {

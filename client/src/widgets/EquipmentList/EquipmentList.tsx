@@ -10,15 +10,20 @@ import { IEquipmentData } from '@/entities/equipment/model';
 
 export default function EquipmentList() {
   const equipments = useAppSelector((state) => state.equipments.equipments);
+  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
   const dispatch = useAppDispatch();
+  const user_id = useAppSelector((state) => state.user.user?.id);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] = useState<
     IEquipmentData | null | undefined
   >(null);
 
   useEffect(() => {
-    dispatch(getEquipmentThunk());
-  }, [dispatch]);
+    console.log('Dispatching getEquipmentThunk');
+    dispatch(
+      getEquipmentThunk(isAuthenticated ? (user_id as number | null) : null)
+    );
+  }, [dispatch, isAuthenticated, user_id]);
 
   const handleAdd = () => {
     setSelectedEquipment(null);
@@ -32,7 +37,9 @@ export default function EquipmentList() {
 
   const handleDelete = (equipment: IEquipmentData) => {
     dispatch(deleteEquipmentThunk(equipment)).then(() =>
-      dispatch(getEquipmentThunk())
+      dispatch(
+        getEquipmentThunk(isAuthenticated ? (user_id as number | null) : null)
+      )
     );
   };
 
@@ -43,10 +50,12 @@ export default function EquipmentList() {
 
   return (
     <div className={styles.container}>
-      <h1>Список снаряжения</h1>
-      <button onClick={handleAdd} className={styles.addButton}>
-        Добавить снаряжение
-      </button>
+      <h1>{isAuthenticated ? 'Моё снаряжение' : 'Список снаряжения'}</h1>
+      {isAuthenticated && (
+        <button onClick={handleAdd} className={styles.addButton}>
+          Добавить
+        </button>
+      )}
       <div className={styles.grid}>
         {equipments?.map((equipment) => (
           <div key={equipment.id} className={styles.card}>
@@ -59,18 +68,22 @@ export default function EquipmentList() {
               />
             )}
             <p>{equipment.description}</p>
-            <p>Цена: {equipment.price}</p>
+            <p>Цена: {equipment.price} ₽</p>
             <p>Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}</p>
-            <div className={styles.actions}>
-              <button onClick={() => handleEdit(equipment)}>
-                Редактировать
-              </button>
-              <button onClick={() => handleDelete(equipment)}>Удалить</button>
-            </div>
+
+            {equipment.address && <p>Адрес: {equipment.address}</p>}
+
+            {isAuthenticated && (
+              <div className={styles.actions}>
+                <button onClick={() => handleEdit(equipment)}>
+                  Редактировать
+                </button>
+                <button onClick={() => handleDelete(equipment)}>Удалить</button>
+              </div>
+            )}
           </div>
         ))}
       </div>
-
       <EquipmentModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
