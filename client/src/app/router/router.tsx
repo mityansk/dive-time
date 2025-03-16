@@ -6,7 +6,8 @@ import TourPage from '@/pages/TourPage/TourPage';
 import MainPage from '@/pages/MainPage/MainPage';
 import { LocationPage } from '@/pages/LocationPage/LocationPage';
 import { LocationInfoPage } from '@/pages/LocationInfoPage/LocationInfoPage';
-import { EquipmentPage } from "@/pages/EquipmentPage/EquipmentPage"
+import { EquipmentPage } from '@/pages/EquipmentPage/EquipmentPage';
+import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 
 export default function Router(): ReactElement {
   return (
@@ -17,6 +18,7 @@ export default function Router(): ReactElement {
           <Route path={CLIENT_ROUTES.TOUR} element={<TourPage />} />
           <Route path={CLIENT_ROUTES.LOCATIONS} element={<LocationPage />} />
           <Route path={CLIENT_ROUTES.EQUIPMENT} element={<EquipmentPage />} />
+          <Route path={CLIENT_ROUTES.PROFILE} element={<ProfilePage />} />
           <Route
             path={CLIENT_ROUTES.LOCATIONS_INFO}
             element={<LocationInfoPage />}

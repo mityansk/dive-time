@@ -8,6 +8,7 @@ import { signOutThunk } from '@/entities/user/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
 import { Link, useNavigate } from 'react-router';
 import styles from './Header.module.css';
+import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 
 const { Header } = Layout;
 const { Title } = Typography;
@@ -107,7 +108,11 @@ export const AppHeader: React.FC = () => {
         </Link>
       ) : (
         <div className={styles.rightContainer}>
-          <Avatar shape="square" icon={<UserOutlined />} />
+          <Avatar
+            shape="square"
+            icon={<UserOutlined />}
+            onClick={() => navigate(CLIENT_ROUTES.PROFILE)}
+          />
           <Link to="" className={styles.buttonReg} onClick={signOutHandler}>
             Выйти
           </Link>
