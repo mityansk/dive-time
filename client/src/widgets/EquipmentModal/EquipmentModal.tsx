@@ -20,7 +20,7 @@ interface IGeoObjectWithAddress extends ymaps.GeoObject {
 }
 
 type MapMouseEvent = {
-  get: (key: string) => [number, number]; // Возвращает координаты
+  get: (key: string) => [number, number];
 };
 
 export default function EquipmentModal({
@@ -35,30 +35,61 @@ export default function EquipmentModal({
     equipment?.coordinates || [55.751244, 37.618423]
   );
 
-  // Функция для геокодирования координат в адрес
+  const [ymaps, setYmaps] = useState<typeof window.ymaps | null>(null);
+
+  const loadYandexMapsAPI = () => {
+    if (window.ymaps) {
+      setYmaps(window.ymaps);
+      return;
+    }
+    const script = document.createElement('script');
+    script.src = 'https://api-maps.yandex.ru/2.1/?lang=ru_RU';
+    script.onload = () => {
+      setYmaps(window.ymaps);
+    };
+    script.onerror = () => {
+      console.error('Ошибка загрузки Яндекс.Карт API');
+    };
+    document.body.appendChild(script);
+  };
+
+  useEffect(() => {
+    loadYandexMapsAPI();
+  }, []);
+
   const getAddressFromCoordinates = (coords: [number, number]) => {
     console.log('Запрашиваем адрес для координат:', coords);
 
-    if (!window.ymaps) {
+    if (!ymaps) {
       console.error('❌ Yandex Maps API не загружен');
       return;
     }
 
-    window.ymaps
+    if (
+      !Array.isArray(coords) ||
+      coords.length !== 2 ||
+      isNaN(coords[0]) ||
+      isNaN(coords[1])
+    ) {
+      console.error('❌ Неверные координаты:', coords);
+      return;
+    }
+
+    ymaps
       .geocode(coords)
       .then((res: IGeocodeResult) => {
         const firstGeoObject = res.geoObjects.get(0) as IGeoObjectWithAddress;
-        const newAddress = firstGeoObject
-          ? firstGeoObject.getAddressLine()
-          : 'Адрес не найден';
-
-        console.log('✅ Найденный адрес:', newAddress);
-        setAddress(newAddress); // Обновляем состояние
-
-        form.setFieldsValue({ address: newAddress }); // Обновляем инпут формы
+        if (firstGeoObject) {
+          const newAddress = firstGeoObject.getAddressLine();
+          console.log('✅ Найденный адрес:', newAddress);
+          setAddress(newAddress);
+          form.setFieldsValue({ address: newAddress });
+        } else {
+          console.error('❌ Адрес не найден');
+        }
       })
-      .catch((err) => {
-        console.error('Ошибка геокодинга:', err);
+      .catch((error: Error) => {
+        console.error('Ошибка геокодинга:', error);
       });
   };
 
@@ -132,21 +163,23 @@ export default function EquipmentModal({
           <Checkbox>Снаряжение в аренде</Checkbox>
         </Form.Item>
 
-        <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
-          <Map
-            defaultState={{ center: coordinates, zoom: 10 }}
-            width="100%"
-            height={300}
-            onClick={(event: MapMouseEvent) => {
-              const coords = event.get('coords');
-              console.log('📍 Новые координаты:', coords);
-              setCoordinates(coords);
-              getAddressFromCoordinates(coords); // Получаем адрес по координатам
-            }}
-          >
-            <Placemark geometry={coordinates} />
-          </Map>
-        </YMaps>
+        {ymaps && (
+          <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
+            <Map
+              defaultState={{ center: coordinates, zoom: 10 }}
+              width="100%"
+              height={300}
+              onClick={(event: MapMouseEvent) => {
+                const coords = event.get('coords');
+                console.log('📍 Новые координаты:', coords);
+                setCoordinates(coords);
+                getAddressFromCoordinates(coords);
+              }}
+            >
+              <Placemark geometry={coordinates} />
+            </Map>
+          </YMaps>
+        )}
 
         <Form.Item label="Адрес" name="address">
           <Input value={address} onChange={(e) => setAddress(e.target.value)} />

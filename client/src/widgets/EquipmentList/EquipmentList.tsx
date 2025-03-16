@@ -71,6 +71,8 @@ export default function EquipmentList() {
             <p>Цена: {equipment.price} ₽</p>
             <p>Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}</p>
 
+            {equipment.address && <p>Адрес: {equipment.address}</p>}
+
             {isAuthenticated && (
               <div className={styles.actions}>
                 <button onClick={() => handleEdit(equipment)}>
