@@ -1,12 +1,12 @@
-import React from 'react';
-import { Avatar, Layout, Typography, Button } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
+import React, { useEffect, useState } from 'react';
+import { Avatar, Layout, Typography, Button, Dropdown } from 'antd';
+import { MenuOutlined, UserOutlined } from '@ant-design/icons';
 import { openModal } from '@/features/auth/slice/authModalSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import AuthModal from '@/features/auth/ui/AuthModal/AuthModal';
 import { signOutThunk } from '@/entities/user/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import styles from './Header.module.css';
 
 const { Header } = Layout;
@@ -17,12 +17,36 @@ export const AppHeader: React.FC = () => {
   const isAuthModalOpen = useAppSelector((state) => state.authModal.isOpen);
   const user = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 750);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const signOutHandler = () => {
     dispatch(signOutThunk());
     alert('Вы успешно вышли из системы');
     navigate(CLIENT_ROUTES.MAIN);
   };
+
+  const menuItems = [
+    {
+      key: '1',
+      label: 'Места для погружений',
+      onClick: () => navigate(CLIENT_ROUTES.LOCATIONS),
+    },
+    { key: '2', label: 'Туры', onClick: () => navigate(CLIENT_ROUTES.TOUR) },
+    {
+      key: '3',
+      label: 'Снаряжение',
+      onClick: () => navigate(CLIENT_ROUTES.EQUIPMENT),
+    },
+  ];
 
   return (
     <Header className={styles.header}>
@@ -39,35 +63,54 @@ export const AppHeader: React.FC = () => {
         DIVE TIME
       </Title>
 
-      <div className={styles.buttonsCenter}>
-        <Button
-          className={styles.button}
-          onClick={() => navigate(CLIENT_ROUTES.LOCATIONS)}
-        >
-          Места для погружений
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => navigate(CLIENT_ROUTES.TOUR)}
-        >
-          Туры
-        </Button>
-        <Button
-          className={styles.button}
-          onClick={() => navigate(CLIENT_ROUTES.EQUIPMENT)}
-        >
-          Снаряжение
-        </Button>
-      </div>
+      {isMobile ? (
+        <Dropdown menu={{ items: menuItems }} trigger={['click']}>
+          <Button
+            className={styles.button}
+            icon={<MenuOutlined />}
+            size="large"
+          />
+        </Dropdown>
+      ) : (
+        <div className={styles.buttonsCenter}>
+          <Button
+            className={styles.button}
+            size="large"
+            onClick={() => navigate(CLIENT_ROUTES.LOCATIONS)}
+          >
+            Места для погружений
+          </Button>
+          <Button
+            className={styles.button}
+            size="large"
+            onClick={() => navigate(CLIENT_ROUTES.TOUR)}
+          >
+            Туры
+          </Button>
+          <Button
+            className={styles.button}
+            size="large"
+            onClick={() => navigate(CLIENT_ROUTES.EQUIPMENT)}
+          >
+            Снаряжение
+          </Button>
+        </div>
+      )}
 
       {!user ? (
-        <Button onClick={() => dispatch(openModal())}>Войти</Button>
+        <Link
+          to=""
+          className={styles.buttonReg}
+          onClick={() => dispatch(openModal())}
+        >
+          Войти
+        </Link>
       ) : (
         <div className={styles.rightContainer}>
           <Avatar shape="square" icon={<UserOutlined />} />
-          <span className={styles.buttonReg} onClick={signOutHandler}>
+          <Link to="" className={styles.buttonReg} onClick={signOutHandler}>
             Выйти
-          </span>
+          </Link>
         </div>
       )}
 

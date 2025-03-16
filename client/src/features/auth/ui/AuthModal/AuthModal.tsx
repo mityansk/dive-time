@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { closeModal } from '@/features/auth/slice/authModalSlice';
 import { signInThunk, signUpThunk } from '@/entities/user/api';
 import styles from './AuthModal.module.css';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 
 const AuthModal: React.FC = () => {
   const INITIAL_INPUTS_DATA = {
@@ -41,6 +41,7 @@ const AuthModal: React.FC = () => {
       dispatch(closeModal());
       navigate('/');
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, dispatch, navigate]);
 
   if (!isOpen) return null;
@@ -110,14 +111,14 @@ const AuthModal: React.FC = () => {
           </button>
         </form>
 
-        <button
+        <Link to=''
           className={styles.linkButton}
           onClick={() => setIsRegister(!isRegister)}
         >
           {isRegister
             ? 'Уже есть аккаунт? Войти'
             : 'Нет аккаунта? Зарегистрироваться'}
-        </button>
+        </Link>
       </div>
     </div>
   );
