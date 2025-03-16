@@ -5,7 +5,10 @@ class EquipmentService {
     return await Equipment.findByPk(id);
   }
 
-  static async getAll() {
+  static async getAll(userId) {
+    if (userId) {
+      return await Equipment.findAll({ where: { user_id: userId } });
+    }
     return await Equipment.findAll();
   }
 
@@ -28,10 +31,6 @@ class EquipmentService {
       throw new Error('Equipment not found');
     }
     return await equipment.destroy();
-  }
-
-  static async getByLocation(locationId) {
-    return await Equipment.findAll({ where: { diveLocation_id: locationId } });
   }
 }
 

@@ -4,7 +4,8 @@ export interface IAddEquipmentData {
   description: string;
   image: string;
   isRented: boolean;
-  diveLocation_id: number;
+  address: string;
+  coordinates: [number, number];
 }
 
 export interface IEquipmentData {
@@ -14,7 +15,8 @@ export interface IEquipmentData {
   description?: string;
   image?: string;
   isRented?: boolean;
-  diveLocation_id?: number;
+  address?: string;
+  coordinates?: [number, number];
   createdAt?: Date;
   updatedAt?: Date;
 }

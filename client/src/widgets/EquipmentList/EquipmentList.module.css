@@ -2,6 +2,7 @@
   padding: 20px;
   background-color: #e0f7fa;
   min-height: 100vh;
+  color: rgba(55, 130, 173, 0.548);
 }
 
 .addButton {
@@ -64,7 +65,7 @@
 
 .actions button:first-child {
   background-color: #00b4d8;
-  color: white;
+  color: rgb(255, 255, 255);
 }
 
 .actions button:first-child:hover {
@@ -72,15 +73,16 @@
 }
 
 .actions button:last-child {
-  background-color: #e63946; /* Красный цвет для кнопки "Удалить" */
+  background-color: #e63946;
   color: white;
 }
 
 .actions button:last-child:hover {
-  background-color: #d90429; /* Более темный красный при наведении */
+  background-color: #d90429;
 }
 .image {
-  max-width: 100%;
+  margin-left: 40px;
+  max-width: 70%;
   height: auto;
   border-radius: 10px;
   margin-bottom: 10px;

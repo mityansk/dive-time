@@ -30,21 +30,19 @@ module.exports = {
         allowNull: false,
         defaultValue: false,
       },
+      address: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      coordinates: {
+        type: Sequelize.ARRAY(Sequelize.FLOAT),
+        allowNull: false,
+      },
       user_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
           model: 'Users',
-          key: 'id',
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
-      },
-      diveLocation_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: {
-          model: 'DiveLocations',
           key: 'id',
         },
         onUpdate: 'CASCADE',

@@ -1,13 +1,13 @@
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import Modal from 'react-modal';
-import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
+import { useState, useEffect } from 'react';
+import { Modal, Form, Input, InputNumber, Checkbox, Button } from 'antd';
+import { YMaps, Map, Placemark } from '@pbe/react-yandex-maps';
+import { useAppDispatch } from '@/shared/hooks/reduxHooks';
 import {
   addEquipmentThunk,
   updateEquipmentThunk,
 } from '@/entities/equipment/api';
-import styles from './EquipmentModal.module.css';
 import { IAddEquipmentData, IEquipmentData } from '@/entities/equipment/model';
-import { getLocation } from '@/entities/location';
+import { IGeocodeResult } from 'yandex-maps';
 
 interface EquipmentModalProps {
   isOpen: boolean;
@@ -15,146 +15,150 @@ interface EquipmentModalProps {
   equipment: IEquipmentData | null | undefined;
 }
 
+interface IGeoObjectWithAddress extends ymaps.GeoObject {
+  getAddressLine: () => string;
+}
+
+type MapMouseEvent = {
+  get: (key: string) => [number, number]; // Возвращает координаты
+};
+
 export default function EquipmentModal({
   isOpen,
   onClose,
   equipment,
 }: EquipmentModalProps) {
   const dispatch = useAppDispatch();
-  const locations = useAppSelector((state) => state.location.locations);
-  const [formData, setFormData] = useState<IEquipmentData>({
-    name: '',
-    price: 0,
-    description: '',
-    image: '',
-    isRented: false,
-    diveLocation_id: 0,
-  });
+  const [form] = Form.useForm();
+  const [address, setAddress] = useState(equipment?.address || '');
+  const [coordinates, setCoordinates] = useState<[number, number]>(
+    equipment?.coordinates || [55.751244, 37.618423]
+  );
 
-  // Загружаем локации, когда окно открывается и локации еще не загружены
-  useEffect(() => {
-    if (isOpen) {
-      dispatch(getLocation()); // Запрос для получения всех локаций
+  // Функция для геокодирования координат в адрес
+  const getAddressFromCoordinates = (coords: [number, number]) => {
+    console.log('Запрашиваем адрес для координат:', coords);
+
+    if (!window.ymaps) {
+      console.error('❌ Yandex Maps API не загружен');
+      return;
     }
 
-    if (equipment) {
-      setFormData({
-        ...equipment,
-        diveLocation_id: equipment.diveLocation_id || 0,
-      });
-    } else {
-      setFormData({
-        name: '',
-        price: 0,
-        description: '',
-        image: '',
-        isRented: false,
-        diveLocation_id: 0,
-      });
-    }
-  }, [isOpen, dispatch, equipment]);
+    window.ymaps
+      .geocode(coords)
+      .then((res: IGeocodeResult) => {
+        const firstGeoObject = res.geoObjects.get(0) as IGeoObjectWithAddress;
+        const newAddress = firstGeoObject
+          ? firstGeoObject.getAddressLine()
+          : 'Адрес не найден';
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === 'price' ? parseFloat(value) : value,
-    }));
+        console.log('✅ Найденный адрес:', newAddress);
+        setAddress(newAddress); // Обновляем состояние
+
+        form.setFieldsValue({ address: newAddress }); // Обновляем инпут формы
+      })
+      .catch((err) => {
+        console.error('Ошибка геокодинга:', err);
+      });
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (isOpen) {
+      form.setFieldsValue(
+        equipment || {
+          name: '',
+          price: 0,
+          description: '',
+          image: '',
+          isRented: false,
+          address: '',
+          coordinates: [55.751244, 37.618423],
+        }
+      );
+    }
+  }, [isOpen, equipment, form]);
+
+  const handleSubmit = (values: IEquipmentData) => {
+    const equipmentData = { ...values, address, coordinates };
     if (equipment) {
-      dispatch(updateEquipmentThunk({ ...formData, id: equipment.id }));
+      dispatch(updateEquipmentThunk({ ...equipmentData, id: equipment.id }));
     } else {
-      dispatch(addEquipmentThunk(formData as IAddEquipmentData));
+      dispatch(addEquipmentThunk(equipmentData as IAddEquipmentData));
     }
     onClose();
   };
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onClose}
-      contentLabel="Модальное окно снаряжения"
-      className={styles.modal}
-      overlayClassName={styles.overlay}
+      title={equipment ? 'Редактировать снаряжение' : 'Добавить снаряжение'}
+      open={isOpen}
+      onCancel={onClose}
+      footer={null}
     >
-      <h2>{equipment ? 'Редактировать снаряжение' : 'Добавить снаряжение'}</h2>
-      <form onSubmit={handleSubmit}>
-        <div className={styles.formGroup}>
-          <label>Название:</label>
-          <input
-            type="text"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Цена:</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Описание:</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Изображение (URL):</label>
-          <input
-            type="text"
-            name="image"
-            value={formData.image}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Статус аренды:</label>
-          <input
-            type="checkbox"
-            name="isRented"
-            checked={formData.isRented}
-            onChange={(e) =>
-              setFormData((prev) => ({ ...prev, isRented: e.target.checked }))
-            }
-          />
-        </div>
-        <div className={styles.formGroup}>
-          <label>Локация дайвинга:</label>
-          <select
-            name="diveLocation_id"
-            value={formData.diveLocation_id}
-            onChange={handleChange}
-            required
+      <Form form={form} layout="vertical" onFinish={handleSubmit}>
+        <Form.Item
+          label="Название"
+          name="name"
+          rules={[{ required: true, message: 'Введите название' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
+          label="Цена"
+          name="price"
+          rules={[{ required: true, message: 'Введите цену' }]}
+        >
+          <InputNumber min={0} style={{ width: '100%' }} />
+        </Form.Item>
+
+        <Form.Item
+          label="Описание"
+          name="description"
+          rules={[{ required: true, message: 'Введите описание' }]}
+        >
+          <Input.TextArea />
+        </Form.Item>
+
+        <Form.Item
+          label="Изображение (URL)"
+          name="image"
+          rules={[{ required: true, message: 'Введите URL изображения' }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="isRented" valuePropName="checked">
+          <Checkbox>Снаряжение в аренде</Checkbox>
+        </Form.Item>
+
+        <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
+          <Map
+            defaultState={{ center: coordinates, zoom: 10 }}
+            width="100%"
+            height={300}
+            onClick={(event: MapMouseEvent) => {
+              const coords = event.get('coords');
+              console.log('📍 Новые координаты:', coords);
+              setCoordinates(coords);
+              getAddressFromCoordinates(coords); // Получаем адрес по координатам
+            }}
           >
-            <option value={0}>Выберите локацию</option>
-            {locations?.map((location) => (
-              <option key={location.id} value={location.id}>
-                {location.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <button type="submit">{equipment ? 'Сохранить' : 'Добавить'}</button>
-        <button type="button" onClick={onClose}>
-          Отмена
-        </button>
-      </form>
+            <Placemark geometry={coordinates} />
+          </Map>
+        </YMaps>
+
+        <Form.Item label="Адрес" name="address">
+          <Input value={address} onChange={(e) => setAddress(e.target.value)} />
+        </Form.Item>
+
+        <Form.Item>
+          <Button type="primary" htmlType="submit" style={{ marginRight: 8 }}>
+            {equipment ? 'Сохранить' : 'Добавить'}
+          </Button>
+          <Button onClick={onClose}>Отмена</Button>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 }
