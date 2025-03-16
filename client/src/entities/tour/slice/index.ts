@@ -89,7 +89,7 @@ const tourSlice = createSlice({
 				state.isLoading = false
 				state.error = null
 				state.tour = state.tour.filter(
-					tour_el => tour_el.id !== action.payload.data.id
+					tour_el => tour_el.id !== action.payload.data
 				)
 			})
 			.addCase(deleteTourThunk.rejected, (state, action) => {

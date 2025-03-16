@@ -1,12 +1,29 @@
-const { Tour } = require('../db/models')
+const { Tour, User } = require('../db/models')
+
 
 class TourService {
 	static async getAll() {
-		return await Tour.findAll()
+		return await Tour.findAll({
+			include: [
+				{
+					model: User,
+					as: 'author',
+					attributes: ['id', 'username'],
+				},
+			],
+		})
 	}
 
 	static async getById(id) {
-		return await Tour.findByPk(id)
+		return await Tour.findByPk(id, {
+			include: [
+				{
+					model: User,
+					as: 'author',
+					attributes: ['id', 'username'],
+				},
+			],
+		})
 	}
 
 	static async create(data) {

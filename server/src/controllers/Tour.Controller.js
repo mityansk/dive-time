@@ -1,3 +1,4 @@
+const {User} = require('../db/models/user')
 const TourService = require('../services/Tour.service')
 const formatResponse = require('../utils/formatResponse')
 const isValidId = require('../utils/isValidId')
@@ -27,7 +28,9 @@ class TourController {
 		}
 
 		try {
-			const tour = await TourService.getById(+id)
+			const tour = await TourService.getById(+id, {
+				include: [{ model: User, as: 'author' }],
+			})
 			if (!tour) {
 				return res
 					.status(404)
@@ -44,7 +47,7 @@ class TourController {
 
 	static async createTour(req, res) {
 		const { location_name, description, start_date, end_date } = req.body
-		//* const { location } = res.locals //! НЕ ЗАБЫТЬ ДОСТАТЬ ЛОКАЦИЮ
+		const { user } = res.locals
 		const { isValid, error } = TourValidator.validate({
 			location_name,
 			description,
@@ -63,6 +66,8 @@ class TourController {
 				description,
 				start_date,
 				end_date,
+				author_id: user.id,
+				image: 'Sobaka'
 				//! НЕ ЗАБЫТЬ ДОБАВИТЬ ID ЛОКАЦИИ location_id: location.id
 			})
 
@@ -156,7 +161,7 @@ class TourController {
 			}
 
 			await TourService.delete(+id)
-			res.status(200).json(formatResponse(200, 'Tour successfully deleted'))
+			res.status(200).json(formatResponse(200, 'Tour successfully deleted', +id))
 		} catch ({ message }) {
 			console.error(message)
 			res
