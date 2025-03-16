@@ -53,7 +53,7 @@ export default function EquipmentList() {
       <h1>{isAuthenticated ? 'Моё снаряжение' : 'Список снаряжения'}</h1>
       {isAuthenticated && (
         <button onClick={handleAdd} className={styles.addButton}>
-          сдать в аренду
+          Добавить
         </button>
       )}
       <div className={styles.grid}>
