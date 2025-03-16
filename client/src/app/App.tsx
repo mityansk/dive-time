@@ -3,16 +3,12 @@ import store from "./store/store";
 import Router from "./router/router";
 import dayjs from 'dayjs';
 dayjs().format();
-// import 'bootstrap/dist/css/bootstrap.min.css';
-// import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 
 function App() {
   return (
-    <>
-      <Provider store={store}>
-        <Router />
-      </Provider>
-    </>
+    <Provider store={store}>
+      <Router />
+    </Provider>
   );
 }
 
