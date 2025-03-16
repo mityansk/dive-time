@@ -10,28 +10,25 @@ export function EquipmentPage() {
   const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
 
   useEffect(() => {
-    if (!equipments) {
-      setPlacemarks([]);
-      return;
-    }
-    const generatedPlacemarks = equipments?.map((equipment: IEquipmentData) => {
-      if (equipment.coordinates && equipment.address) {
-        return (
-          <Placemark
-            key={equipment.id}
-            geometry={equipment.coordinates}
-            properties={{
-              balloonContentHeader: equipment.name,
-              balloonContentBody: `Цена: ${equipment.price} ₽\nСтатус: ${
-                equipment.isRented ? 'Арендовано' : 'Доступно'
-              }`,
-              balloonContentFooter: equipment.address,
-            }}
-          />
-        );
-      }
-      return null;
-    });
+    const generatedPlacemarks =
+      equipments?.map((equipment: IEquipmentData) => {
+        if (equipment.coordinates && equipment.address) {
+          return (
+            <Placemark
+              key={equipment.id}
+              geometry={equipment.coordinates}
+              properties={{
+                balloonContentHeader: equipment.name,
+                balloonContentBody: `Цена: ${equipment.price} ₽\nСтатус: ${
+                  equipment.isRented ? 'Арендовано' : 'Доступно'
+                }`,
+                balloonContentFooter: equipment.address,
+              }}
+            />
+          );
+        }
+        return null;
+      }) || [];
 
     setPlacemarks(generatedPlacemarks);
   }, [equipments]);
