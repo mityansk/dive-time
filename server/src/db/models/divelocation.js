@@ -1,14 +1,18 @@
-"use strict";
-const { Model } = require("sequelize");
+'use strict'
+const { Model } = require('sequelize')
 module.exports = (sequelize, DataTypes) => {
-  class DiveLocation extends Model {
-    static associate({ Equipment }) {
-      this.hasMany(Equipment, {
+	class DiveLocation extends Model {
+		static associate({ Equipment, Tour }) {
+			this.hasMany(Equipment, {
 				foreignKey: 'location_id',
 			})
-    }
-  }
-  DiveLocation.init(
+			this.hasMany(Tour, {
+				foreignKey: 'location_id',
+				as: 'location',
+			})
+		}
+	}
+	DiveLocation.init(
 		{
 			name: DataTypes.STRING,
 			coordinateX: DataTypes.STRING,
@@ -23,6 +27,6 @@ module.exports = (sequelize, DataTypes) => {
 			sequelize,
 			modelName: 'DiveLocation',
 		}
-	);
-  return DiveLocation;
-};
+	)
+	return DiveLocation
+}
