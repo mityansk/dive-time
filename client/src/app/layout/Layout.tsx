@@ -1,6 +1,6 @@
 import { refreshTokensThunk } from '@/entities/user/api';
 import { useAppDispatch } from '@/shared/hooks/reduxHooks';
-import Footer from '@/widgets/Footer/Footer';
+import AppFooter from '@/widgets/Footer/Footer';
 import Header from '@/widgets/Header/Header';
 import { ReactElement, useEffect } from 'react';
 import { Outlet } from 'react-router';
@@ -16,7 +16,7 @@ export default function Layout(): ReactElement {
     <>
       <Header />
       <Outlet />
-      <Footer />
+      <AppFooter />
     </>
   );
 }
