@@ -1,9 +1,9 @@
-
 export interface IAddTourData {
-  image: string;
+  image?: string;
   location_name: string;
   description: string;
-  start_date: string;
+  date_strings?: [string, string]
+  start_date: string
   end_date: string;
   author_id: number;
   //! ФОТО ЛОКАЦИИ

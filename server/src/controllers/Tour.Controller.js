@@ -47,6 +47,8 @@ class TourController {
 
 	static async createTour(req, res) {
 		const { location_name, description, start_date, end_date } = req.body
+		console.log(req.body, '=======');
+		
 		const { user } = res.locals
 		const { isValid, error } = TourValidator.validate({
 			location_name,
