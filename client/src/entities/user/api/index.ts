@@ -9,6 +9,8 @@ enum USER_API_ENDPOINTS {
   SIGN_UP = '/auth/signUp',
   REFRESH = '/auth/refreshTokens',
   SIGN_OUT = '/auth/signOut',
+  CONFIRM_EMAIL = '/auth/confirmEmail',
+  DELETE_USER = '/auth',
 }
 
 enum USER_THUNK_TYPES {
@@ -16,6 +18,8 @@ enum USER_THUNK_TYPES {
   SIGN_UP = 'user/signUp',
   REFRESH = 'user/refreshTokens',
   SIGN_OUT = 'user/signOut',
+  CONFIRM_EMAIL = '/user/confirmEmail',
+  DELETE_USER = '/user/delete',
 }
 
 export const refreshTokensThunk = createAsyncThunk<
@@ -74,6 +78,37 @@ export const signOutThunk = createAsyncThunk<
   try {
     const { data } = await axiosInstance.get(USER_API_ENDPOINTS.SIGN_OUT);
     setAccessToken('');
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
+
+export const deleteUserThunk = createAsyncThunk<
+  IServerResponse,
+  number,
+  { rejectValue: IServerResponse }
+>(USER_THUNK_TYPES.DELETE_USER, async (id, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.delete(`${USER_API_ENDPOINTS.DELETE_USER}/${id}`);
+    
+    setAccessToken('');
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
+
+
+export const confirmEmailThunk = createAsyncThunk<
+  IServerResponse<IAuthResponseData>,
+  string | undefined,
+  { rejectValue: IServerResponse }
+>(USER_THUNK_TYPES.CONFIRM_EMAIL, async (token, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.get(
+      `${USER_API_ENDPOINTS.CONFIRM_EMAIL}?token=${token}`
+    );
     return data;
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));

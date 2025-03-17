@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const formatResponse = require('../utils/formatResponse');
 
 function verifyAccessToken(req, res, next) {
+  console.log('Middleware params:', req.params);
   try {
     const accessToken = req.headers.authorization.split(' ')[1];
     const { user } = jwt.verify(accessToken, process.env.SECRET_ACCESS_TOKEN);

@@ -13,6 +13,10 @@ class UserService {
     return await User.findByPk(id);
   }
 
+  static async delete(id) {
+    return await User.destroy({ where: { id } });
+  }
+
   static async confirmEmail(id) {
     const user = await User.findByPk(id);
     if (!user) {
@@ -20,6 +24,7 @@ class UserService {
     }
     user.isEmailConfirmed = true;
     await user.save();
+    console.log('<><><><><><><><><>', user);
     return user;
   }
 }
