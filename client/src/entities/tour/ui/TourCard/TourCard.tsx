@@ -6,7 +6,7 @@ import TourUpdateForm from '../TourUpdateForm/TourUpdateForm';
 interface TourCardProps {
   tour: ITour;
   onClick: () => void;
-  onDelete: (id: number) => void
+  onDelete?: (id: number) => void;
 }
 
 export default function TourCard({
@@ -42,6 +42,7 @@ export default function TourCard({
             Автор тура:{' '}
             {tour.author ? tour.author.username : 'Автор неизвестен'}
           </span>
+          {onDelete && (
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -50,16 +51,18 @@ export default function TourCard({
             className={styles.editButton}
           >
             Редактировать
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(tour.id)
-            }}
-            className={styles.editButton}
-          >
-            Удалить тур
-          </button>
+          </button>)}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(tour.id);
+              }}
+              className={styles.editButton}
+            >
+              Удалить тур
+            </button>
+          )}
         </div>
       )}
     </>

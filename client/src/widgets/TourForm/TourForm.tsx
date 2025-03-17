@@ -1,12 +1,13 @@
 import { addTourThunk } from '@/entities/tour/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import TourFormModal from '@/components/TourFormModal/TourFormModal';
-import { Button, Form, Input, DatePicker, message, GetProps } from 'antd';
+import { Button, Form, Input, DatePicker, message, GetProps, Select } from 'antd';
 import { IAddTourData } from '@/entities/tour';
 import dayjs from 'dayjs';
+import { getLocation } from '@/entities/location';
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
@@ -17,17 +18,25 @@ export default function TourForm() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
+  const location = useAppSelector((state) => state.location.locations)
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    dispatch(getLocation())
+  }, [dispatch]);
+
   const onFinish = async (values: IAddTourData) => { 
-    
+
     try {
       const data = {
         location_name: values.location_name,
         description: values.description,
         start_date: new Date(values.date_strings![0]).toLocaleDateString(),
         end_date: new Date(values.date_strings![1]).toLocaleDateString(),
+        location_id: location.find((loc) => loc.name === values.location_name)?.id,
         author_id: user!.id,
+        image: location.find((loc) => loc.name === values.location_name)?.image
       };
 
       await dispatch(addTourThunk(data)).unwrap();
@@ -62,11 +71,17 @@ export default function TourForm() {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите название локации',
+                message: 'Пожалуйста, выберите локацию',
               },
             ]}
           >
-            <Input />
+            <Select placeholder='Выберите локацию'>
+              {location!.map((location) => (
+                <Select.Option key={location.id} value={location.name}>
+                  {location.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
