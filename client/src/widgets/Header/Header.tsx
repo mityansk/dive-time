@@ -107,7 +107,10 @@ export const AppHeader: React.FC = () => {
         </Link>
       ) : (
         <div className={styles.rightContainer}>
-          <Avatar shape="square" icon={<UserOutlined />} />
+          <span onClick={() => navigate(CLIENT_ROUTES.PROFILE)}>
+            {user.username}
+            <Avatar shape="square" icon={<UserOutlined />} />
+          </span>
           <Link to="" className={styles.buttonReg} onClick={signOutHandler}>
             Выйти
           </Link>

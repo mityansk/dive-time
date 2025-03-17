@@ -4,11 +4,14 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import TourFormModal from '@/components/TourFormModal/TourFormModal';
-import { Button, Form, Input, DatePicker, Upload, message } from 'antd';
+import { Button, Form, Input, DatePicker, Upload, message, GetProps } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import { IAddTourData } from '@/entities/tour';
+import dayjs from 'dayjs';
 
 const { TextArea } = Input;
+const { RangePicker } = DatePicker;
+type RangePickerProps = GetProps<typeof DatePicker.RangePicker>
 
 export default function TourForm() {
   const [form] = Form.useForm();
@@ -38,6 +41,10 @@ export default function TourForm() {
       message.error(`Ошибка при создании тура: ${error}`);
     }
   };
+
+  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+    return current && current < dayjs().endOf('day')
+  }
 
   //! const onFileChange = ({ fileList }: any) => {
   //!   setFileList(fileList);
@@ -79,23 +86,13 @@ export default function TourForm() {
           </Form.Item>
 
           <Form.Item
-            label="Дата начала"
+            label="Выберите даты тура"
             name="start_date"
             rules={[
-              { required: true, message: 'Пожалуйста, выберите дату начала' },
+              { required: true, message: 'Пожалуйста, выберите даты тура' },
             ]}
           >
-            <DatePicker style={{ width: '100%' }} format={'DD.MM.YYYY'} />
-          </Form.Item>
-
-          <Form.Item
-            label="Дата конца"
-            name="end_date"
-            rules={[
-              { required: true, message: 'Пожалуйста, выберите дату конца' },
-            ]}
-          >
-            <DatePicker style={{ width: '100%' }} format={'DD.MM.YYYY'} />
+            <RangePicker style={{ width: '100%' }} format={'DD.MM.YYYY'} disabledDate={disabledDate}/>
           </Form.Item>
 
           <Form.Item label="Изображение" name="image">
