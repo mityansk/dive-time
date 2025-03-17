@@ -5,5 +5,6 @@ export enum CLIENT_ROUTES {
   EQUIPMENT = '/equipment',
   LOCATIONS_INFO = '/locations/:id',
   PROFILE = '/profile',
+  CONFIRM_EMAIL = '/confirm-email/:token',
   NOT_FOUND = '*',
 }

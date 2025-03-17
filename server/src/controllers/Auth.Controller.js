@@ -188,7 +188,7 @@ class AuthController {
 
   static async confirmEmail(req, res) {
     const { token } = req.query;
-
+    console.log('>>>>>>>>>>>>>>>>>>>')
     if (!token) {
       return res
         .status(400)
