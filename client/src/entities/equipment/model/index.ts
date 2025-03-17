@@ -1,26 +1,24 @@
 export interface IAddEquipmentData {
-  id: number;
   name: string;
   price: number;
   description: string;
   image: string;
   isRented: boolean;
-  user_id: number;
-  diveLocation_id: number;
-  createdAt: Date;
-  updatedAt: Date;
+  address: string;
+  coordinates: [number, number];
 }
 
-export interface IUpdateEquipmentData {
+export interface IEquipmentData {
   id?: number;
   name?: string;
   price?: number;
   description?: string;
   image?: string;
   isRented?: boolean;
-  diveLocation_id?: number;
+  address?: string;
+  coordinates?: [number, number];
   createdAt?: Date;
   updatedAt?: Date;
 }
 
-export type EquipmentArrayType = IAddEquipmentData[];
+export type EquipmentArrayType = IEquipmentData[];

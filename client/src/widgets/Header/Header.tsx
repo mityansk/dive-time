@@ -1,11 +1,13 @@
-import React from 'react';
-import { Layout, Space, Button, Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Avatar, Layout, Typography, Button, Dropdown } from 'antd';
+import { MenuOutlined, UserOutlined } from '@ant-design/icons';
 import { openModal } from '@/features/auth/slice/authModalSlice';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import AuthModal from '@/features/auth/ui/AuthModal/AuthModal';
 import { signOutThunk } from '@/entities/user/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
-import { useNavigate } from 'react-router';
+import { Link, useNavigate } from 'react-router';
+import styles from './Header.module.css';
 
 const { Header } = Layout;
 const { Title } = Typography;
@@ -15,6 +17,16 @@ export const AppHeader: React.FC = () => {
   const isAuthModalOpen = useAppSelector((state) => state.authModal.isOpen);
   const user = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 750);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const signOutHandler = () => {
     dispatch(signOutThunk());
@@ -22,56 +34,87 @@ export const AppHeader: React.FC = () => {
     navigate(CLIENT_ROUTES.MAIN);
   };
 
+  const menuItems = [
+    {
+      key: '1',
+      label: 'Места для погружений',
+      onClick: () => navigate(CLIENT_ROUTES.LOCATIONS),
+    },
+    { key: '2', label: 'Туры', onClick: () => navigate(CLIENT_ROUTES.TOUR) },
+    {
+      key: '3',
+      label: 'Снаряжение',
+      onClick: () => navigate(CLIENT_ROUTES.EQUIPMENT),
+    },
+  ];
+
   return (
-    <Header
-      style={{
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        background: '#001529',
-        padding: '0 20px',
-      }}
-    >
+    <Header className={styles.header}>
       <Title
         level={3}
-        style={{ color: 'white', margin: '0', cursor: 'pointer' }}
+        style={{
+          color: 'white',
+          margin: '0',
+          cursor: 'pointer',
+          whiteSpace: 'nowrap',
+        }}
         onClick={() => navigate(CLIENT_ROUTES.MAIN)}
       >
         DIVE TIME
       </Title>
 
-      <Space size="large">
-        <Button
-          type="text"
-          style={{ color: 'white' }}
-          onClick={() => navigate(CLIENT_ROUTES.LOCATIONS)}
-        >
-          Места для погружений
-        </Button>
-        <Button
-          type="text"
-          style={{ color: 'white' }}
-          onClick={() => navigate(CLIENT_ROUTES.TOUR)}
-        >
-          Туры
-        </Button>
-        <Button
-          type="text"
-          style={{ color: 'white' }}
-          onClick={() => navigate(CLIENT_ROUTES.EQUIPMENT)}
-        >
-          Снаряжение
-        </Button>
-      </Space>
+      {isMobile ? (
+        <Dropdown menu={{ items: menuItems }} trigger={['click']}>
+          <Button
+            className={styles.button}
+            icon={<MenuOutlined />}
+            size="large"
+          />
+        </Dropdown>
+      ) : (
+        <div className={styles.buttonsCenter}>
+          <Button
+            className={styles.button}
+            size="large"
+            onClick={() => navigate(CLIENT_ROUTES.LOCATIONS)}
+          >
+            Места для погружений
+          </Button>
+          <Button
+            className={styles.button}
+            size="large"
+            onClick={() => navigate(CLIENT_ROUTES.TOUR)}
+          >
+            Туры
+          </Button>
+          <Button
+            className={styles.button}
+            size="large"
+            onClick={() => navigate(CLIENT_ROUTES.EQUIPMENT)}
+          >
+            Снаряжение
+          </Button>
+        </div>
+      )}
 
       {!user ? (
-        <Button type="primary" onClick={() => dispatch(openModal())}>
+        <Link
+          to=""
+          className={styles.buttonReg}
+          onClick={() => dispatch(openModal())}
+        >
           Войти
-        </Button>
+        </Link>
       ) : (
-        <Button type="primary" danger onClick={signOutHandler}>
-          Выйти
-        </Button>
+        <div className={styles.rightContainer}>
+          <span onClick={() => navigate(CLIENT_ROUTES.PROFILE)}>
+            {user.username}
+            <Avatar shape="square" icon={<UserOutlined />} />
+          </span>
+          <Link to="" className={styles.buttonReg} onClick={signOutHandler}>
+            Выйти
+          </Link>
+        </div>
       )}
 
       {isAuthModalOpen && <AuthModal />}

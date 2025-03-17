@@ -1,5 +1,6 @@
+
 export interface IAddTourData {
-  image: string
+  image: string;
   location_name: string;
   description: string;
   start_date: string;
@@ -8,12 +9,20 @@ export interface IAddTourData {
   //! ФОТО ЛОКАЦИИ
 }
 
-export interface IAddTourDataWithId extends IAddTourData {
+export interface IAddTourDataWithId {
   id: number;
+  image: string;
+  location_name: string;
+  description: string;
+  start_date: string;
+  end_date: string;
 }
+
+export type DeleteTourIdType = number
 
 export interface ITour extends IAddTourDataWithId {
   isDone: boolean;
+  location_id: number;
   createdAt: Date;
   updatedAt: Date;
   author: {
