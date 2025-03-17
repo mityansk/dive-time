@@ -46,7 +46,14 @@ class TourController {
 	}
 
 	static async createTour(req, res) {
-		const { location_name, description, start_date, end_date } = req.body
+		const {
+			location_name,
+			description,
+			start_date,
+			end_date,
+			location_id,
+			image,
+		} = req.body
 		const { user } = res.locals
 		const { isValid, error } = TourValidator.validate({
 			location_name,
@@ -67,8 +74,8 @@ class TourController {
 				start_date,
 				end_date,
 				author_id: user.id,
-				image: 'Sobaka'
-				//! НЕ ЗАБЫТЬ ДОБАВИТЬ ID ЛОКАЦИИ location_id: location.id
+				location_id,
+				image,
 			})
 
 			if (!newTour) {

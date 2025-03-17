@@ -1,36 +1,46 @@
 import { addTourThunk } from '@/entities/tour/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import TourFormModal from '@/components/TourFormModal/TourFormModal';
-import { Button, Form, Input, DatePicker, Upload, message } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Form, Input, DatePicker, message, GetProps, Select } from 'antd';
 import { IAddTourData } from '@/entities/tour';
+import dayjs from 'dayjs';
+import { getLocation } from '@/entities/location';
 
 const { TextArea } = Input;
+const { RangePicker } = DatePicker;
+type RangePickerProps = GetProps<typeof DatePicker.RangePicker>
 
 export default function TourForm() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
+  const location = useAppSelector((state) => state.location.locations)
+  
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //! const [fileList, setFileList] = useState<File[]>([]);
 
-  const onFinish = async (values: IAddTourData) => {
+  useEffect(() => {
+    dispatch(getLocation())
+  }, [dispatch]);
+
+  const onFinish = async (values: IAddTourData) => { 
+
     try {
-      const formData = new FormData();
-      formData.append('location_name', values.location_name);
-      formData.append('description', values.description);
-      formData.append('start_date', values.start_date);
-      formData.append('end_date', values.end_date);
-      formData.append('author_id', user!.id.toString());
-      //! if (fileList.length > 0) {
-      //!   formData.append('image', fileList[0].originFileObj);
-      //! } ЗАГРУЗКА ФОТО
+      const data = {
+        location_name: values.location_name,
+        description: values.description,
+        start_date: new Date(values.date_strings![0]).toLocaleDateString(),
+        end_date: new Date(values.date_strings![1]).toLocaleDateString(),
+        location_id: location.find((loc) => loc.name === values.location_name)?.id,
+        author_id: user!.id,
+        image: location.find((loc) => loc.name === values.location_name)?.image
+      };
 
-      await dispatch(addTourThunk(values)).unwrap();
+      await dispatch(addTourThunk(data)).unwrap();
+      
       message.success('Тур успешно создан!');
       navigate(CLIENT_ROUTES.TOUR);
       setIsModalOpen(false);
@@ -39,9 +49,9 @@ export default function TourForm() {
     }
   };
 
-  //! const onFileChange = ({ fileList }: any) => {
-  //!   setFileList(fileList);
-  //! };
+  const disabledDate: RangePickerProps['disabledDate'] = (current) => {
+    return current && current < dayjs().endOf('day')
+  }
 
   return (
     <div>
@@ -61,11 +71,17 @@ export default function TourForm() {
             rules={[
               {
                 required: true,
-                message: 'Пожалуйста, введите название локации',
+                message: 'Пожалуйста, выберите локацию',
               },
             ]}
           >
-            <Input />
+            <Select placeholder='Выберите локацию'>
+              {location!.map((location) => (
+                <Select.Option key={location.id} value={location.name}>
+                  {location.name}
+                </Select.Option>
+              ))}
+            </Select>
           </Form.Item>
 
           <Form.Item
@@ -79,33 +95,17 @@ export default function TourForm() {
           </Form.Item>
 
           <Form.Item
-            label="Дата начала"
-            name="start_date"
+            label="Выберите даты тура"
+            name="date_strings"
             rules={[
-              { required: true, message: 'Пожалуйста, выберите дату начала' },
+              { required: true, message: 'Пожалуйста, выберите даты тура' },
             ]}
           >
-            <DatePicker style={{ width: '100%' }} format={'DD.MM.YYYY'} />
-          </Form.Item>
-
-          <Form.Item
-            label="Дата конца"
-            name="end_date"
-            rules={[
-              { required: true, message: 'Пожалуйста, выберите дату конца' },
-            ]}
-          >
-            <DatePicker style={{ width: '100%' }} format={'DD.MM.YYYY'} />
-          </Form.Item>
-
-          <Form.Item label="Изображение" name="image">
-            <Upload
-              //! fileList={fileList}
-              //! onChange={onFileChange}
-              beforeUpload={() => false}
-            >
-              <Button icon={<UploadOutlined />}>Загрузить изображение</Button>
-            </Upload>
+            <RangePicker
+              style={{ width: '100%' }}
+              format={'DD.MM.YYYY'}
+              disabledDate={disabledDate}
+            />
           </Form.Item>
 
           <Form.Item>
