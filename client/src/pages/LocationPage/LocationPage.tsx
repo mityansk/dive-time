@@ -5,55 +5,57 @@ import {
   Placemark,
   GeolocationControl,
   FullscreenControl,
+  SearchControl,
 } from '@pbe/react-yandex-maps';
-import { Select } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import styles from './LocationPage.module.css';
 import { getLocation, ILocation } from '@/entities/location';
 import { useEffect, useState } from 'react';
 import { LocationCard } from '@/entities/location/ui/LocationCard/CardLocation';
 import { Link } from 'react-router';
-import { City } from '../../entities/location/city/city';
 import config from '@/entities/location/city/config/config.json';
-import citiesData from '@/entities/location/city/material/city.json';
 import { getDistance } from 'geolib';
-const cities: City[] = citiesData;
+
 export function LocationPage() {
   const dispatch = useAppDispatch();
   const state = useAppSelector((state) => state.location.locations);
-  const [mapCenter, setMapCenter] = useState<number[]>([55.1623, 61.4001]);
+  const [mapCenter, setMapCenter] = useState<number[]>([
+    58.57194574452162, 87.7375171235891,
+  ]);
+  const [filteredLocations, setFilteredLocations] = useState<ILocation[]>([]);
+  const [zoom, setZoom] = useState(3);
 
-  const ZOOM = 12;
-
-  useEffect(() => {
-    dispatch(getLocation());
-  }, [dispatch]);
-
-  useEffect(() => {});
-  const handleCityChange = (el: string) => {
-    const selectedCity = cities.find((city) => city.value === el);
-    if (selectedCity) {
-      setMapCenter(selectedCity.coordinates);
-      filterLocations(selectedCity.coordinates);
-    }
+  // Функция для определения радиуса на основе зума
+  const getRadiusByZoom = (zoomLevel: number) => {
+    if (zoomLevel < 4) return 5000000; // 5000 км
+    if (zoomLevel < 6) return 1000000; // 1000 км
+    if (zoomLevel < 8) return 700000; // 700 км
+    if (zoomLevel < 10) return 500000; // 500 км
+    if (zoomLevel < 12) return 200000; // 200 км
+    if (zoomLevel < 14) return 100000; // 100 км
+    if (zoomLevel < 16) return 50000; // 50 км
+    if (zoomLevel < 18) return 20000; // 20 км
+    if (zoomLevel < 20) return 10000; // 10 км
+    return 5000; // 5 км
   };
 
-  const [filteredLocations, setFilteredLocations] = useState<ILocation[]>([]);
-
-  const filterLocations = (cityCoordinates: number[]) => {
+  // Функция Фильтраций локаций по координатам и зуму
+  const filterLocations = (coordinates: number[], zoomLevel: number) => {
+    const radius = getRadiusByZoom(zoomLevel);
     const filtered = state?.filter((location) => {
       const distance = getDistance(
-        { latitude: cityCoordinates[0], longitude: cityCoordinates[1] },
+        { latitude: coordinates[0], longitude: coordinates[1] },
         {
           latitude: Number(location.coordinateX),
           longitude: Number(location.coordinateY),
         }
       );
-      return distance <= 100000; // 100 км = 100000 метров
+      return distance <= radius;
     });
     setFilteredLocations(filtered || []);
   };
 
+  // Функция для создания балуна с описанием локации
   const createBalloonContent = (location: ILocation): string => {
     return ` <div style="width:200px">
     <strong>${location.name}</strong><br/>
@@ -65,15 +67,29 @@ export function LocationPage() {
       location.id
     }'">Перейти</button>
     </div>
-  `;
+    `;
   };
 
+  // Функция для обработки изменения карты
   const handleMapChange = (e: ymaps.IEvent) => {
     const newCenter = e.get('newCenter') as number[];
+    const newZoom = e.get('newZoom') as number;
     setMapCenter(newCenter);
-    filterLocations(newCenter);
-  };
+    setZoom(newZoom);
 
+    filterLocations(newCenter, newZoom);
+  };
+  //Для отрисовки карт
+  useEffect(() => {
+    dispatch(getLocation());
+  }, [dispatch]);
+
+  // Для отрисовки карты при перезагрузке страницы
+  useEffect(() => {
+    setTimeout(() => {
+      filterLocations(mapCenter, zoom);
+    }, 300);
+  }, [state]);
 
   return (
     <YMaps
@@ -81,23 +97,14 @@ export function LocationPage() {
         apikey: config.YANDEX_API_KEY,
       }}
     >
-      <Select
-        placeholder="Ведите свой город"
-        showSearch
-        optionFilterProp="label"
-        options={cities.map((city) => ({
-          label: city.label,
-          value: city.value,
-        }))}
-        onChange={handleCityChange}
-      />
       <div className={styles.container}>
         <div className={styles.map}>
+          <h2>Карта погружений</h2>
           <Map
             className={styles.mapDisplay}
             state={{
               center: mapCenter,
-              zoom: ZOOM,
+              zoom: zoom,
             }}
             onBoundsChange={handleMapChange}
           >
@@ -126,24 +133,27 @@ export function LocationPage() {
               ))}
             </Clusterer>
             <FullscreenControl />
+            <SearchControl options={{ float: 'left', size: 'auto' }} />
             <GeolocationControl options={{ float: 'left' }} />
           </Map>
         </div>
-        <div className={styles.box}>
+        <div className={styles.PreBox}>
           <h2>Места дайвинга</h2>
-          {filteredLocations?.length === 0 ? (
-            <p>Нет мест дайвинга в вашем Радиусе</p>
-          ) : (
-            filteredLocations.map((location) => (
-              <Link
-                to={`/locations/${location.id}`}
-                className={styles.card}
-                key={location.id}
-              >
-                <LocationCard location={location} />
-              </Link>
-            ))
-          )}
+          <div className={styles.box}>
+            {filteredLocations?.length === 0 ? (
+              <p>Нет мест дайвинга в вашем Радиусе</p>
+            ) : (
+              filteredLocations.map((location) => (
+                <Link
+                  to={`/locations/${location.id}`}
+                  className={styles.card}
+                  key={location.id}
+                >
+                  <LocationCard location={location} />
+                </Link>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </YMaps>
