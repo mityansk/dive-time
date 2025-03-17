@@ -6,9 +6,31 @@ const EquipmentValidator = require('../utils/Equipment.validator');
 class EquipmentController {
   static async getAll(req, res) {
     try {
+      const equipments = await EquipmentService.getAll();
+      if (equipments.length === 0) {
+        return res
+          .status(200)
+          .json(formatResponse(200, 'No equipment found', []));
+      }
+      res.status(200).json(formatResponse(200, 'success', equipments));
+    } catch ({ message }) {
+      console.error(message);
+
+      res
+        .status(500)
+        .json(formatResponse(500, 'Internal server error', null, message));
+    }
+  }
+  static async getAllByUser(req, res) {
+    try {
       const { user } = res.locals;
-      const userId = user ? user.id : null;
-      const equipments = await EquipmentService.getAll(userId);
+      const userId = user?.id;
+      if (!userId) {
+        return res
+          .status(400)
+          .json(formatResponse(400, 'UserId is required', null));
+      }
+      const equipments = await EquipmentService.getAllByUser(userId);
       if (equipments.length === 0) {
         return res
           .status(200)

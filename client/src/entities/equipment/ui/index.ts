@@ -4,6 +4,7 @@ export type {
   EquipmentArrayType,
 } from '../model';
 export {
+  getUserEquipmentThunk,
   getEquipmentThunk,
   addEquipmentThunk,
   updateEquipmentThunk,

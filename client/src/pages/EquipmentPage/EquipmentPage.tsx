@@ -8,7 +8,6 @@ import styles from './EquipmentPage.module.css';
 export function EquipmentPage() {
   const equipments = useAppSelector((state) => state.equipments.equipments);
   const [placemarks, setPlacemarks] = useState<React.ReactNode[]>([]);
-  const isAuthenticated = useAppSelector((state) => state.user.isAuthenticated);
 
   useEffect(() => {
     const generatedPlacemarks =
@@ -36,26 +35,26 @@ export function EquipmentPage() {
 
   return (
     <div className={styles.container}>
+      <h1 className={styles.text}>
+        "Добро пожаловать в подводное приключение! 🌊 <br /> Мы предлагаем вам
+        уникальную возможность выбрать и арендовать лучшее снаряжение и
+        оборудование для дайвинга. <br /> Откройте для себя подводный мир 🐠 с
+        комфортом и стилем!🤿"
+      </h1>
       <div className={styles.mapContainer}>
-        {!isAuthenticated && (
-          <h1 className={styles.text}>
-            "Добро пожаловать в подводное приключение! 🌊 <br /> Мы предлагаем
-            вам уникальную возможность выбрать и арендовать лучшее снаряжение и
-            оборудование для дайвинга. <br /> Откройте для себя подводный мир 🐠
-            с комфортом и стилем!🤿"
-          </h1>
-        )}
-        {!isAuthenticated && (
-          <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
-            <Map
-              defaultState={{ center: [55.751244, 37.618423], zoom: 10 }}
-              className={styles.map}
-            >
-              {placemarks}
-            </Map>
-          </YMaps>
-        )}
+        <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
+          <Map
+            defaultState={{
+              center: [61, 105],
+              zoom: 3,
+            }}
+            style={{ width: '70%', height: '500px' }}
+          >
+            {placemarks}
+          </Map>
+        </YMaps>
       </div>
+
       <div className={styles.equipmentListContainer}>
         <Suspense fallback={<div>Загрузка...</div>}>
           <EquipmentList />

@@ -9,29 +9,42 @@ export const EQUIPMENT_API_ENDPOINT = '/equipment';
 enum EQUIPMENTS_THUNK_TYPES {
   ADD_EQUIPMENT = 'equipment/create',
   GET_EQUIPMENTS = 'equipments/get',
+  GET_EQUIPMENTS_BY_USER = 'equipments/getByUser',
   UPDATE_EQUIPMENT = 'equipment/update',
   DELETE_EQUIPMENT = 'equipment/delete',
   GET_BY_ID = 'equipment/getById',
 }
 
-export const getEquipmentThunk = createAsyncThunk<
+export const getUserEquipmentThunk = createAsyncThunk<
   IServerResponse<IEquipmentData[]>,
-  number | null,
+  void,
   { rejectValue: IServerResponse }
 >(
-  EQUIPMENTS_THUNK_TYPES.GET_EQUIPMENTS,
+  EQUIPMENTS_THUNK_TYPES.GET_EQUIPMENTS_BY_USER,
   async (userId, { rejectWithValue }) => {
     try {
-      const endpoint = userId
-        ? `${EQUIPMENT_API_ENDPOINT}?user_id=${userId}`
-        : EQUIPMENT_API_ENDPOINT;
-      const { data } = await axiosInstance.get(endpoint);
+      const { data } = await axiosInstance.get(
+        `${EQUIPMENT_API_ENDPOINT}/${userId}`
+      );
       return data;
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));
     }
   }
 );
+
+export const getEquipmentThunk = createAsyncThunk<
+  IServerResponse<IEquipmentData[]>,
+  void,
+  { rejectValue: IServerResponse }
+>(EQUIPMENTS_THUNK_TYPES.GET_EQUIPMENTS, async (_, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.get(EQUIPMENT_API_ENDPOINT);
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
 
 export const addEquipmentThunk = createAsyncThunk<
   IServerResponse<IEquipmentData>,
