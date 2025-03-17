@@ -16,6 +16,7 @@ import { Link } from 'react-router';
 import { City } from '../../entities/location/city/city';
 import config from '@/entities/location/city/config/config.json';
 import citiesData from '@/entities/location/city/material/city.json';
+import { getDistance } from 'geolib';
 const cities: City[] = citiesData;
 export function LocationPage() {
   const dispatch = useAppDispatch();
@@ -33,14 +34,37 @@ export function LocationPage() {
     const selectedCity = cities.find((city) => city.value === el);
     if (selectedCity) {
       setMapCenter(selectedCity.coordinates);
+      filterLocations(selectedCity.coordinates);
     }
   };
 
+  const [filteredLocations, setFilteredLocations] = useState<ILocation[]>([]);
+
+  const filterLocations = (cityCoordinates: number[]) => {
+    const filtered = state?.filter((location) => {
+      const distance = getDistance(
+        { latitude: cityCoordinates[0], longitude: cityCoordinates[1] },
+        {
+          latitude: Number(location.coordinateX),
+          longitude: Number(location.coordinateY),
+        }
+      );
+      return distance <= 100000; // 100 км = 100000 метров
+    });
+    setFilteredLocations(filtered || []);
+  };
+
   const createBalloonContent = (location: ILocation): string => {
-    return `
+    return ` <div style="width:200px">
     <strong>${location.name}</strong><br/>
-    <img style="width:100px" src="http://localhost:3000/${location.image}" alt="${location.name}" />
+    <img style="width:100%" src="http://localhost:3000/${
+      location.image
+    }" alt="${location.name}" />
     <p>${location.description || ''}</p>
+    <button onclick="document.location='/locations/${
+      location.id
+    }'">Перейти</button>
+    </div>
   `;
   };
   return (
@@ -85,7 +109,7 @@ export function LocationPage() {
                   ]}
                   options={{
                     iconLayout: 'default#image',
-                    iconImageHref: '/public/icon.png',
+                    iconImageHref: '/icon.png',
                   }}
                   properties={{
                     balloonContentBody: createBalloonContent(coordinates),
@@ -99,15 +123,19 @@ export function LocationPage() {
         </div>
         <div className={styles.box}>
           <h2>Места дайвинга</h2>
-          {state?.map((location) => (
-            <Link
-              to={`/locations/${location.id}`}
-              className={styles.card}
-              key={location.id}
-            >
-              <LocationCard location={location} />
-            </Link>
-          ))}
+          {filteredLocations?.length === 0 ? (
+            <p>Нет мест дайвинга в вашем Радиусе</p>
+          ) : (
+            filteredLocations?.map((location) => (
+              <Link
+                to={`/locations/${location.id}`}
+                className={styles.card}
+                key={location.id}
+              >
+                <LocationCard location={location} />
+              </Link>
+            ))
+          )}
         </div>
       </div>
     </YMaps>
