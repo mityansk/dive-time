@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import TourFormModal from '@/components/TourFormModal/TourFormModal';
-import { Button, Form, Input, DatePicker, Upload, message, GetProps } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Form, Input, DatePicker, message, GetProps } from 'antd';
 import { IAddTourData } from '@/entities/tour';
 import dayjs from 'dayjs';
 
@@ -19,21 +18,20 @@ export default function TourForm() {
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //! const [fileList, setFileList] = useState<File[]>([]);
 
-  const onFinish = async (values: IAddTourData) => {
+  const onFinish = async (values: IAddTourData) => { 
+    
     try {
-      const formData = new FormData();
-      formData.append('location_name', values.location_name);
-      formData.append('description', values.description);
-      formData.append('start_date', values.start_date);
-      formData.append('end_date', values.end_date);
-      formData.append('author_id', user!.id.toString());
-      //! if (fileList.length > 0) {
-      //!   formData.append('image', fileList[0].originFileObj);
-      //! } ЗАГРУЗКА ФОТО
+      const data = {
+        location_name: values.location_name,
+        description: values.description,
+        start_date: new Date(values.date_strings![0]).toLocaleDateString(),
+        end_date: new Date(values.date_strings![1]).toLocaleDateString(),
+        author_id: user!.id,
+      };
 
-      await dispatch(addTourThunk(values)).unwrap();
+      await dispatch(addTourThunk(data)).unwrap();
+      
       message.success('Тур успешно создан!');
       navigate(CLIENT_ROUTES.TOUR);
       setIsModalOpen(false);
@@ -45,10 +43,6 @@ export default function TourForm() {
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
     return current && current < dayjs().endOf('day')
   }
-
-  //! const onFileChange = ({ fileList }: any) => {
-  //!   setFileList(fileList);
-  //! };
 
   return (
     <div>
@@ -87,22 +81,16 @@ export default function TourForm() {
 
           <Form.Item
             label="Выберите даты тура"
-            name="start_date"
+            name="date_strings"
             rules={[
               { required: true, message: 'Пожалуйста, выберите даты тура' },
             ]}
           >
-            <RangePicker style={{ width: '100%' }} format={'DD.MM.YYYY'} disabledDate={disabledDate}/>
-          </Form.Item>
-
-          <Form.Item label="Изображение" name="image">
-            <Upload
-              //! fileList={fileList}
-              //! onChange={onFileChange}
-              beforeUpload={() => false}
-            >
-              <Button icon={<UploadOutlined />}>Загрузить изображение</Button>
-            </Upload>
+            <RangePicker
+              style={{ width: '100%' }}
+              format={'DD.MM.YYYY'}
+              disabledDate={disabledDate}
+            />
           </Form.Item>
 
           <Form.Item>
