@@ -1,29 +1,24 @@
 .container {
   display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
+  gap: 0.3em;
 }
 
 .map {
+  width: 70%;
   border: 5px solid black;
   .mapDisplay {
-    width: 700px;
-    height: 500px;
+    width: 100%;
+    height: 80vh;
   }
+}
+
+.PreBox {
+  width: 30%;
 }
 
 .box {
-  width: 500px;
+  width: 100%;
   border: 5px solid black;
-  .CardLocation {
-    display: flex;
-    flex-direction: column;
-  }
-  img {
-    height: 10em;
-  }
-}
-
-.location {
-  border: 5px solid rgb(215, 165, 16);
+  max-height: 77vh;
+  overflow: auto;
 }

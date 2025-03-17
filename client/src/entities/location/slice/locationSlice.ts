@@ -31,7 +31,6 @@ const locationSlice = createSlice({
 				state.loading = false;
 				state.error = null;
 				state.locations = action.payload;
-				console.log(action.payload, 'Список локаций получен успешно');
 			})
 			.addCase(getLocation.rejected, (state, action) => {
 				state.loading = false;
