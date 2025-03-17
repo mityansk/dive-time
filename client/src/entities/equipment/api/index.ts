@@ -25,7 +25,7 @@ export const getEquipmentThunk = createAsyncThunk<
       const endpoint = userId
         ? `${EQUIPMENT_API_ENDPOINT}?user_id=${userId}`
         : EQUIPMENT_API_ENDPOINT;
-      const { data } = await axiosInstance.get(endpoint); // Отправляем запрос с user_id
+      const { data } = await axiosInstance.get(endpoint);
       return data;
     } catch (error) {
       return rejectWithValue(handleAxiosError(error));

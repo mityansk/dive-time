@@ -1,8 +1,7 @@
 .container {
   padding: 20px;
-  background-color: #e0f7fa;
   min-height: 100vh;
-  color: rgba(55, 130, 173, 0.548);
+  color: rgba(28, 118, 192, 0.74);
 }
 
 .addButton {
@@ -27,9 +26,9 @@
 }
 .card {
   border: 1px solid #90e0ef;
-  border-radius: 10px;
+  border-radius: 20px;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: #00000000;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
