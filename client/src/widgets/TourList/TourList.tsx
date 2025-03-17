@@ -6,51 +6,61 @@ import { deleteTourThunk, getTourByIdThunk, getTourThunk } from '@/entities/tour
 import styles from './TourList.module.css'
 import OneTourModal from '@/components/OneTourModal/OneTourModal'
 
+interface TourListProps {
+  isProfile?: boolean; 
+}
 
-export default function TourList(): JSX.Element {
-	const tours = useAppSelector(state => state.tour.tour)
-	const dispatch = useAppDispatch()
+export default function TourList({ isProfile = false }: TourListProps): JSX.Element {
+  const tours = useAppSelector((state) => state.tour.tour);
+  const user = useAppSelector((state) => state.user.user);
+  const dispatch = useAppDispatch();
 
-	const [isModalOpen, setIsModalOpen] = useState(false)
-	const [selectedTourId, setSelectedTourId] = useState<number | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTourId, setSelectedTourId] = useState<number | null>(null);
 
-	useEffect(() => {
-		dispatch(getTourThunk())
-	}, [dispatch])
+  useEffect(() => {
+    dispatch(getTourThunk());
+  }, [dispatch]);
 
-	const handleTourClick = (id: number) => {
-		setSelectedTourId(id)
-		setIsModalOpen(true) 
-		dispatch(getTourByIdThunk(id)) 
-	}
+  const displayedTours = isProfile
+    ? tours.filter((tour) => tour.author.id === user?.id)
+    : tours;
 
-	const handleCloseModal = () => {
-		setIsModalOpen(false)
-		setSelectedTourId(null)
-	}
+  const handleTourClick = (id: number) => {
+    setSelectedTourId(id);
+    setIsModalOpen(true);
+    dispatch(getTourByIdThunk(id));
+  };
 
-    const handleDelete = (id: DeleteTourIdType) => {
-      try {
-        dispatch(deleteTourThunk(id));
-        console.log('Тур успешно удален');
-      } catch (error) {
-        console.error('Ошибка при удалении тура:', error);
-      }
-    };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedTourId(null);
+  };
 
-	return (
+  const handleDelete = (id: DeleteTourIdType) => {
+    try {
+      dispatch(deleteTourThunk(id));
+      console.log('Тур успешно удален');
+    } catch (error) {
+      console.error('Ошибка при удалении тура:', error);
+    }
+  };
+
+  return (
     <div>
-      <h1 className={styles.header}>Список туров</h1>
-      {tours.length === 0 ? (
+      <h1 className={styles.header}>
+        {isProfile ? 'Список моих туров' : 'Список туров'}
+      </h1>
+      {displayedTours.length === 0 ? (
         <div className={styles.noTours}>Туры не найдены</div>
       ) : (
         <div className={styles.tourList}>
-          {tours.map((tour_el: ITour) => (
+          {displayedTours.map((tour_el: ITour) => (
             <TourCard
               key={tour_el.id}
               tour={tour_el}
               onClick={() => handleTourClick(tour_el.id)}
-              onDelete={handleDelete}
+              onDelete={isProfile ? handleDelete : undefined}
             />
           ))}
         </div>
