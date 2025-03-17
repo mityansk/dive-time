@@ -6,7 +6,7 @@ export interface IAddTourData {
   start_date: string
   end_date: string;
   author_id: number;
-  //! ФОТО ЛОКАЦИИ
+  location_id?: number
 }
 
 export interface IAddTourDataWithId {
@@ -29,6 +29,11 @@ export interface ITour extends IAddTourDataWithId {
     id: number;
     username: string;
   };
+  location: {
+    id: number
+    name: string
+    image: string
+  }
 }
 
 export type TourArrayType = ITour[];
