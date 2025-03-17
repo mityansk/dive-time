@@ -10,6 +10,8 @@ export {
   signInThunk,
   signUpThunk,
   signOutThunk,
+  confirmEmailThunk,
+  deleteUserThunk,
 } from './api';
 
 export { userReducer } from './slice/userSlice';

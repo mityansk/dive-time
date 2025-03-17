@@ -3,6 +3,8 @@ import {
   signInThunk,
   signUpThunk,
   signOutThunk,
+  confirmEmailThunk,
+  deleteUserThunk,
 } from '../api';
 
 import { IUser } from '../model';
@@ -22,7 +24,7 @@ const initialState: UserState = {
   isAuthenticated: false,
 };
 
-const userSLice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
@@ -94,8 +96,38 @@ const userSLice = createSlice({
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
         state.isAuthenticated = false;
+      })
+
+      // confirmEmailThunk
+      .addCase(confirmEmailThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(confirmEmailThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.data.user;
+        state.error = null;
+      })
+      .addCase(confirmEmailThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload!.error ?? 'Unknown error';
+      })
+
+      // deleteUserThunk
+      .addCase(deleteUserThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUserThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = null;
+      })
+      .addCase(deleteUserThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload!.error ?? 'Unknown error';
       });
   },
 });
 
-export const userReducer = userSLice.reducer;
+export const userReducer = userSlice.reducer;

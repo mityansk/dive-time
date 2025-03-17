@@ -91,7 +91,7 @@ class AuthController {
       await sendEmail({
         to: email,
         subject: 'Подтверждение email',
-        text: `Пожалуйста, подтвердите ваш email, перейдя по ссылке: ${confirmationLink}`,
+        text: `${username}, мы приветствуем вас на сайте DIVE TIME! \n\n Пожалуйста, подтвердите ваш email, перейдя по ссылке: ${confirmationLink}`,
       });
 
       const plainUser = newUser.get({ plain: true });
@@ -118,7 +118,7 @@ class AuthController {
 
   static async signIn(req, res) {
     const { email, password } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     const { isValid, error } = AuthValidator.validateSignIn({
       email,
       password,
@@ -186,9 +186,29 @@ class AuthController {
     }
   }
 
+  static async delete(req, res) {
+    const { id } = req.params;
+    if (+id !== res.locals.user.id) {
+      return res
+        .status(403)
+        .json(formatResponse(403, 'Нет доступа', null, 'Нет доступа'));
+    }
+    try {
+      const { data } = await UserService.delete(+id);
+      res
+        .clearCookie('refreshToken')
+        .status(200)
+        .json(formatResponse(200, 'Профиль пользователя удален', data, null));
+    } catch ({ message }) {
+      console.error(message);
+      res
+        .status(500)
+        .json(formatResponse(500, 'Internal server error', null, message));
+    }
+  }
   static async confirmEmail(req, res) {
     const { token } = req.query;
-
+    console.log('>>>>>>>>>>>>>>>>>>>');
     if (!token) {
       return res
         .status(400)
