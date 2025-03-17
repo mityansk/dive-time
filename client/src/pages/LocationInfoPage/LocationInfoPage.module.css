@@ -25,6 +25,7 @@
 }
 
 .description {
+  padding: 1em;
   font-size: 1.2em;
   line-height: 1.5;
 }
@@ -38,4 +39,10 @@
   width: 20em;
 	height: 10em;
 	object-fit: cover;
+}
+
+.mapDisplay {
+  padding-top: 10em;
+  width: 100vw;
+  height: 30em;
 }
