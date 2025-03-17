@@ -67,11 +67,18 @@ export function LocationPage() {
     </div>
   `;
   };
+
+  const handleMapChange = (e: ymaps.IEvent) => {
+    const newCenter = e.get('newCenter') as number[];
+    setMapCenter(newCenter);
+    filterLocations(newCenter);
+  };
+
+
   return (
     <YMaps
       query={{
         apikey: config.YANDEX_API_KEY,
-        // , load:"package.full"
       }}
     >
       <Select
@@ -92,6 +99,7 @@ export function LocationPage() {
               center: mapCenter,
               zoom: ZOOM,
             }}
+            onBoundsChange={handleMapChange}
           >
             <Clusterer
               options={{
@@ -126,7 +134,7 @@ export function LocationPage() {
           {filteredLocations?.length === 0 ? (
             <p>Нет мест дайвинга в вашем Радиусе</p>
           ) : (
-            filteredLocations?.map((location) => (
+            filteredLocations.map((location) => (
               <Link
                 to={`/locations/${location.id}`}
                 className={styles.card}
