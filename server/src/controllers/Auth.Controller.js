@@ -4,9 +4,10 @@ const formatResponse = require('../utils/formatResponse');
 const bcrypt = require('bcrypt');
 const generateTokens = require('../utils/generateTokens');
 const cookiesConfig = require('../config/cookiesConfig');
+const jwt = require('jsonwebtoken');
+const sendEmail = require('../utils/sendEmail');
 
 class AuthController {
-
   static async refreshTokens(req, res) {
     try {
       const { user } = res.locals;
@@ -79,6 +80,19 @@ class AuthController {
             )
           );
       }
+
+      const emailConfirmationToken = jwt.sign(
+        { userId: newUser.id },
+        process.env.JWT_SECRET,
+        { expiresIn: '1h' }
+      );
+
+      const confirmationLink = `http://localhost:5173/confirm-email/${emailConfirmationToken}`;
+      await sendEmail({
+        to: email,
+        subject: 'Подтверждение email',
+        text: `Пожалуйста, подтвердите ваш email, перейдя по ссылке: ${confirmationLink}`,
+      });
 
       const plainUser = newUser.get({ plain: true });
       delete plainUser.password;
@@ -169,6 +183,53 @@ class AuthController {
       res
         .status(500)
         .json(formatResponse(500, 'Internal server error', null, message));
+    }
+  }
+
+  static async confirmEmail(req, res) {
+    const { token } = req.query;
+
+    if (!token) {
+      return res
+        .status(400)
+        .json(
+          formatResponse(
+            400,
+            'Токен не предоставлен',
+            null,
+            'Токен не предоставлен'
+          )
+        );
+    }
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      const userConfirm = await UserService.confirmEmail(decoded.userId);
+
+      if (!userConfirm) {
+        return res
+          .status(400)
+          .json(
+            formatResponse(
+              400,
+              'Пользователь не найден',
+              'Пользователь не найден'
+            )
+          );
+      }
+      return res
+        .status(200)
+        .json(
+          formatResponse(
+            200,
+            'Email успешно подтвержден!',
+            userConfirm,
+            'Email успешно подтвержден!'
+          )
+        );
+    } catch ({ message }) {
+      return res
+        .status(400)
+        .json(formatResponse(400, 'Пользователь не найден', null, message));
     }
   }
 }
