@@ -1,8 +1,8 @@
 .container {
   padding: 20px;
-  background-color: #e0f7fa;
   min-height: 100vh;
-  color: rgba(55, 130, 173, 0.548);
+  color: rgba(147, 238, 241, 0.866);
+  padding-top: 70px;
 }
 
 .addButton {
@@ -29,7 +29,7 @@
   border: 1px solid #90e0ef;
   border-radius: 10px;
   padding: 10px;
-  background-color: #ffffff;
+  background-color: rgba(8, 27, 78, 0.602);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
@@ -41,12 +41,12 @@
 
 .card h2 {
   margin-top: 0;
-  color: #0077b6;
+  color: #ffffff;
 }
 
 .card p {
   margin: 5px 0;
-  color: #023e8a;
+  color: #ffffff;
 }
 .actions {
   display: flex;
