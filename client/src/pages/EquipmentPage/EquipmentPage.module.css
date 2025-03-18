@@ -1,9 +1,9 @@
 .container {
   display: flex;
-  flex-direction: column; /* Размещаем все элементы вертикально */
-  align-items: center; /* Центрируем содержимое */
+  flex-direction: column;
   gap: 20px;
   padding: 20px;
+  height: 100vh;
 }
 
 .text {
@@ -12,49 +12,12 @@
   color: #0077b6;
   text-shadow: 2px 2px 4px rgba(0, 119, 182, 0.6);
   animation: wave 3s infinite alternate ease-in-out;
-}
-
-.mapContainer {
-  display: flex;
-  justify-content: flex-start; /* Располагаем карту слева */
-  width: 100%; /* Растягиваем контейнер на всю ширину */
-}
-
-.mapContainer .ymap-container {
-  flex: 0 0 70%; /* Ограничиваем ширину карты до 70% */
-  height: 500px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .equipmentListContainer {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto; /* Добавляем вертикальный скролл */
-  gap: 20px;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.equipmentCard {
-  display: flex;
-  transform: rotateY(180deg); /* Переворачиваем карточки горизонтально */
-  flex-direction: row;
-  gap: 10px;
-  background: #f0f0f0;
-  padding: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.equipmentCard img {
-  width: 100px; /* Пример размера изображения */
-  height: 100px;
-  object-fit: cover;
-}
-
-.equipmentCard .details {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  overflow-y: auto; /* Включаем вертикальную прокрутку */
 }
 
 @keyframes wave {

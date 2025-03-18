@@ -48,7 +48,7 @@ export function EquipmentPage() {
               center: [61, 105],
               zoom: 3,
             }}
-            style={{ width: '70%', height: '500px' }}
+            style={{ width: '50%', height: '400px' }}
           >
             {placemarks}
           </Map>
