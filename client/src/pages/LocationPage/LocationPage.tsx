@@ -62,7 +62,11 @@ export function LocationPage() {
     <img style="width:100%" src="http://localhost:3000/${
       location.image
     }" alt="${location.name}" />
-    <p>${location.description || ''}</p>
+    <p style=" -webkit-line-clamp: 3;
+  line-clamp: 3;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;">${location.description || ''}</p>
     <button onclick="document.location='/locations/${
       location.id
     }'">Перейти</button>

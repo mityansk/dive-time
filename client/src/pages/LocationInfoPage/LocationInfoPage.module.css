@@ -5,27 +5,28 @@
 
 .mainImage {
   width: 100%;
-  height: 14em;
+  height: 20em;
   object-fit: cover;
 }
 
 .title {
   display: flex;
   justify-content: space-between;
-	padding: 0.5em;
+  padding: 0.5em;
   font-size: 20px;
   font-weight: 700;
 }
 
 .info {
   display: flex;
-	flex-direction: column;
-	background-color: rgb(226, 235, 236);
-	padding: 0.5em;
-	border-radius: 10px;
+  flex-direction: column;
+  background-color: rgba(8, 27, 78, 0.602);
+  padding: 0.5em;
+  border-radius: 10px;
 }
 
 .description {
+  background-color: rgba(8, 27, 78, 0.602);
   padding: 1em;
   font-size: 1.2em;
   line-height: 1.5;
@@ -33,17 +34,16 @@
 
 .containerImage {
   display: flex;
-  gap: 0.5em;
+  flex-wrap: wrap;
 }
 
 .extraImage {
-  width: 20em;
-	height: 10em;
-	object-fit: cover;
+padding: 0.2em;
+  width: 30em;
+  height: 20em;
 }
 
 .mapDisplay {
-  padding-top: 10em;
-  width: 100vw;
+  width: 99.9%;
   height: 30em;
 }
