@@ -8,6 +8,7 @@ import {
   GeolocationControl,
   Map,
   Placemark,
+  RouteButton,
   SearchControl,
   YMaps,
 } from '@pbe/react-yandex-maps';
@@ -47,8 +48,9 @@ export function LocationInfoPage() {
             <div className={styles.title}>
               <h2>{loc.name}</h2>
               <div className={styles.info}>
-                <div>{loc.deep}</div>
-                <div>{loc.complexity}</div>
+                <div>Глубина:{loc.deep}</div>
+                <div>Температура воды: летом 15-18℃, зимой 5-7℃</div>
+                <div>Сложность:{loc.complexity}</div>
               </div>
             </div>
             <div className={styles.description}>{loc.description}</div>
@@ -94,6 +96,7 @@ export function LocationInfoPage() {
           <FullscreenControl />
           <SearchControl options={{ float: 'left', size: 'auto' }} />
           <GeolocationControl options={{ float: 'left' }} />
+          <RouteButton options={{ float: 'right' }} />
         </Map>
       </div>
     </YMaps>
