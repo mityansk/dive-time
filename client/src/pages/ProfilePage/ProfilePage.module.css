@@ -1,8 +1,12 @@
-.card {
+.cardContainer {
   display: flex;
+
+  gap: 20px;
+}
+
+.card {
   color: black;
-  flex-direction: row;
-  background-color: #fff;
+  background-color: transparent;
   border: 1px solid #ddd;
   border-radius: 10px;
   padding: 10px;
@@ -11,35 +15,15 @@
   margin-bottom: 20px;
   max-width: 700px;
   height: 200px;
+  display: grid;
+  overflow: hidden;
 }
 
-.image {
-  width: 50px;
-  height: 50px;
-  object-fit: cover;
+.cardImage {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
   border-radius: 8px;
-}
-
-.card-content {
-  display: flex;
-  color: black;
-  flex-direction: column;
-  justify-content: space-between;
-  height: 100%; /* Занимает всю высоту карточки */
-  flex-grow: 1; /* Заполняет оставшееся пространство */
-}
-
-.card-content h2 {
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-.actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: auto;
-  align-items: flex-start;
 }
 
 .actions button {

@@ -1,8 +1,7 @@
 .container {
   display: flex;
-  gap: 20px;
-  padding: 20px;
-  height: 100vh;
+
+  height: 100%;
 }
 
 .mapContainer {
@@ -15,9 +14,10 @@
 }
 
 .text {
-  font-size: 24px;
+  padding-top: 70px;
+  font-size: 25px;
   font-weight: bold;
-  color: #0077b6;
+  color: #0c0e0f;
   text-shadow: 2px 2px 4px rgba(0, 119, 182, 0.6);
   animation: wave 3s infinite alternate ease-in-out;
   text-align: center;
@@ -26,7 +26,8 @@
 
 .equipmentListContainer {
   width: 30%;
-  overflow-y: scroll; /* Включаем вертикальную прокрутку */
+  height: 80vh;
+  overflow-y: scroll;
 }
 
 @keyframes wave {

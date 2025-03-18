@@ -27,7 +27,8 @@
     "react-modal": "^3.16.3",
     "react-redux": "^9.2.0",
     "react-router": "^7.3.0",
-    "url": "^0.11.4"
+    "url": "^0.11.4",
+    "ymaps": "^0.2.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.21.0",

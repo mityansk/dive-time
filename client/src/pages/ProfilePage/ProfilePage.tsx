@@ -64,7 +64,7 @@ export default function ProfilePage(): ReactElement {
   };
 
   return (
-    <div style={{paddingTop: '80px'}}>
+    <div style={{ paddingTop: '80px' }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Popconfirm
           title="Удалить профиль"
@@ -78,49 +78,58 @@ export default function ProfilePage(): ReactElement {
         </Popconfirm>
       </div>
 
-      <div>
-        <TourForm />
-        <TourList isProfile={true} />
-      </div>
-
-      <div className={styles.profileContainer}>
-        <h1>Мое снаряжение</h1>
-        <Button
-          type="primary"
-          onClick={handleAddEquipment}
-          className={styles.addButton}
-        >
-          Добавить снаряжение
-        </Button>
-
-        <div className={styles.cardContainer}>
-          {equipments
-            ?.filter((equipment) => equipment.user_id === id)
-            .map((equipment) => (
-              <Card
-                key={equipment.id}
-                cover={
-                  <img
-                    alt={equipment.name}
-                    src={equipment.image}
-                    className={styles.cardImage}
-                  />
-                }
-                className={styles.card}
-              >
-                <p>{equipment.name}</p>
-                <p>Цена: {equipment.price} руб./сутки</p>
-                <p>Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}</p>
-              </Card>
-            ))}
+      <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
+        {/* Левая колонка: Туры */}
+        <div style={{ flex: 1, maxWidth: '50%' }}>
+          <TourForm />
+          <TourList isProfile={true} />
         </div>
 
-        <EquipmentModal
-          isOpen={isModalOpen}
-          onClose={handleCloseModal}
-          equipment={selectedEquipment}
-        />
+        {/* Правая колонка: Снаряжение */}
+        <div
+          style={{ flex: 1, maxWidth: '50%' }}
+          className={styles.profileContainer}
+        >
+          <h1>Мое снаряжение</h1>
+          <Button
+            type="primary"
+            onClick={handleAddEquipment}
+            className={styles.addButton}
+          >
+            Добавить снаряжение
+          </Button>
+
+          <div className={styles.cardContainer}>
+            {equipments
+              ?.filter((equipment) => equipment.user_id === id)
+              .map((equipment) => (
+                <Card
+                  key={equipment.id}
+                  cover={
+                    <img
+                      alt={equipment.name}
+                      src={equipment.image}
+                      className={styles.cardImage}
+                    />
+                  }
+                  className={styles.card}
+                >
+                  <p>{equipment.name}</p>
+                  <p>Цена: {equipment.price} руб./сутки</p>
+                  <p>
+                    Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}
+                  </p>
+                </Card>
+              ))}
+          </div>
+        </div>
       </div>
+
+      <EquipmentModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        equipment={selectedEquipment}
+      />
     </div>
   );
 }
