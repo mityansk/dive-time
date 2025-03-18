@@ -38,8 +38,6 @@ export default function TourUpdateForm({
   }, [dispatch]);
 
   useEffect(() => {
-    console.log([(tour.start_date), (tour.end_date)]);
-    
     form.setFieldsValue({
       location_name: tour.location_name,
       description: tour.description,
