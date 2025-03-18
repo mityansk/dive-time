@@ -19,6 +19,9 @@ module.exports = {
 			coordinateY: {
 				type: Sequelize.STRING,
 			},
+			temperature: {
+				type: Sequelize.STRING,
+			},
 			description: {
 				type: Sequelize.TEXT,
 			},

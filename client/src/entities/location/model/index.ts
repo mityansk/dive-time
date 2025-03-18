@@ -1,12 +1,13 @@
 export interface ILocationRowData {
-	name: string;
-	coordinateX: string;
-	coordinateY: string;
-	description: string;
-	complexity: string;
-	deep: string;
-	image: string; 
-	arrayImage: []; 
+  name: string;
+  coordinateX: string;
+  coordinateY: string;
+  temperature: string;
+  description: string;
+  complexity: string;
+  deep: string;
+  image: string;
+  arrayImage: [];
 }
 
 export interface ILocation extends ILocationRowData {
