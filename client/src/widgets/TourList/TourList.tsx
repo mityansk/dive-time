@@ -61,6 +61,7 @@ export default function TourList({ isProfile = false }: TourListProps): JSX.Elem
               tour={tour_el}
               onClick={() => handleTourClick(tour_el.id)}
               onDelete={isProfile ? handleDelete : undefined}
+              isProfile={isProfile}
             />
           ))}
         </div>

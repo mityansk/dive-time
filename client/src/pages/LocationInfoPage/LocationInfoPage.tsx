@@ -8,6 +8,7 @@ import {
   GeolocationControl,
   Map,
   Placemark,
+  RouteButton,
   SearchControl,
   YMaps,
 } from '@pbe/react-yandex-maps';
@@ -23,7 +24,7 @@ export function LocationInfoPage() {
     Number(loc?.coordinateX) || 0,
     Number(loc?.coordinateY) || 0,
   ];
-  const zoom = 16;
+  const zoom = 14;
 
   useEffect(() => {
     if (id) {
@@ -47,8 +48,9 @@ export function LocationInfoPage() {
             <div className={styles.title}>
               <h2>{loc.name}</h2>
               <div className={styles.info}>
-                <div>{loc.deep}</div>
-                <div>{loc.complexity}</div>
+                <div>Глубина:{loc.deep}</div>
+                <div>Температура воды: {loc.temperature}</div>
+                <div>Сложность:{loc.complexity}</div>
               </div>
             </div>
             <div className={styles.description}>{loc.description}</div>
@@ -73,6 +75,15 @@ export function LocationInfoPage() {
             center: mapCenter,
             zoom: zoom,
           }}
+          options={{
+            suppressMapOpenBlock: true,
+            restrictMapArea: [
+              [85.23618, -178.9],
+              [-73.87011, 181],
+            ],
+            minZoom: 3,
+            maxZoom: 20,
+          }}
         >
           <Clusterer
             options={{
@@ -94,6 +105,7 @@ export function LocationInfoPage() {
           <FullscreenControl />
           <SearchControl options={{ float: 'left', size: 'auto' }} />
           <GeolocationControl options={{ float: 'left' }} />
+          <RouteButton options={{ float: 'right' }} />
         </Map>
       </div>
     </YMaps>
