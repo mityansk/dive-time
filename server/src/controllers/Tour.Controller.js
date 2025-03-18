@@ -1,4 +1,4 @@
-const {User} = require('../db/models/user')
+const { User } = require('../db/models/user')
 const TourService = require('../services/Tour.service')
 const formatResponse = require('../utils/formatResponse')
 const isValidId = require('../utils/isValidId')
@@ -95,7 +95,14 @@ class TourController {
 
 	static async updateTour(req, res) {
 		const { id } = req.params
-		const { location_name, description, start_date, end_date } = req.body
+		const {
+			location_name,
+			description,
+			start_date,
+			end_date,
+			location_id,
+			image,
+		} = req.body
 		const { user } = res.locals
 
 		if (!isValidId(id)) {
@@ -134,7 +141,10 @@ class TourController {
 				description,
 				start_date,
 				end_date,
+				location_id,
+				image,
 			})
+
 			res.status(200).json(formatResponse(200, 'success', updatedTour))
 		} catch ({ message }) {
 			console.error(message)
@@ -168,7 +178,9 @@ class TourController {
 			}
 
 			await TourService.delete(+id)
-			res.status(200).json(formatResponse(200, 'Tour successfully deleted', +id))
+			res
+				.status(200)
+				.json(formatResponse(200, 'Tour successfully deleted', +id))
 		} catch ({ message }) {
 			console.error(message)
 			res
