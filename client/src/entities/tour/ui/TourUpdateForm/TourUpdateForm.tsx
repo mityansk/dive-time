@@ -38,11 +38,18 @@ export default function TourUpdateForm({
   }, [dispatch]);
 
   useEffect(() => {
+    console.log([(tour.start_date), (tour.end_date)]);
+    
     form.setFieldsValue({
       location_name: tour.location_name,
       description: tour.description,
-      date_strings: [dayjs(tour.start_date), dayjs(tour.end_date)],
+      date_strings: [
+        dayjs(tour.start_date, 'DD.MM.YYYY'),
+        dayjs(tour.end_date, 'DD.MM.YYYY'),
+      ],
     });
+   
+    
   }, [tour, form]);
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
