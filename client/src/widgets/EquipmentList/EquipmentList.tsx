@@ -39,10 +39,10 @@ export default function EquipmentList() {
           key={equipment.id}
           cover={
             <img
+              title={equipment.name}
               alt={equipment.name}
               src={equipment.image}
               className={styles.cardImage}
-              title={equipment.name}
             />
           }
           actions={[

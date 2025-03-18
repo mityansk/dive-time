@@ -34,32 +34,34 @@ export function EquipmentPage() {
   }, [equipments]);
 
   return (
-    <div className={styles.container}>
+    <>
       <h1 className={styles.text}>
         "Добро пожаловать в подводное приключение! 🌊 <br /> Мы предлагаем вам
         уникальную возможность выбрать и арендовать лучшее снаряжение и
         оборудование для дайвинга. <br /> Откройте для себя подводный мир 🐠 с
         комфортом и стилем!🤿"
       </h1>
-      <div className={styles.mapContainer}>
-        <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
-          <Map
-            defaultState={{
-              center: [61, 105],
-              zoom: 3,
-            }}
-            style={{ width: '50%', height: '400px' }}
-          >
-            {placemarks}
-          </Map>
-        </YMaps>
-      </div>
+      <div className={styles.container}>
+        <div className={styles.mapContainer}>
+          <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
+            <Map
+              className={styles.map}
+              defaultState={{
+                center: [61, 105],
+                zoom: 3,
+              }}
+            >
+              {placemarks}
+            </Map>
+          </YMaps>
+        </div>
 
-      <div className={styles.equipmentListContainer}>
-        <Suspense fallback={<div>Загрузка...</div>}>
-          <EquipmentList />
-        </Suspense>
+        <div className={styles.equipmentListContainer}>
+          <Suspense fallback={<div>Загрузка...</div>}>
+            <EquipmentList />
+          </Suspense>
+        </div>
       </div>
-    </div>
+    </>
   );
 }

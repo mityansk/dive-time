@@ -9,7 +9,7 @@ export interface IAddEquipmentData {
 }
 
 export interface IEquipmentData {
-  id?: number;
+  id: number;
   name?: string;
   price?: number;
   description?: string;
@@ -19,6 +19,7 @@ export interface IEquipmentData {
   coordinates?: [number, number];
   createdAt?: Date;
   updatedAt?: Date;
+  user_id: number;
 }
 
 export type EquipmentArrayType = IEquipmentData[];

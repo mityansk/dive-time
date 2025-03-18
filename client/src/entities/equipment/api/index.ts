@@ -17,7 +17,7 @@ enum EQUIPMENTS_THUNK_TYPES {
 
 export const getUserEquipmentThunk = createAsyncThunk<
   IServerResponse<IEquipmentData[]>,
-  void,
+  number,
   { rejectValue: IServerResponse }
 >(
   EQUIPMENTS_THUNK_TYPES.GET_EQUIPMENTS_BY_USER,

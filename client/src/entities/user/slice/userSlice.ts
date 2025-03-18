@@ -3,6 +3,8 @@ import {
   signInThunk,
   signUpThunk,
   signOutThunk,
+  confirmEmailThunk,
+  deleteUserThunk,
 } from '../api';
 
 import { IUser } from '../model';
@@ -12,12 +14,14 @@ type UserState = {
   user: IUser | null;
   error: string | null;
   isLoading: boolean;
+  isAuthenticated: boolean;
 };
 
 const initialState: UserState = {
   user: null,
   error: null,
   isLoading: false,
+  isAuthenticated: false,
 };
 
 const userSlice = createSlice({
@@ -34,11 +38,13 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = action.payload.data.user;
+        state.isAuthenticated = true;
       })
       .addCase(refreshTokensThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       })
 
       ///* signInThunk
@@ -49,11 +55,13 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = action.payload.data.user;
+        state.isAuthenticated = true;
       })
       .addCase(signInThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       })
 
       ///* signUpThunk
@@ -64,11 +72,13 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = action.payload.data.user;
+        state.isAuthenticated = true;
       })
       .addCase(signUpThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
       })
 
       ///* signOutThunk
@@ -79,11 +89,43 @@ const userSlice = createSlice({
         state.isLoading = false;
         state.error = null;
         state.user = null;
+        state.isAuthenticated = false;
       })
       .addCase(signOutThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
         state.user = null;
+        state.isAuthenticated = false;
+      })
+
+      // confirmEmailThunk
+      .addCase(confirmEmailThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(confirmEmailThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.data.user;
+        state.error = null;
+      })
+      .addCase(confirmEmailThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload!.error ?? 'Unknown error';
+      })
+
+      // deleteUserThunk
+      .addCase(deleteUserThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(deleteUserThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = null;
+      })
+      .addCase(deleteUserThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.user = null;
+        state.error = action.payload!.error ?? 'Unknown error';
       });
   },
 });

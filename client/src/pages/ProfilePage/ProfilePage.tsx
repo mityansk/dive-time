@@ -1,17 +1,28 @@
 import TourForm from '@/widgets/TourForm/TourForm';
 import TourList from '@/widgets/TourList/TourList';
-import { Button, message, Popconfirm } from 'antd';
-import { ReactElement, useEffect } from 'react';
+import { Card, Button, message, Popconfirm } from 'antd';
+import { ReactElement, useEffect, useState } from 'react';
 import type { PopconfirmProps } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { deleteUserThunk } from '@/entities/user';
 import { useNavigate } from 'react-router';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
+import EquipmentModal from '@/widgets/EquipmentModal/EquipmentModal';
+import { getUserEquipmentThunk } from '@/entities/equipment/api';
+import { IEquipmentData } from '@/entities/equipment/model';
+import styles from './ProfilePage.module.css';
 
 export default function ProfilePage(): ReactElement {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const id = useAppSelector((state) => state.user.user?.id);
+
+  //для снаряжения
+  const equipments = useAppSelector((state) => state.equipments.equipments);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEquipment, setSelectedEquipment] =
+    useState<IEquipmentData | null>(null);
 
   useEffect(() => {
     if (!id) {
@@ -37,6 +48,19 @@ export default function ProfilePage(): ReactElement {
 
   const cancel: PopconfirmProps['onCancel'] = () => {};
 
+  useEffect(() => {
+    dispatch(getUserEquipmentThunk(id!));
+  }, [dispatch, id]);
+
+  const handleAddEquipment = () => {
+    setSelectedEquipment(null);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
@@ -51,13 +75,49 @@ export default function ProfilePage(): ReactElement {
           <Button>Удалить профиль</Button>
         </Popconfirm>
       </div>
-      <div>
-        Здесь компонент, выводящий кнопку "Добавить снаряжение" и список моего
-        снаряжения с кнопками "редактировать/удалить"
-      </div>
+
       <div>
         <TourForm />
         <TourList isProfile={true} />
+      </div>
+
+      <div className={styles.profileContainer}>
+        <h1>Мое снаряжение</h1>
+        <Button
+          type="primary"
+          onClick={handleAddEquipment}
+          className={styles.addButton}
+        >
+          Добавить снаряжение
+        </Button>
+
+        <div className={styles.cardContainer}>
+          {equipments
+            ?.filter((equipment) => equipment.user_id === id)
+            .map((equipment) => (
+              <Card
+                key={equipment.id}
+                cover={
+                  <img
+                    alt={equipment.name}
+                    src={equipment.image}
+                    className={styles.cardImage}
+                  />
+                }
+                className={styles.card}
+              >
+                <p>{equipment.name}</p>
+                <p>Цена: {equipment.price} руб./сутки</p>
+                <p>Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}</p>
+              </Card>
+            ))}
+        </div>
+
+        <EquipmentModal
+          isOpen={isModalOpen}
+          onClose={handleCloseModal}
+          equipment={selectedEquipment}
+        />
       </div>
     </div>
   );
