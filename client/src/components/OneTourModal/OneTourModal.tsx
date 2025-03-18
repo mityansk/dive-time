@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { getTourByIdThunk } from '@/entities/tour/api';
 import { Modal, Spin } from 'antd';
 import { useNavigate } from 'react-router';
-import dayjs from 'dayjs';
 
 interface TourModalProps {
   tourId: number;
@@ -19,8 +18,8 @@ const OneTourModal: React.FC<TourModalProps> = ({
   const dispatch = useAppDispatch();
   const { one_tour, isLoading, error } = useAppSelector((state) => state.tour);
   const navigate = useNavigate();
-    const startDate = dayjs(one_tour?.start_date).format('DD.MM.YYYY')
-    const endDate = dayjs(one_tour?.end_date).format('DD.MM.YYYY');
+    const startDate = (one_tour?.start_date)
+    const endDate = (one_tour?.end_date)
   
 
   useEffect(() => {

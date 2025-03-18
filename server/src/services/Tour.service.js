@@ -1,4 +1,4 @@
-const { Tour, User } = require('../db/models')
+const { Tour, User, DiveLocation } = require('../db/models')
 
 
 class TourService {
@@ -9,6 +9,11 @@ class TourService {
 					model: User,
 					as: 'author',
 					attributes: ['id', 'username'],
+				},
+				{
+					model: DiveLocation,
+					as: 'location',
+					attributes: ['id', 'name', 'image'],
 				},
 			],
 		})
@@ -21,6 +26,11 @@ class TourService {
 					model: User,
 					as: 'author',
 					attributes: ['id', 'username'],
+				},
+				{
+					model: DiveLocation,
+					as: 'location',
+					attributes: ['id', 'name', 'image'],
 				},
 			],
 		})

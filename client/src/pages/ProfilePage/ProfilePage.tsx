@@ -1,89 +1,64 @@
-import { ReactElement } from 'react';
-import EquipmentModal from '@/widgets/EquipmentModal/EquipmentModal';
+import TourForm from '@/widgets/TourForm/TourForm';
+import TourList from '@/widgets/TourList/TourList';
+import { Button, message, Popconfirm } from 'antd';
+import { ReactElement, useEffect } from 'react';
+import type { PopconfirmProps } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
-import { useEffect, useState } from 'react';
-import {
-  getUserEquipmentThunk,
-  deleteEquipmentThunk,
-} from '@/entities/equipment/api/index';
-import { IEquipmentData } from '@/entities/equipment/model';
-import styles from './ProfilePage.module.css';
+import { deleteUserThunk } from '@/entities/user';
+import { useNavigate } from 'react-router';
+import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
 
 export default function ProfilePage(): ReactElement {
   const dispatch = useAppDispatch();
-  const equipments = useAppSelector((state) => state.equipments.equipments);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedEquipment, setSelectedEquipment] =
-    useState<IEquipmentData | null>(null);
+  const navigate = useNavigate();
+  const id = useAppSelector((state) => state.user.user?.id);
 
   useEffect(() => {
-    dispatch(getUserEquipmentThunk());
-  }, [dispatch]);
+    if (!id) {
+      navigate(CLIENT_ROUTES.MAIN);
+    }
+  }, []);
 
-  const handleAdd = () => {
-    setSelectedEquipment(null);
-    setIsModalOpen(true);
+  const confirm: PopconfirmProps['onConfirm'] = async () => {
+    try {
+      await dispatch(deleteUserThunk(id!))
+        .unwrap()
+        .then(() => {
+          message.success('Профиль пользователя удален');
+          navigate('/');
+        })
+        .catch(() => {
+          message.error('Ошибка при удалении профиля');
+        });
+    } catch {
+      message.error('Ошибка при удалении профиля');
+    }
   };
 
-  const handleEdit = (equipment: IEquipmentData) => {
-    setSelectedEquipment(equipment);
-    setIsModalOpen(true);
-  };
-  const handleDelete = (equipment: IEquipmentData) => {
-    dispatch(deleteEquipmentThunk(equipment)).then(() => {
-      dispatch(getUserEquipmentThunk());
-    });
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedEquipment(null);
-  };
+  const cancel: PopconfirmProps['onCancel'] = () => {};
 
   return (
-    <div className={styles.container}>
-      <h1>Моё снаряжение</h1>
-
-      <button onClick={handleAdd} className={styles.addButton}>
-        Добавить снаряжение
-      </button>
-
-      <div className={styles.grid}>
-        {equipments?.map((equipment) => (
-          <div key={equipment.id} className={styles.card}>
-            <h2>{equipment.name}</h2>
-            {equipment.image && (
-              <img
-                src={equipment.image}
-                alt={equipment.name}
-                className={styles.image}
-              />
-            )}
-            <p>{equipment.description}</p>
-            <p>Цена: {equipment.price} ₽</p>
-            <p>Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}</p>
-            {equipment.address && <p>Адрес: {equipment.address}</p>}
-
-            <div className={styles.actions}>
-              <button onClick={() => handleEdit(equipment)}>
-                Редактировать
-              </button>
-              <button onClick={() => handleDelete(equipment)}>Удалить</button>
-            </div>
-          </div>
-        ))}
+    <div>
+      <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+        <Popconfirm
+          title="Удалить профиль"
+          description="Вы уверены? Удалятся все туры и снаряжение!"
+          onConfirm={confirm}
+          onCancel={cancel}
+          okText="Да, удалить"
+          cancelText="Отмена"
+        >
+          <Button>Удалить профиль</Button>
+        </Popconfirm>
       </div>
-
-      <EquipmentModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
-        equipment={selectedEquipment}
-      />
+      <div>
+        Здесь компонент, выводящий кнопку "Добавить снаряжение" и список моего
+        снаряжения с кнопками "редактировать/удалить"
+      </div>
+      <div>
+        <TourForm />
+        <TourList isProfile={true} />
+      </div>
     </div>
-
-    // <div>
-    //   Здесь компонент, выводящий кнопку "Добавить тур" и список добавленных мной
-    //   туров
-    // </div>
   );
 }

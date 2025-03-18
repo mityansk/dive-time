@@ -3,6 +3,8 @@ import {
   signInThunk,
   signUpThunk,
   signOutThunk,
+  confirmEmailThunk,
+  deleteUserThunk,
 } from '../api';
 
 import { IUser } from '../model';
@@ -20,7 +22,7 @@ const initialState: UserState = {
   isLoading: false,
 };
 
-const userSLice = createSlice({
+const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {},
@@ -88,4 +90,4 @@ const userSLice = createSlice({
   },
 });
 
-export const userReducer = userSLice.reducer;
+export const userReducer = userSlice.reducer;

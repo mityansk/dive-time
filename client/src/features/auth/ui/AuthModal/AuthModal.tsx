@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { closeModal } from '@/features/auth/slice/authModalSlice';
 import { signInThunk, signUpThunk } from '@/entities/user/api';
@@ -19,6 +19,7 @@ const AuthModal: React.FC = () => {
 
   const [isRegister, setIsRegister] = useState(false);
   const [inputs, setInputs] = useState(INITIAL_INPUTS_DATA);
+  const [errorRed, setErrorRed] = useState('');
 
   const onChangeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputs((prev) => ({ ...prev, [event.target.name]: event.target.value }));
@@ -35,13 +36,23 @@ const AuthModal: React.FC = () => {
     }
   };
 
+  const isFirstRender = useRef(true);
+
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (error) setErrorRed(error);
+  }, [error]);
+
   useEffect(() => {
     if (user) {
       setInputs(INITIAL_INPUTS_DATA);
       dispatch(closeModal());
       navigate('/');
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, dispatch, navigate]);
 
   if (!isOpen) return null;
@@ -59,15 +70,15 @@ const AuthModal: React.FC = () => {
           ✖
         </button>
         <h2>{isRegister ? 'Регистрация' : 'Вход'}</h2>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {errorRed && <p style={{ color: 'red' }}>{errorRed}</p>}
 
         <form onSubmit={handleSubmit}>
           {isRegister && (
             <div>
               <input
-                type='text'
-                placeholder='Имя пользователя'
-                name='username'
+                type="text"
+                placeholder="Имя пользователя"
+                name="username"
                 value={inputs.username}
                 onChange={onChangeHandler}
                 className={styles.inputField}
@@ -77,9 +88,9 @@ const AuthModal: React.FC = () => {
           )}
           <div>
             <input
-              type='email'
-              placeholder='Email'
-              name='email'
+              type="email"
+              placeholder="Email"
+              name="email"
               value={inputs.email}
               onChange={onChangeHandler}
               className={styles.inputField}
@@ -88,10 +99,10 @@ const AuthModal: React.FC = () => {
           </div>
           <div>
             <input
-              type='password'
-              placeholder='Пароль'
-              name='password'
-              autoComplete='off'
+              type="password"
+              placeholder="Пароль"
+              name="password"
+              autoComplete="off"
               value={inputs.password}
               onChange={onChangeHandler}
               className={styles.inputField}
@@ -100,7 +111,7 @@ const AuthModal: React.FC = () => {
           </div>
           <button
             className={styles.actionButton}
-            type='submit'
+            type="submit"
             disabled={isLoading}
           >
             {isLoading
@@ -111,7 +122,8 @@ const AuthModal: React.FC = () => {
           </button>
         </form>
 
-        <Link to=''
+        <Link
+          to=""
           className={styles.linkButton}
           onClick={() => setIsRegister(!isRegister)}
         >

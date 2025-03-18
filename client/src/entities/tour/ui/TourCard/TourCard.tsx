@@ -2,12 +2,11 @@ import { JSX, useState } from 'react';
 import { ITour } from '../../model';
 import styles from './TourCard.module.css';
 import TourUpdateForm from '../TourUpdateForm/TourUpdateForm';
-import dayjs from 'dayjs';
 
 interface TourCardProps {
   tour: ITour;
   onClick: () => void;
-  onDelete: (id: number) => void
+  onDelete?: (id: number) => void;
 }
 
 export default function TourCard({
@@ -16,8 +15,6 @@ export default function TourCard({
   onDelete,
 }: TourCardProps): JSX.Element {
   const { image, location_name, description, start_date, end_date } = tour;
-  const startDate = dayjs(start_date).format('DD.MM.YYYY')
-  const endDate = dayjs(end_date).format('DD.MM.YYYY')
   const [isEditing, setIsEditing] = useState(false);
 
   const handleSave = () => {
@@ -39,12 +36,13 @@ export default function TourCard({
           />
           <span className={styles.location}>Локация: {location_name}</span>
           <span className={styles.description}>Описание: {description}</span>
-          <span className={styles.date}>Дата начала тура: {startDate}</span>
-          <span className={styles.date}>Дата конца тура: {endDate}</span>
+          <span className={styles.date}>Дата начала тура: {start_date}</span>
+          <span className={styles.date}>Дата конца тура: {end_date}</span>
           <span>
             Автор тура:{' '}
             {tour.author ? tour.author.username : 'Автор неизвестен'}
           </span>
+          {onDelete && (
           <button
             onClick={(e) => {
               e.stopPropagation();
@@ -53,16 +51,18 @@ export default function TourCard({
             className={styles.editButton}
           >
             Редактировать
-          </button>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(tour.id)
-            }}
-            className={styles.editButton}
-          >
-            Удалить тур
-          </button>
+          </button>)}
+          {onDelete && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(tour.id);
+              }}
+              className={styles.editButton}
+            >
+              Удалить тур
+            </button>
+          )}
         </div>
       )}
     </>
