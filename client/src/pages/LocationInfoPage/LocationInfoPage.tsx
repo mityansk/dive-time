@@ -24,7 +24,7 @@ export function LocationInfoPage() {
     Number(loc?.coordinateX) || 0,
     Number(loc?.coordinateY) || 0,
   ];
-  const zoom = 16;
+  const zoom = 14;
 
   useEffect(() => {
     if (id) {
@@ -49,7 +49,7 @@ export function LocationInfoPage() {
               <h2>{loc.name}</h2>
               <div className={styles.info}>
                 <div>Глубина:{loc.deep}</div>
-                <div>Температура воды: летом 15-18℃, зимой 5-7℃</div>
+                <div>Температура воды: {loc.temperature}</div>
                 <div>Сложность:{loc.complexity}</div>
               </div>
             </div>
@@ -74,6 +74,15 @@ export function LocationInfoPage() {
           state={{
             center: mapCenter,
             zoom: zoom,
+          }}
+          options={{
+            suppressMapOpenBlock: true,
+            restrictMapArea: [
+              [85.23618, -178.9],
+              [-73.87011, 181],
+            ],
+            minZoom: 3,
+            maxZoom: 20,
           }}
         >
           <Clusterer
