@@ -6,9 +6,11 @@ dayjs().format();
 
 function App() {
   return (
-    <Provider store={store}>
-      <Router />
-    </Provider>
+    <div style={{ backgroundImage: 'main1.jpg' }}>
+      <Provider store={store}>
+        <Router />
+      </Provider>
+    </div>
   );
 }
 

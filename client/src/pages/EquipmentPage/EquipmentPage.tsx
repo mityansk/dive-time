@@ -34,7 +34,7 @@ export function EquipmentPage() {
   }, [equipments]);
 
   return (
-    <>
+    <div style={{paddingTop: '80px'}}>
       {!isAuthenticated && (
         <h1
           style={{
@@ -65,6 +65,6 @@ export function EquipmentPage() {
       <Suspense fallback={<div>Загрузка...</div>}>
         <EquipmentList />
       </Suspense>
-    </>
+    </div>
   );
 }

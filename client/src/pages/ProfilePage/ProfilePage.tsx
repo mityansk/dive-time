@@ -38,7 +38,7 @@ export default function ProfilePage(): ReactElement {
   const cancel: PopconfirmProps['onCancel'] = () => {};
 
   return (
-    <div>
+    <div style={{paddingTop: '80px'}}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Popconfirm
           title="Удалить профиль"

@@ -1,5 +1,6 @@
 .container {
   gap: 1em;
+  padding-top: 80px;
 }
 
 .mainImage {
@@ -19,7 +20,7 @@
 .info {
   display: flex;
 	flex-direction: column;
-	background-color: rgb(69, 69, 124);
+	background-color: rgb(226, 235, 236);
 	padding: 0.5em;
 	border-radius: 10px;
 }

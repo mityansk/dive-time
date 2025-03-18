@@ -1,7 +1,12 @@
+import styles from './MainPage.module.css'
 export default function MainPage() {
   return (
     <>
-      <img width="100%" height="auto" src="main1.jpg" alt="Main Banner" />
+      <img
+        className={styles.fullHeightImage}
+        src="main1.jpg"
+        alt="Main Banner"
+      />
     </>
   );
 }
