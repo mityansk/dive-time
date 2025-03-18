@@ -1,14 +1,14 @@
 .container {
   display: flex;
   gap: 0.3em;
+  padding-top: 80px;
 }
 
 .map {
   width: 70%;
-  border: 5px solid black;
   .mapDisplay {
     width: 100%;
-    height: 80vh;
+    height: 77vh;
   }
 }
 
@@ -18,7 +18,6 @@
 
 .box {
   width: 100%;
-  border: 5px solid black;
   max-height: 77vh;
   overflow: auto;
 }

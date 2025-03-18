@@ -64,7 +64,7 @@ export default function ProfilePage(): ReactElement {
   };
 
   return (
-    <div>
+    <div style={{paddingTop: '80px'}}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Popconfirm
           title="Удалить профиль"
