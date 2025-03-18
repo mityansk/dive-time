@@ -3,8 +3,6 @@ import {
   signInThunk,
   signUpThunk,
   signOutThunk,
-  confirmEmailThunk,
-  deleteUserThunk,
 } from '../api';
 
 import { IUser } from '../model';
