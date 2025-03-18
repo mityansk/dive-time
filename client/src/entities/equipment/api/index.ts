@@ -24,7 +24,7 @@ export const getUserEquipmentThunk = createAsyncThunk<
   async (userId, { rejectWithValue }) => {
     try {
       const { data } = await axiosInstance.get(
-        `${EQUIPMENT_API_ENDPOINT}/${userId}`
+        `${EQUIPMENT_API_ENDPOINT}/users/${userId}`
       );
       return data;
     } catch (error) {

@@ -26,7 +26,8 @@ class EquipmentController {
       const { user } = res.locals;
       const id = user?.id;
       const { userId } = req.params;
-      if (id !== userId) {
+
+      if (id !== +userId) {
         return res.status(400).json(formatResponse(400, 'Access denied', null));
       }
 

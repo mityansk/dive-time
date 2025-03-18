@@ -4,7 +4,11 @@ const verifyAccessToken = require('../middleware/verifyAccessToken');
 
 router.get('/', EquipmentController.getAll);
 
-router.get('/:userId', verifyAccessToken, EquipmentController.getAllByUser);
+router.get(
+  '/users/:userId',
+  verifyAccessToken,
+  EquipmentController.getAllByUser
+);
 
 router.get('/:id', EquipmentController.getById);
 

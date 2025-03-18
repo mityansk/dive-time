@@ -49,7 +49,9 @@ export default function ProfilePage(): ReactElement {
   const cancel: PopconfirmProps['onCancel'] = () => {};
 
   useEffect(() => {
-    dispatch(getUserEquipmentThunk(id!));
+    if (id) {
+      dispatch(getUserEquipmentThunk(id));
+    }
   }, [dispatch, id]);
 
   const handleAddEquipment = () => {
