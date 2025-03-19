@@ -90,7 +90,7 @@ export default function ProfilePage(): ReactElement {
   };
 
   return (
-    <div className={styles.pageContainer}>
+    <div style={{ paddingTop: '80px' }}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Popconfirm
           title="Удалить профиль"
@@ -104,20 +104,22 @@ export default function ProfilePage(): ReactElement {
         </Popconfirm>
       </div>
 
-      <div className={styles.contentContainer}>
-        <div
-          style={{ flex: 1, maxWidth: '48%' }}
-          className={styles.sectionContainer}
-        >
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          marginTop: '20px',
+          alignItems: 'stretch',
+        }}
+      >
+        <div style={{ flex: 1, maxWidth: '50%' }}>
           <TourForm />
-          <div className={styles.scrollableContainer}>
-            <TourList isProfile={true} />
-          </div>
+          <TourList isProfile={true} />
         </div>
 
         <div
-          style={{ flex: 1, maxWidth: '48%' }}
-          className={styles.sectionContainer}
+          style={{ flex: 1, maxWidth: '50%' }}
+          className={styles.profileContainer}
         >
           <h1>Список моего снаряжения</h1>
           <Button
@@ -128,9 +130,7 @@ export default function ProfilePage(): ReactElement {
             Добавить снаряжение
           </Button>
 
-          <div
-            className={`${styles.cardContainer} ${styles.scrollableContainer}`}
-          >
+          <div className={styles.cardContainer}>
             {equipments
               ?.filter((equipment) => equipment.user_id === id)
               .map((equipment) => (

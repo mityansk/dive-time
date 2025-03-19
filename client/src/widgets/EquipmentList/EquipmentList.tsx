@@ -1,9 +1,12 @@
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useEffect, useState } from 'react';
-import { getEquipmentThunk } from '@/entities/equipment/api/index';
+import {
+  getEquipmentThunk,
+  updateEquipmentThunk,
+} from '@/entities/equipment/api/index';
 import styles from './EquipmentList.module.css';
 import { IEquipmentData } from '@/entities/equipment/model';
-import { Card, Button, Modal } from 'antd';
+import { Card, Button, Modal, message } from 'antd';
 
 interface EquipmentListProps {
   filteredEquipments: IEquipmentData[];
@@ -17,17 +20,29 @@ export default function EquipmentList({
   const [selectedEquipment, setSelectedEquipment] =
     useState<IEquipmentData | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [bookedItems, setBookedItems] = useState<number[]>([]);
 
   useEffect(() => {
     dispatch(getEquipmentThunk());
   }, [dispatch]);
 
-  const handleBook = (id: number) => {
-    if (user) {
-      setBookedItems((prev) => [...prev, id]);
-    } else {
+  const handleBook = async (equipment: IEquipmentData) => {
+    if (!user) {
       setIsModalOpen(true);
+      return;
+    }
+
+    try {
+      await dispatch(
+        updateEquipmentThunk({
+          ...equipment,
+          isRented: true,
+        })
+      ).unwrap();
+
+      message.success('Снаряжение успешно забронировано!');
+    } catch (err) {
+      console.error('Ошибка при бронировании:', err);
+      message.error('Ошибка при бронировании');
     }
   };
 
@@ -64,19 +79,16 @@ export default function EquipmentList({
             <Button
               key="book"
               type="primary"
-              onClick={() => handleBook(equipment.id)}
-              disabled={
-                equipment.isRented || bookedItems.includes(equipment.id)
-              }
+              onClick={(e) => {
+                e.stopPropagation();
+                handleBook(equipment);
+              }}
+              disabled={equipment.isRented}
               className={
-                bookedItems.includes(equipment.id)
-                  ? styles.bookedButton
-                  : styles.bookButton
+                equipment.isRented ? styles.bookedButton : styles.bookButton
               }
             >
-              {bookedItems.includes(equipment.id)
-                ? 'Забронировано'
-                : 'Забронировать'}
+              {equipment.isRented ? 'Забронировано' : 'Забронировать'}
             </Button>
           </Card>
         ))
