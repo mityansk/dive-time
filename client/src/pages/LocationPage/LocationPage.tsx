@@ -114,7 +114,7 @@ export function LocationPage() {
           >
             <Clusterer
               options={{
-                preset: 'islands#invertedVioletClusterIcons',
+                preset: 'islands#invertedBlueClusterIcons',
                 groupByCoordinates: false,
               }}
             >
