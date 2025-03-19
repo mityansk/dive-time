@@ -5,11 +5,15 @@ class EquipmentService {
     return await Equipment.findByPk(id);
   }
 
-  static async getAll(userId) {
+  static async getAll() {
+    return await Equipment.findAll();
+  }
+
+  static async getAllByUser(userId) {
     if (userId) {
       return await Equipment.findAll({ where: { user_id: userId } });
     }
-    return await Equipment.findAll();
+    throw new Error('UserId is required');
   }
 
   static async create(data) {

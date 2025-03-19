@@ -5,6 +5,7 @@ import {
   deleteEquipmentThunk,
   getEquipmentThunk,
   updateEquipmentThunk,
+  getUserEquipmentThunk,
 } from '../api';
 
 type EquipmentState = {
@@ -34,6 +35,20 @@ const equipmentsSlice = createSlice({
         state.equipments = action.payload.data;
       })
       .addCase(getEquipmentThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error =
+          action.payload!.error ??
+          'Неизвестная ошибка при получении снаряжения!';
+      })
+      .addCase(getUserEquipmentThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getUserEquipmentThunk.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.error = null;
+        state.equipments = action.payload.data;
+      })
+      .addCase(getUserEquipmentThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.error =
           action.payload!.error ??

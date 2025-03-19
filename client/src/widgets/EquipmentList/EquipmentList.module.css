@@ -1,89 +1,80 @@
-.container {
-  padding: 20px;
-  min-height: 100vh;
-  color: rgba(147, 238, 241, 0.866);
-  padding-top: 70px;
+.cardContainer {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  justify-content: center;
 }
 
-.addButton {
-  margin-bottom: 20px;
-  padding: 10px 20px;
-  background-color: #0077b6;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.addButton:hover {
-  background-color: #023e8a;
-}
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-}
 .card {
-  border: 1px solid #90e0ef;
-  border-radius: 10px;
-  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  width: 98%;
+  height: 200px;
   background-color: rgba(8, 27, 78, 0.602);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-radius: 10px;
+  border: none;
+  overflow: hidden;
+  padding: 1em;
+  margin-left: 5px;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(172, 137, 137, 0.2);
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
-
-.card h2 {
-  margin-top: 0;
-  color: #ffffff;
-}
-
-.card p {
-  margin: 5px 0;
-  color: #ffffff;
-}
-.actions {
+.imageContainer {
   display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  border-radius: 14px;
+  background-color: rgb(255, 255, 255);
 }
 
-.actions button {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
+.cardImage {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  border-radius: 14px;
 }
 
-.actions button:first-child {
-  background-color: #00b4d8;
-  color: rgb(255, 255, 255);
-}
-
-.actions button:first-child:hover {
-  background-color: #0096c7;
-}
-
-.actions button:last-child {
-  background-color: #e63946;
+.bookButton {
+  background-color: transparent;
+  flex-direction: column;
+  background-color: #ff9800;
   color: white;
+  font-weight: 600;
+  border-radius: 8px;
 }
 
-.actions button:last-child:hover {
-  background-color: #d90429;
+.bookButton:hover {
+  background-color: #e68900;
 }
-.image {
-  margin-left: 40px;
-  max-width: 30%;
+
+.bookedButton {
+  background-color: rgb(116, 190, 240) !important;
+  color: rgb(136, 10, 10) !important;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: not-allowed;
+}
+
+p {
+  font-size: 16px;
+  font-weight: 500;
+  margin: 8px 0;
+}
+
+.modalImage {
+  width: 100%;
   height: auto;
+  max-height: 250px;
+  object-fit: contain;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
 }
