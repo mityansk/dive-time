@@ -16,27 +16,25 @@ import EquipmentList from '@/widgets/EquipmentList/EquipmentList';
 
 export function EquipmentPage() {
   const equipments = useAppSelector((state) => state.equipments.equipments);
-  const [placemarks, setPlacemarks] = useState<React.ReactNode[]>([]);
-  const [mapCenter, setMapCenter] = useState<number[]>([61, 105]);
-  const [zoom, setZoom] = useState(3);
   const [filteredEquipments, setFilteredEquipments] = useState<
     IEquipmentData[]
   >([]);
-  const [isMapLoaded, setIsMapLoaded] = useState(false);
+  const [mapCenter, setMapCenter] = useState<number[]>([61, 105]);
+  const [zoom, setZoom] = useState(3);
+  const [placemarks, setPlacemarks] = useState<React.ReactNode[]>([]);
 
   // Функция для определения радиуса на основе зума
   const getRadiusByZoom = (zoomLevel: number) => {
-    if (zoomLevel < 4) return 10000000; // 10,000 км (весь мир)
-    if (zoomLevel < 4) return 5000000; // 5000 км
-    if (zoomLevel < 6) return 1000000; // 1000 км
-    if (zoomLevel < 8) return 700000; // 700 км
-    if (zoomLevel < 10) return 500000; // 500 км
-    if (zoomLevel < 12) return 200000; // 200 км
-    if (zoomLevel < 14) return 100000; // 100 км
-    if (zoomLevel < 16) return 50000; // 50 км
-    if (zoomLevel < 18) return 20000; // 20 км
-    if (zoomLevel < 20) return 10000; // 10 км
-    return 5000; // 5 км
+    if (zoomLevel <= 3) return 10000000; // 10,000 км (весь мир)
+    if (zoomLevel <= 5) return 5000000; // 5000 км
+    if (zoomLevel <= 7) return 1000000; // 1000 км
+    if (zoomLevel <= 9) return 700000; // 700 км
+    if (zoomLevel <= 11) return 500000; // 500 км
+    if (zoomLevel <= 13) return 200000; // 200 км
+    if (zoomLevel <= 15) return 100000; // 100 км
+    if (zoomLevel <= 17) return 50000; // 50 км
+    if (zoomLevel <= 19) return 20000; // 20 км
+    return 10000; // 10 км для максимального приближения
   };
 
   const createBalloonContent = (equipment: IEquipmentData): string => {
@@ -75,6 +73,22 @@ export function EquipmentPage() {
   };
 
   useEffect(() => {
+    const radius = getRadiusByZoom(zoom);
+    const filtered = equipments?.filter((equipment: IEquipmentData) => {
+      if (!equipment.coordinates) return false;
+      const distance = getDistance(
+        { latitude: mapCenter[0], longitude: mapCenter[1] },
+        {
+          latitude: equipment.coordinates[0],
+          longitude: equipment.coordinates[1],
+        }
+      );
+      return distance <= radius;
+    });
+    setFilteredEquipments(filtered || []);
+  }, [equipments, mapCenter, zoom]);
+
+  useEffect(() => {
     const generatedPlacemarks =
       equipments?.map((equipment: IEquipmentData) => {
         if (equipment.coordinates) {
@@ -96,13 +110,7 @@ export function EquipmentPage() {
       }) || [];
     setPlacemarks(generatedPlacemarks);
   }, [equipments]);
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsMapLoaded(true);
-    }, 3000);
 
-    return () => clearTimeout(timer);
-  }, []);
   return (
     <>
       <h1 className={styles.text}>
@@ -139,11 +147,7 @@ export function EquipmentPage() {
         </div>
         <div className={styles.equipmentListContainer}>
           <Suspense fallback={<div>Загрузка...</div>}>
-            {isMapLoaded ? (
-              <EquipmentList filteredEquipments={filteredEquipments} />
-            ) : (
-              <div>Загрузка списка оборудования...</div>
-            )}
+            <EquipmentList filteredEquipments={filteredEquipments} />
           </Suspense>
         </div>
       </div>

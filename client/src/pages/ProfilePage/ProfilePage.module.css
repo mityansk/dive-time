@@ -1,10 +1,10 @@
 .cardContainer {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  padding: 0;
+  padding: 20px 0;
   margin: 0;
-  flex-wrap: wrap;
-  overflow: auto;
+  width: 100%;
 }
 
 .card {
@@ -15,12 +15,13 @@
   border: none;
   padding: 20px;
   height: 380px;
-  margin: 10px;
-  width: 300px;
+  width: 100%;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   font-family: 'Roboto', sans-serif;
   color: #ffffff;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
@@ -28,9 +29,17 @@
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-.cardImage {
+.imageContainer {
   width: 100%;
   height: 200px;
+  overflow: hidden;
+  border-radius: 12px;
+  margin-bottom: 15px;
+}
+
+.cardImage {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 12px;
 }

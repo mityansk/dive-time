@@ -137,11 +137,13 @@ export default function ProfilePage(): ReactElement {
                 <Card
                   key={equipment.id}
                   cover={
-                    <img
-                      alt={equipment.name}
-                      src={equipment.image}
-                      className={styles.cardImage}
-                    />
+                    <div className={styles.imageContainer}>
+                      <img
+                        alt={equipment.name}
+                        src={equipment.image}
+                        className={styles.cardImage}
+                      />
+                    </div>
                   }
                   className={styles.card}
                 >
