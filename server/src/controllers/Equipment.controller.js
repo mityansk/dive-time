@@ -129,10 +129,9 @@ class EquipmentController {
     const { id } = req.params;
     const { name, price, description, image, isRented, address, coordinates } =
       req.body;
-
     const { user } = res.locals;
 
-    if (!isValidId(id)) {
+    if (!isValidId(+id)) {
       return res.status(400).json(formatResponse(400, 'Invalid equipment ID'));
     }
 

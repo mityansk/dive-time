@@ -22,6 +22,7 @@ export function EquipmentPage() {
   const [filteredEquipments, setFilteredEquipments] = useState<
     IEquipmentData[]
   >([]);
+  const [isMapLoaded, setIsMapLoaded] = useState(false);
 
   // Функция для определения радиуса на основе зума
   const getRadiusByZoom = (zoomLevel: number) => {
@@ -95,15 +96,22 @@ export function EquipmentPage() {
       }) || [];
     setPlacemarks(generatedPlacemarks);
   }, [equipments]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsMapLoaded(true);
+    }, 3000);
 
+    return () => clearTimeout(timer);
+  }, []);
   return (
     <>
       <h1 className={styles.text}>
-        "Добро пожаловать в подводное приключение! 🌊 <br /> Мы предлагаем вам
+        Добро пожаловать в подводное приключение! 🌊 <br /> Мы предлагаем вам
         уникальную возможность выбрать и арендовать лучшее снаряжение и
         оборудование для дайвинга. <br /> Откройте для себя подводный мир 🐠 с
-        комфортом и стилем!🤿"
+        комфортом и стилем!🤿
       </h1>
+
       <div className={styles.container}>
         <div className={styles.mapContainer}>
           <YMaps query={{ apikey: '37589157-41df-4c37-9939-de9d8b65a791' }}>
@@ -131,7 +139,11 @@ export function EquipmentPage() {
         </div>
         <div className={styles.equipmentListContainer}>
           <Suspense fallback={<div>Загрузка...</div>}>
-            <EquipmentList filteredEquipments={filteredEquipments} />
+            {isMapLoaded ? (
+              <EquipmentList filteredEquipments={filteredEquipments} />
+            ) : (
+              <div>Загрузка списка оборудования...</div>
+            )}
           </Suspense>
         </div>
       </div>

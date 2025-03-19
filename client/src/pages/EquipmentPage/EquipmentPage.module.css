@@ -6,7 +6,7 @@
 
 .mapContainer {
   width: 70%;
-  height: 80vh;
+  height: 70vh;
 }
 .map {
   width: 100%;
@@ -17,7 +17,8 @@
   padding-top: 70px;
   font-size: 25px;
   font-weight: bold;
-  color: #0c0e0f;
+  color: #ffffff;
+  /* background-color: rgba(8, 27, 78, 0.602); */
   text-shadow: 2px 2px 4px rgba(0, 119, 182, 0.6);
   animation: wave 3s infinite alternate ease-in-out;
   text-align: center;
@@ -26,7 +27,7 @@
 
 .equipmentListContainer {
   width: 30%;
-  height: 80vh;
+  height: 70vh;
   overflow-y: scroll;
 }
 

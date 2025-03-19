@@ -106,6 +106,10 @@ export default function EquipmentModal({
           coordinates: [55.751244, 37.618423],
         }
       );
+      if (equipment) {
+        setAddress(equipment.address || ''); // <-- Добавляем обновление address
+        setCoordinates(equipment.coordinates || [55.751244, 37.618423]);
+      }
     }
   }, [isOpen, equipment, form]);
 

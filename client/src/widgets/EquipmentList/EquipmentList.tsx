@@ -45,12 +45,14 @@ export default function EquipmentList({
           <Card
             key={equipment.id}
             cover={
-              <img
-                title={equipment.name}
-                alt={equipment.name}
-                src={equipment.image}
-                className={styles.cardImage}
-              />
+              <div className={styles.imageContainer}>
+                <img
+                  className={styles.cardImage}
+                  title={equipment.name}
+                  alt={equipment.name}
+                  src={equipment.image}
+                />
+              </div>
             }
             onClick={() => handleViewDetails(equipment)}
             className={styles.card}
@@ -62,17 +64,17 @@ export default function EquipmentList({
             <Button
               key="book"
               type="primary"
-              onClick={() => handleBook(equipment.id!)}
+              onClick={() => handleBook(equipment.id)}
               disabled={
-                equipment.isRented || bookedItems.includes(equipment.id!)
+                equipment.isRented || bookedItems.includes(equipment.id)
               }
               className={
-                bookedItems.includes(equipment.id!)
+                bookedItems.includes(equipment.id)
                   ? styles.bookedButton
                   : styles.bookButton
               }
             >
-              {bookedItems.includes(equipment.id!)
+              {bookedItems.includes(equipment.id)
                 ? 'Забронировано'
                 : 'Забронировать'}
             </Button>

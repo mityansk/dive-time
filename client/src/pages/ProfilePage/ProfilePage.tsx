@@ -8,7 +8,10 @@ import { deleteUserThunk } from '@/entities/user';
 import { useNavigate } from 'react-router';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
 import EquipmentModal from '@/widgets/EquipmentModal/EquipmentModal';
-import { getUserEquipmentThunk } from '@/entities/equipment/api';
+import {
+  getUserEquipmentThunk,
+  deleteEquipmentThunk,
+} from '@/entities/equipment/api';
 import { IEquipmentData } from '@/entities/equipment/model';
 import styles from './ProfilePage.module.css';
 
@@ -23,6 +26,7 @@ export default function ProfilePage(): ReactElement {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] =
     useState<IEquipmentData | null>(null);
+  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!id) {
@@ -61,6 +65,28 @@ export default function ProfilePage(): ReactElement {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+    setSelectedEquipment(null);
+  };
+  const handleEditEquipment = (equipment: IEquipmentData) => {
+    console.log('Editing equipment:', equipment);
+    setSelectedEquipment(equipment);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteEquipment = async (equipment: IEquipmentData) => {
+    try {
+      await dispatch(deleteEquipmentThunk(equipment)).unwrap();
+      message.success('Снаряжение удалено');
+      if (id) {
+        dispatch(getUserEquipmentThunk(id));
+      }
+    } catch {
+      message.error('Ошибка при удалении');
+    }
+  };
+
+  const toggleMenu = (id: number) => {
+    setOpenMenuId(openMenuId === id ? null : id);
   };
 
   return (
@@ -78,19 +104,24 @@ export default function ProfilePage(): ReactElement {
         </Popconfirm>
       </div>
 
-      <div style={{ display: 'flex', gap: '20px', marginTop: '20px' }}>
-        {/* Левая колонка: Туры */}
+      <div
+        style={{
+          display: 'flex',
+          gap: '20px',
+          marginTop: '20px',
+          alignItems: 'stretch',
+        }}
+      >
         <div style={{ flex: 1, maxWidth: '50%' }}>
           <TourForm />
           <TourList isProfile={true} />
         </div>
 
-        {/* Правая колонка: Снаряжение */}
         <div
           style={{ flex: 1, maxWidth: '50%' }}
           className={styles.profileContainer}
         >
-          <h1>Мое снаряжение</h1>
+          <h1>Список моего снаряжения</h1>
           <Button
             type="primary"
             onClick={handleAddEquipment}
@@ -114,11 +145,38 @@ export default function ProfilePage(): ReactElement {
                   }
                   className={styles.card}
                 >
-                  <p>{equipment.name}</p>
-                  <p>Цена: {equipment.price} руб./сутки</p>
-                  <p>
+                  <p className={styles.name}>{equipment.name}</p>
+                  <p className={styles.price}>
+                    Цена: {equipment.price} ₽/сутки
+                  </p>
+                  <p className={styles.status}>
                     Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}
                   </p>
+
+                  <div className={styles.menuContainer}>
+                    <button
+                      className={styles.menuButton}
+                      onClick={() => toggleMenu(equipment.id)}
+                    >
+                      ⚙️
+                    </button>
+                    {openMenuId === equipment.id && (
+                      <div className={styles.menu}>
+                        <button
+                          className={styles.menuItem}
+                          onClick={() => handleEditEquipment(equipment)}
+                        >
+                          Редактировать
+                        </button>
+                        <button
+                          className={styles.menuItem}
+                          onClick={() => handleDeleteEquipment(equipment)}
+                        >
+                          Удалить
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </Card>
               ))}
           </div>
