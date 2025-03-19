@@ -50,6 +50,8 @@ class TourService {
 		tour.description = data.description
 		tour.start_date = data.start_date
 		tour.end_date = data.end_date
+		tour.location_id = data.location_id
+		tour.image = data.image
 		await tour.save()
 		return tour
 	}

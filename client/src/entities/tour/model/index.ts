@@ -11,9 +11,11 @@ export interface IAddTourData {
 
 export interface IAddTourDataWithId {
   id: number;
-  image: string;
+  image?: string;
   location_name: string;
+  location_id?: number;
   description: string;
+  date_strings?: [string, string];
   start_date: string;
   end_date: string;
 }
