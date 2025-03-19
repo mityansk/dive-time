@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
 			name: DataTypes.STRING,
 			coordinateX: DataTypes.STRING,
 			coordinateY: DataTypes.STRING,
+			temperature: DataTypes.STRING,
 			description: DataTypes.TEXT,
 			complexity: DataTypes.STRING,
 			deep: DataTypes.STRING,

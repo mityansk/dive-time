@@ -110,6 +110,15 @@ export function LocationPage() {
               center: mapCenter,
               zoom: zoom,
             }}
+            options={{
+              suppressMapOpenBlock: true,
+              restrictMapArea: [
+                [85.23618, -178.9],
+                [-73.87011, 181],
+              ],
+              minZoom: 3,
+              maxZoom: 20,
+            }}
             onBoundsChange={handleMapChange}
           >
             <Clusterer
