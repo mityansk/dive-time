@@ -8,6 +8,6 @@ router.post('/signUp', AuthController.signUp);
 router.get('/signOut', AuthController.signOut);
 router.get('/refreshTokens', verifyRefreshToken, AuthController.refreshTokens);
 router.get('/confirmEmail', AuthController.confirmEmail);
-router.delete('/:id', verifyAccessToken, AuthController.delete)
+router.delete('/:id', verifyAccessToken, AuthController.delete);
 
 module.exports = router;

@@ -2,6 +2,7 @@ import React from 'react';
 import { Layout, Typography } from 'antd';
 import styles from './Footer.module.css';
 import { Facebook, Instagram, Twitter, Send } from 'lucide-react';
+import FeedbackFormModal from '../FeedbackForm/FeedbackForm';
 
 const { Footer } = Layout;
 
@@ -11,6 +12,7 @@ const AppFooter: React.FC = () => {
       <Typography.Text style={{ color: 'white' }}>
         © 2025 DIVE TIME. Все права защищены.
       </Typography.Text>
+      <FeedbackFormModal />
       <div className={styles.socialIcons}>
         <a
           href="https://t.me/yourchannel"
