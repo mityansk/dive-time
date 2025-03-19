@@ -8,5 +8,26 @@
   bottom: 0;
   left: 0;
   z-index: 1000; /* Убедимся, что footer поверх других элементов */
-  height: 50px; /* Уменьшил высоту */
+  height: 70px; /* Уменьшил высоту */
+}
+
+.text {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.socialIcons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.socialIcons a {
+  color: white;
+  transition: color 0.3s ease-in-out;
+}
+
+.socialIcons a:hover {
+  color: #00bcd4; /* Голубой оттенок при наведении */
 }
