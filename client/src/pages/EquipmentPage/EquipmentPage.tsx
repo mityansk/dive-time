@@ -8,13 +8,15 @@ import {
   FullscreenControl,
   SearchControl,
 } from '@pbe/react-yandex-maps';
-import { useAppSelector } from '@/shared/hooks/reduxHooks';
+import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { IEquipmentData } from '@/entities/equipment/model';
 import styles from './EquipmentPage.module.css';
 import { getDistance } from 'geolib';
 import EquipmentList from '@/widgets/EquipmentList/EquipmentList';
+import { getEquipmentThunk } from '@/entities/equipment/api';
 
 export function EquipmentPage() {
+  const dispatch = useAppDispatch();
   const equipments = useAppSelector((state) => state.equipments.equipments);
   const [filteredEquipments, setFilteredEquipments] = useState<
     IEquipmentData[]
@@ -22,6 +24,11 @@ export function EquipmentPage() {
   const [mapCenter, setMapCenter] = useState<number[]>([61, 105]);
   const [zoom, setZoom] = useState(3);
   const [placemarks, setPlacemarks] = useState<React.ReactNode[]>([]);
+
+  // Загружаем все снаряжение при монтировании компонента
+  useEffect(() => {
+    dispatch(getEquipmentThunk());
+  }, [dispatch]);
 
   // Функция для определения радиуса на основе зума
   const getRadiusByZoom = (zoomLevel: number) => {
@@ -46,7 +53,7 @@ export function EquipmentPage() {
     }" />
         <p>Цена: ${equipment.price} ₽/сутки</p>
         <p>Статус: ${equipment.isRented ? 'Арендовано' : 'Доступно'}</p>
-        </div>
+      </div>
     `;
   };
 
@@ -72,22 +79,26 @@ export function EquipmentPage() {
     setFilteredEquipments(filtered || []);
   };
 
+  // фильтрование списка при загрузке
   useEffect(() => {
-    const radius = getRadiusByZoom(zoom);
-    const filtered = equipments?.filter((equipment: IEquipmentData) => {
-      if (!equipment.coordinates) return false;
-      const distance = getDistance(
-        { latitude: mapCenter[0], longitude: mapCenter[1] },
-        {
-          latitude: equipment.coordinates[0],
-          longitude: equipment.coordinates[1],
-        }
-      );
-      return distance <= radius;
-    });
-    setFilteredEquipments(filtered || []);
+    if (equipments) {
+      const radius = getRadiusByZoom(zoom);
+      const filtered = equipments.filter((equipment: IEquipmentData) => {
+        if (!equipment.coordinates) return false;
+        const distance = getDistance(
+          { latitude: mapCenter[0], longitude: mapCenter[1] },
+          {
+            latitude: equipment.coordinates[0],
+            longitude: equipment.coordinates[1],
+          }
+        );
+        return distance <= radius;
+      });
+      setFilteredEquipments(filtered);
+    }
   }, [equipments, mapCenter, zoom]);
 
+  // Обновление маркеров на карте
   useEffect(() => {
     const generatedPlacemarks =
       equipments?.map((equipment: IEquipmentData) => {
@@ -147,7 +158,10 @@ export function EquipmentPage() {
         </div>
         <div className={styles.equipmentListContainer}>
           <Suspense fallback={<div>Загрузка...</div>}>
-            <EquipmentList filteredEquipments={filteredEquipments} />
+            <EquipmentList
+              filteredEquipments={filteredEquipments}
+              className={styles.equipmentPageCard}
+            />
           </Suspense>
         </div>
       </div>

@@ -5,12 +5,14 @@ import styles from './EquipmentCard.module.css';
 
 interface EquipmentCardProps {
   equipment: IEquipmentData;
+  className?: string;
   onEdit: (equipment: IEquipmentData) => void;
   onDelete: (equipment: IEquipmentData) => void;
 }
 
 export function EquipmentCard({
   equipment,
+  className = '',
   onEdit,
   onDelete,
 }: EquipmentCardProps) {
@@ -32,7 +34,7 @@ export function EquipmentCard({
           />
         </div>
       }
-      className={styles.card}
+      className={`${styles.card} ${className}`}
     >
       <p className={styles.name}>{equipment.name}</p>
       <p className={styles.price}>Цена: {equipment.price} ₽/сутки</p>

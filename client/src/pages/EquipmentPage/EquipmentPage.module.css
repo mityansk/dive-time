@@ -18,7 +18,6 @@
   font-size: 25px;
   font-weight: bold;
   color: #ffffff;
-  /* background-color: rgba(8, 27, 78, 0.602); */
   text-shadow: 2px 2px 4px rgba(0, 119, 182, 0.6);
   animation: wave 3s infinite alternate ease-in-out;
   text-align: center;
@@ -26,9 +25,13 @@
 }
 
 .equipmentListContainer {
+  position: relative;
   width: 30%;
   height: 70vh;
+
   overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
 }
 
 @keyframes wave {
@@ -38,4 +41,30 @@
   100% {
     transform: translateY(5px);
   }
+}
+.equipmentPageCard {
+  width: 98%;
+  height: 200px;
+  background-color: rgba(8, 27, 78, 0.602);
+  border-radius: 14px;
+  border: none;
+  margin: 0 0 0.5em 0;
+  padding: 1em;
+  p {
+    color: #ffffff;
+    font-size: 18px;
+  }
+
+  img {
+    width: 12em;
+    height: 12em;
+    padding: 0.5em;
+    border-radius: 14px;
+    object-fit: cover;
+  }
+}
+
+.equipmentPageCard:hover {
+  transform: scale(1.02);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
