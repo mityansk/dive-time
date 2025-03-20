@@ -1,6 +1,6 @@
 import TourForm from '@/widgets/TourForm/TourForm';
 import TourList from '@/widgets/TourList/TourList';
-import { Card, Button, message, Popconfirm } from 'antd';
+import { Button, message, Popconfirm } from 'antd';
 import { ReactElement, useEffect, useState } from 'react';
 import type { PopconfirmProps } from 'antd';
 import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
@@ -13,26 +13,56 @@ import {
   deleteEquipmentThunk,
 } from '@/entities/equipment/api';
 import { IEquipmentData } from '@/entities/equipment/model';
+import { EquipmentCard } from '@/entities/equipment/ui/EquipmentCard/EquipmentCard';
 import styles from './ProfilePage.module.css';
 
 export default function ProfilePage(): ReactElement {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const id = useAppSelector((state) => state.user.user?.id);
-
-  //для снаряжения
   const equipments = useAppSelector((state) => state.equipments.equipments);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEquipment, setSelectedEquipment] =
     useState<IEquipmentData | null>(null);
-  const [openMenuId, setOpenMenuId] = useState<number | null>(null);
 
   useEffect(() => {
     if (!id) {
       navigate(CLIENT_ROUTES.MAIN);
     }
   }, []);
+
+  useEffect(() => {
+    if (id) {
+      dispatch(getUserEquipmentThunk(id));
+    }
+  }, [dispatch, id]);
+
+  const handleAddEquipment = () => {
+    setSelectedEquipment(null);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedEquipment(null);
+  };
+
+  const handleEditEquipment = (equipment: IEquipmentData) => {
+    setSelectedEquipment(equipment);
+    setIsModalOpen(true);
+  };
+
+  const handleDeleteEquipment = async (equipment: IEquipmentData) => {
+    try {
+      await dispatch(deleteEquipmentThunk(equipment)).unwrap();
+      message.success('Снаряжение удалено');
+      if (id) {
+        dispatch(getUserEquipmentThunk(id));
+      }
+    } catch {
+      message.error('Ошибка при удалении');
+    }
+  };
 
   const confirm: PopconfirmProps['onConfirm'] = async () => {
     try {
@@ -52,45 +82,8 @@ export default function ProfilePage(): ReactElement {
 
   const cancel: PopconfirmProps['onCancel'] = () => {};
 
-  useEffect(() => {
-    if (id) {
-      dispatch(getUserEquipmentThunk(id));
-    }
-  }, [dispatch, id]);
-
-  const handleAddEquipment = () => {
-    setSelectedEquipment(null);
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-    setSelectedEquipment(null);
-  };
-  const handleEditEquipment = (equipment: IEquipmentData) => {
-    console.log('Editing equipment:', equipment);
-    setSelectedEquipment(equipment);
-    setIsModalOpen(true);
-  };
-
-  const handleDeleteEquipment = async (equipment: IEquipmentData) => {
-    try {
-      await dispatch(deleteEquipmentThunk(equipment)).unwrap();
-      message.success('Снаряжение удалено');
-      if (id) {
-        dispatch(getUserEquipmentThunk(id));
-      }
-    } catch {
-      message.error('Ошибка при удалении');
-    }
-  };
-
-  const toggleMenu = (id: number) => {
-    setOpenMenuId(openMenuId === id ? null : id);
-  };
-
   return (
-    <div style={{ paddingTop: '80px' }}>
+    <div className={styles.pageContainer}>
       <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
         <Popconfirm
           title="Удалить профиль"
@@ -104,22 +97,20 @@ export default function ProfilePage(): ReactElement {
         </Popconfirm>
       </div>
 
-      <div
-        style={{
-          display: 'flex',
-          gap: '20px',
-          marginTop: '20px',
-          alignItems: 'stretch',
-        }}
-      >
-        <div style={{ flex: 1, maxWidth: '50%' }}>
+      <div className={styles.contentContainer}>
+        <div
+          style={{ flex: 1, maxWidth: '48%' }}
+          className={styles.sectionContainer}
+        >
           <TourForm />
-          <TourList isProfile={true} />
+          <div className={styles.scrollableContainer}>
+            <TourList isProfile={true} />
+          </div>
         </div>
 
         <div
-          style={{ flex: 1, maxWidth: '50%' }}
-          className={styles.profileContainer}
+          style={{ flex: 1, maxWidth: '48%' }}
+          className={styles.sectionContainer}
         >
           <h1>Список моего снаряжения</h1>
           <Button
@@ -130,56 +121,18 @@ export default function ProfilePage(): ReactElement {
             Добавить снаряжение
           </Button>
 
-          <div className={styles.cardContainer}>
+          <div
+            className={`${styles.cardContainer} ${styles.scrollableContainer}`}
+          >
             {equipments
               ?.filter((equipment) => equipment.user_id === id)
               .map((equipment) => (
-                <Card
+                <EquipmentCard
                   key={equipment.id}
-                  cover={
-                    <div className={styles.imageContainer}>
-                      <img
-                        alt={equipment.name}
-                        src={equipment.image}
-                        className={styles.cardImage}
-                      />
-                    </div>
-                  }
-                  className={styles.card}
-                >
-                  <p className={styles.name}>{equipment.name}</p>
-                  <p className={styles.price}>
-                    Цена: {equipment.price} ₽/сутки
-                  </p>
-                  <p className={styles.status}>
-                    Статус: {equipment.isRented ? 'Арендовано' : 'Доступно'}
-                  </p>
-
-                  <div className={styles.menuContainer}>
-                    <button
-                      className={styles.menuButton}
-                      onClick={() => toggleMenu(equipment.id)}
-                    >
-                      ⚙️
-                    </button>
-                    {openMenuId === equipment.id && (
-                      <div className={styles.menu}>
-                        <button
-                          className={styles.menuItem}
-                          onClick={() => handleEditEquipment(equipment)}
-                        >
-                          Редактировать
-                        </button>
-                        <button
-                          className={styles.menuItem}
-                          onClick={() => handleDeleteEquipment(equipment)}
-                        >
-                          Удалить
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                </Card>
+                  equipment={equipment}
+                  onEdit={handleEditEquipment}
+                  onDelete={handleDeleteEquipment}
+                />
               ))}
           </div>
         </div>

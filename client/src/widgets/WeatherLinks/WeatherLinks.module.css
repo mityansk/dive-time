@@ -1,0 +1,111 @@
+.weatherLinksContainer {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  background-color: transparent;
+}
+
+.dropletsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 25px; /* Увеличиваем расстояние между каплями */
+}
+
+.dropletLink {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 110px;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.2s;
+}
+
+/* Создаем форму капли с помощью псевдоэлемента */
+.dropletLink::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(8, 27, 78, 0.6);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: scaleY(1.1) rotate(360deg); /* Поворачиваем каплю острым концом вверх */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s, background-color 0.2s;
+  z-index: -1;
+}
+
+.dropletLink:hover::before {
+  background-color: rgba(8, 27, 78, 0.8);
+  transform: scaleY(1.2) rotate(180deg);
+}
+
+.dropletLink:hover {
+  transform: translateY(-5px);
+}
+
+.dropletIcon {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.dropletText {
+  font-size: 0.8em;
+  text-align: center;
+  color: #ffffff;
+  margin-top: 5px;
+  position: relative;
+  z-index: 1;
+}
+
+.weatherTitle {
+  color: #ffffff;
+  font-size: 0.9em;
+  margin-bottom: 15px;
+  text-align: center;
+  background-color: rgba(8, 27, 78, 0.6);
+  padding: 8px;
+  border-radius: 10px;
+}
+
+@keyframes dropletWobble {
+  0% {
+    transform: rotate(180deg);
+  }
+  25% {
+    transform: rotate(175deg);
+  }
+  75% {
+    transform: rotate(185deg);
+  }
+  100% {
+    transform: rotate(180deg);
+  }
+}
+
+.dropletLink:hover::before {
+  animation: dropletWobble 1s ease-in-out infinite;
+}
+
+.dropletLink::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 30%;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.4) 0%,
+    transparent 50%
+  );
+  border-radius: 50%;
+  top: 20%;
+  left: 20%;
+  z-index: 0;
+}
