@@ -1,14 +1,10 @@
 .footer {
   width: 100%;
-  background: rgba(0, 0, 0, 0); /* Добавил прозрачность */
+  background: rgba(0, 0, 0, 0.194); /* Прозрачность */
   color: white;
   text-align: center;
-  padding: 10px 0; /* Уменьшил padding */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  z-index: 1000; /* Убедимся, что footer поверх других элементов */
-  height: 70px; /* Уменьшил высоту */
+  padding: 10px; /* Уменьшенный padding */
+  height: 70px; /* Уменьшенная высота */
 }
 
 .text {
