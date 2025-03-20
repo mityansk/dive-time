@@ -71,7 +71,6 @@ const AuthModal: React.FC = () => {
         </button>
         <h2>{isRegister ? 'Регистрация' : 'Вход'}</h2>
         {errorRed && <p style={{ color: 'red' }}>{errorRed}</p>}
-
         <form onSubmit={handleSubmit}>
           {isRegister && (
             <div>
@@ -121,16 +120,20 @@ const AuthModal: React.FC = () => {
               : 'Войти'}
           </button>
         </form>
-
-        <Link
-          to=""
-          className={styles.linkButton}
-          onClick={() => setIsRegister(!isRegister)}
-        >
-          {isRegister
-            ? 'Уже есть аккаунт? Войти'
-            : 'Нет аккаунта? Зарегистрироваться'}
-        </Link>
+        <div className={styles.linkContainer}>
+          <Link to="" className={styles.linkPasswordRecovery}>
+            {isRegister ? '' : 'Забыли пароль?'}
+          </Link>
+          <Link
+            to=""
+            className={styles.linkButton}
+            onClick={() => setIsRegister(!isRegister)}
+          >
+            {isRegister
+              ? 'Уже есть аккаунт? Войти'
+              : 'Нет аккаунта? Зарегистрироваться'}
+          </Link>
+        </div>
       </div>
     </div>
   );

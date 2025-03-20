@@ -30,7 +30,8 @@
   color: black;
 }
 
-.linkButton {
+.linkButton,
+.linkPasswordRecovery {
   background: none;
   border: none;
   color: white;
@@ -39,10 +40,12 @@
   font-size: inherit;
   outline: none;
 }
-.linkButton:hover {
+.linkButton:hover,
+.linkPasswordRecovery:hover {
   color: rgb(255, 255, 255);
 }
-.linkButton:focus {
+.linkButton:focus,
+.linkPasswordRecovery:focus {
   outline: none;
 }
 
@@ -71,4 +74,10 @@
 .inputField:focus {
   border-color: rgb(0, 83, 167);
   outline: none;
+}
+
+.linkContainer
+{
+  display: flex;
+  flex-direction: column;
 }
