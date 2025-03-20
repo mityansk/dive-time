@@ -11,16 +11,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   User.init(
-    {
-      username: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      isEmailConfirmed: DataTypes.BOOLEAN,
-    },
-    {
-      sequelize,
-      modelName: "User",
-    }
-  );
+		{
+			username: DataTypes.STRING,
+			email: DataTypes.STRING,
+			password: DataTypes.STRING,
+			isEmailConfirmed: DataTypes.BOOLEAN,
+			resetToken: DataTypes.STRING,
+			resetTokenExpiry: DataTypes.DATE,
+		},
+		{
+			sequelize,
+			modelName: 'User',
+		}
+	);
   return User;
 };
