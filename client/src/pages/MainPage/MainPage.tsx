@@ -1,5 +1,6 @@
 import styles from './MainPage.module.css';
 import WeatherLinks from '@/widgets/WeatherLinks/WeatherLinks';
+import TipsModal from '@/widgets/TipsModal/TipsModal';
 
 export default function MainPage() {
   return (
@@ -11,6 +12,9 @@ export default function MainPage() {
       />
       <div>
         <WeatherLinks />
+      </div>
+      <div>
+        <TipsModal />
       </div>
       <p className={styles.welcomeText}>Погрузитесь в мир приключений!</p>
       <div className={styles.contentContainer}>

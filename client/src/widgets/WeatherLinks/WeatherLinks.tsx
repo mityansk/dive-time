@@ -18,7 +18,6 @@ const weatherSites: WeatherSite[] = [
     icon: 'https://www.tide-forecast.com/favicon.ico',
     link: 'https://www.tide-forecast.com',
   },
-  // Другие сайты...
 ];
 
 const WeatherLinks: React.FC = () => {

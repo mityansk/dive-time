@@ -1,6 +1,5 @@
 .container {
   display: flex;
-
   height: 100%;
 }
 
@@ -18,7 +17,8 @@
   font-size: 25px;
   font-weight: bold;
   color: #ffffff;
-  text-shadow: 2px 2px 4px rgba(0, 119, 182, 0.6);
+  font: bolder;
+  text-shadow: 2px 2px 4px rgba(14, 68, 97, 0.6);
   animation: wave 3s infinite alternate ease-in-out;
   text-align: center;
   margin-bottom: 20px;

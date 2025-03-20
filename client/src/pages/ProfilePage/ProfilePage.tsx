@@ -58,7 +58,7 @@ export default function ProfilePage(): ReactElement {
       <div className={styles.contentContainer}>
         <div
           style={{ flex: 1, maxWidth: '48%' }}
-          className={styles.sectionContainerLeft}
+          className={styles.sectionContainer}
         >
           <TourForm />
           <div className={styles.scrollableContainer}>
@@ -68,17 +68,24 @@ export default function ProfilePage(): ReactElement {
 
         <div
           style={{ flex: 1, maxWidth: '48%' }}
-          className={styles.sectionContainerRight}
+          className={styles.sectionContainer}
         >
-          <p>Список моего снаряжения</p>
           <EquipmentForm />
           <div className={styles.scrollableContainer}>
-            <div className={styles.equipmentList}>
-              <EquipmentList
-                isProfile={true}
-                className={styles.equipmentPageCard}
-              />
-            </div>
+            <h1
+              style={{
+                textAlign: 'center',
+                color: '#032a50',
+                marginBottom: '48px',
+              }}
+            >
+              Список моего снаряжения
+            </h1>
+
+            <EquipmentList
+              isProfile={true}
+              className={styles.profilePageCard}
+            />
           </div>
         </div>
       </div>

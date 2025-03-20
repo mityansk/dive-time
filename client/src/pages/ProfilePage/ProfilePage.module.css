@@ -4,6 +4,8 @@
   overflow: hidden;
   padding-top: 80px;
   flex-direction: column;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .contentContainer {
@@ -35,25 +37,13 @@
 .scrollableContainer::-webkit-scrollbar-thumb:hover {
   background-color: rgba(8, 27, 78, 0.8);
 }
-.sectionContainerLeft {
+
+.sectionContainer {
   height: calc(100vh - 100px);
   overflow: hidden;
-  display: grid;
-
+  padding-left: 20px;
   flex-direction: column;
   width: 48%;
-}
-.sectionContainerRight {
-  height: calc(100vh - 100px);
-  overflow: hidden;
-  display: grid;
-  flex-direction: row;
-  width: 48%;
-}
-
-.equipmentList {
-  padding: 20px;
-  width: 100%;
 }
 
 .addButton {
@@ -65,4 +55,9 @@ h1 {
   font-size: 30px;
   color: black;
   margin-bottom: 20px;
+}
+
+.profilePageCard {
+  display: flex;
+  flex-wrap: wrap;
 }
