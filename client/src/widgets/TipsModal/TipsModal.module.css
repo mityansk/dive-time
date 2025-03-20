@@ -19,7 +19,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease;
   position: absolute;
-  padding-left: 20px; /* Сдвигаем текст вправо */
+  padding-left: 20px;
 }
 
 .icon:hover {
@@ -62,7 +62,7 @@
 
 .modalContent {
   background-color: rgba(0, 119, 182, 0.9);
-  padding: 20px 30px; /* Добавляем отступы по бокам */
+  padding: 20px 30px;
   border-radius: 10px;
   width: 50%;
   max-width: 600px;
@@ -70,10 +70,10 @@
   max-height: 80vh;
   overflow-y: auto;
   display: flex;
-  flex-direction: column; /* Чтобы элементы располагались вертикально */
-  justify-content: center; /* Центрирует содержимое по вертикали */
-  text-align: left; /* Сдвигаем текст влево */
-  padding-left: 50px; /* Добавляем дополнительный отступ слева */
+  flex-direction: column;
+  justify-content: center;
+  text-align: left;
+  padding-left: 50px;
 }
 
 .close {
