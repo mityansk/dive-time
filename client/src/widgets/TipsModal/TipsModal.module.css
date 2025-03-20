@@ -62,17 +62,13 @@
 
 .modalContent {
   background-color: rgba(0, 119, 182, 0.9);
-  padding: 20px 30px;
+  padding: 20px;
   border-radius: 10px;
   width: 50%;
   max-width: 600px;
   position: relative;
   max-height: 80vh;
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: left;
   padding-left: 50px;
 }
 
@@ -84,7 +80,6 @@
   cursor: pointer;
 }
 
-/* Адаптивность */
 @media (max-width: 768px) {
   .icon {
     width: 70px;
