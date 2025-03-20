@@ -21,6 +21,10 @@ export default function Router(): ReactElement {
           <Route path={CLIENT_ROUTES.EQUIPMENT} element={<EquipmentPage />} />
           <Route path={CLIENT_ROUTES.PROFILE} element={<ProfilePage />} />
           <Route
+            path={CLIENT_ROUTES.RESET_PASSWORD}
+            element={<MainPage />}
+          />
+          <Route
             path={CLIENT_ROUTES.CONFIRM_EMAIL}
             element={<ConfirmationEmailPage />}
           />

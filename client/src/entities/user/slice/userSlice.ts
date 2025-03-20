@@ -5,6 +5,8 @@ import {
   signOutThunk,
   confirmEmailThunk,
   deleteUserThunk,
+  resetPasswordThunk,
+  forgotPasswordThunk,
 } from '../api';
 
 import { IUser } from '../model';
@@ -125,6 +127,32 @@ const userSlice = createSlice({
       .addCase(deleteUserThunk.rejected, (state, action) => {
         state.isLoading = false;
         state.user = null;
+        state.error = action.payload!.error ?? 'Unknown error';
+      })
+
+      // forgotPasswordThunk
+      .addCase(forgotPasswordThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(forgotPasswordThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(forgotPasswordThunk.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload!.error ?? 'Unknown error';
+      })
+
+      // resetPasswordThunk
+      .addCase(resetPasswordThunk.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(resetPasswordThunk.fulfilled, (state) => {
+        state.isLoading = false;
+        state.error = null;
+      })
+      .addCase(resetPasswordThunk.rejected, (state, action) => {
+        state.isLoading = false;
         state.error = action.payload!.error ?? 'Unknown error';
       });
   },
