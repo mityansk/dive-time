@@ -1,19 +1,15 @@
 .pageContainer {
+  display: flex;
   height: 100vh;
   overflow: hidden;
   padding-top: 80px;
-  display: flex;
   flex-direction: column;
+  flex-wrap: nowrap;
+  overflow-x: auto;
 }
 
 .contentContainer {
   display: flex;
-  gap: 20px;
-  margin-top: 20px;
-  align-items: flex-start;
-  justify-content: space-between;
-  height: calc(100% - 60px);
-  overflow: hidden;
 }
 
 .scrollableContainer {
@@ -42,81 +38,12 @@
   background-color: rgba(8, 27, 78, 0.8);
 }
 
-.cardContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  margin: 0;
-  width: 100%;
-}
-
 .sectionContainer {
   height: calc(100vh - 100px);
   overflow: hidden;
-  display: flex;
+  padding-left: 20px;
   flex-direction: column;
-}
-
-.card {
-  position: relative;
-  background-color: rgba(8, 27, 78, 0.8);
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  padding: 20px;
-  margin: 10px;
-  max-width: 300px;
-  width: 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  font-family: 'Roboto', sans-serif;
-  color: #ffffff;
-  overflow: hidden;
-  height: 390px;
-  border: none;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-.imageContainer {
-  width: 100%;
-  height: 200px;
-  overflow: hidden;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.cardImage {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
-
-.name {
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #ffffff;
-  display: block;
-}
-
-.status {
-  font-size: 14px;
-  line-height: 1.5;
-  margin-bottom: 10px;
-  color: #e0e0e0;
-  display: block;
-}
-
-.price {
-  font-size: 14px;
-  color: #b0b0b0;
-  margin-bottom: 5px;
-  display: block;
+  width: 48%;
 }
 
 .addButton {
@@ -124,64 +51,8 @@
   margin-bottom: 20px;
 }
 
-.menuContainer {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 2;
-}
-
-.menuButton {
-  background: rgba(0, 0, 0, 0);
-  border: none;
-  border-radius: 21%;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-
-.menuButton:hover {
-  background: rgba(9, 31, 198, 0.777);
-}
-
-.menu {
-  position: absolute;
-  top: 40px;
-  right: 0;
-  display: flex;
-  flex-direction: column;
-  background: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-  padding: 5px 0;
-}
-
-.menuItem {
-  padding: 8px 16px;
-  background: none;
-  border: none;
-  text-align: left;
-  cursor: pointer;
-  font-size: 14px;
-  color: #333;
-  transition: background 0.2s ease;
-}
-
-.menuItem:hover {
-  background: #f0f0f0;
-}
-
 h1 {
   font-size: 30px;
   color: black;
   margin-bottom: 20px;
-}
-
-.card :global(.ant-card-head) {
-  display: none;
 }
