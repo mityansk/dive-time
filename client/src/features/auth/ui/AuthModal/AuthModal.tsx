@@ -43,6 +43,7 @@ const AuthModal: React.FC = () => {
 
     if (isRegister) {
       dispatch(signUpThunk({ username, email, password }));
+       message.success('Перейдите в почту что бы подтвердить аккаунт.');
     } else if (isForgotPassword) {
       dispatch(forgotPasswordThunk(email));
       message.success('Перейдите в почту что бы подтвердить аккаунт.');
@@ -65,7 +66,7 @@ const AuthModal: React.FC = () => {
       isFirstRender.current = false;
       return;
     }
-    if (error) setErrorRed(error);
+    if (error && error !== 'Invalid refresh token') setErrorRed(error);
   }, [error]);
 
   useEffect(() => {
