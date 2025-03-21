@@ -19,7 +19,7 @@ export default function ProfilePage(): ReactElement {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const id = useAppSelector((state) => state.user.user?.id);
-
+  const user = useAppSelector((state) => state.user.user);
   //для снаряжения
   const equipments = useAppSelector((state) => state.equipments.equipments);
 
@@ -30,6 +30,9 @@ export default function ProfilePage(): ReactElement {
 
   useEffect(() => {
     if (!id) {
+      navigate(CLIENT_ROUTES.MAIN);
+    }
+    if (!user) {
       navigate(CLIENT_ROUTES.MAIN);
     }
   }, []);
@@ -88,6 +91,18 @@ export default function ProfilePage(): ReactElement {
   const toggleMenu = (id: number) => {
     setOpenMenuId(openMenuId === id ? null : id);
   };
+
+// if (user && user!.isEmailConfirmed === false) {
+//   return (
+//     <div className={styles.containerIsEmailConfirmed}>
+//       <div className={styles.messageIsEmailConfirmed}>
+//         Пожалуйста подтвердите вашу почту
+//       </div>
+//     </div>
+//   );
+// }
+// console.log('User:', user);
+// console.log('Is email confirmed:', user?.isEmailConfirmed);
 
   return (
     <div className={styles.pageContainer}>
