@@ -56,8 +56,3 @@ h1 {
   color: black;
   margin-bottom: 20px;
 }
-
-.profilePageCard {
-  display: flex;
-  flex-wrap: wrap;
-}
