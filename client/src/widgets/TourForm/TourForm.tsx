@@ -4,43 +4,51 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router';
 import TourFormModal from '@/components/TourFormModal/TourFormModal';
-import { Button, Form, Input, DatePicker, message, GetProps, Select } from 'antd';
+import {
+  Button,
+  Form,
+  Input,
+  DatePicker,
+  message,
+  GetProps,
+  Select,
+} from 'antd';
 import { IAddTourData } from '@/entities/tour';
 import dayjs from 'dayjs';
 import { getLocation } from '@/entities/location';
 
 const { TextArea } = Input;
 const { RangePicker } = DatePicker;
-type RangePickerProps = GetProps<typeof DatePicker.RangePicker>
+type RangePickerProps = GetProps<typeof DatePicker.RangePicker>;
 
 export default function TourForm() {
   const [form] = Form.useForm();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.user.user);
-  const location = useAppSelector((state) => state.location.locations)
-  
+  const location = useAppSelector((state) => state.location.locations);
+
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    dispatch(getLocation())
+    dispatch(getLocation());
   }, [dispatch]);
 
-  const onFinish = async (values: IAddTourData) => { 
-
+  const onFinish = async (values: IAddTourData) => {
     try {
       const data = {
         location_name: values.location_name,
         description: values.description,
         start_date: new Date(values.date_strings![0]).toLocaleDateString(),
         end_date: new Date(values.date_strings![1]).toLocaleDateString(),
-        location_id: location.find((loc) => loc.name === values.location_name)?.id,
+        location_id: location.find((loc) => loc.name === values.location_name)
+          ?.id,
         author_id: user!.id,
-        image: location.find((loc) => loc.name === values.location_name)?.image
+        image: location.find((loc) => loc.name === values.location_name)?.image,
       };
 
       await dispatch(addTourThunk(data)).unwrap();
-      
+
       message.success('Тур успешно создан!');
       navigate(CLIENT_ROUTES.TOUR);
       setIsModalOpen(false);
@@ -50,15 +58,15 @@ export default function TourForm() {
   };
 
   const disabledDate: RangePickerProps['disabledDate'] = (current) => {
-    return current && current < dayjs().endOf('day')
-  }
+    return current && current < dayjs().endOf('day');
+  };
 
   return (
     <div>
       <Button
         type="primary"
         onClick={() => setIsModalOpen(true)}
-        style={{ marginBottom: '16px' }}
+        style={{ marginBottom: '16px', width: '200px', margin: '10px' }}
       >
         Создать тур
       </Button>
@@ -75,7 +83,7 @@ export default function TourForm() {
               },
             ]}
           >
-            <Select placeholder='Выберите локацию'>
+            <Select placeholder="Выберите локацию">
               {location!.map((location) => (
                 <Select.Option key={location.id} value={location.name}>
                   {location.name}

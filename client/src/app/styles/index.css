@@ -30,6 +30,7 @@ a:hover {
 body {
   min-height: 100vh;
   background-image: url('/main1.jpg');
+  background-size: cover;
 }
 
 h1 {
