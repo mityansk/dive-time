@@ -9,6 +9,7 @@ import { LocationInfoPage } from '@/pages/LocationInfoPage/LocationInfoPage';
 import { EquipmentPage } from '@/pages/EquipmentPage/EquipmentPage';
 import ProfilePage from '@/pages/ProfilePage/ProfilePage';
 import ConfirmationEmailPage from '@/pages/ConfirmationEmailPage/ConfirmationEmailPage';
+import NotFoundPage from '@/pages/NotFoundPage/NotFoundPage';
 
 export default function Router(): ReactElement {
   return (
@@ -20,10 +21,7 @@ export default function Router(): ReactElement {
           <Route path={CLIENT_ROUTES.LOCATIONS} element={<LocationPage />} />
           <Route path={CLIENT_ROUTES.EQUIPMENT} element={<EquipmentPage />} />
           <Route path={CLIENT_ROUTES.PROFILE} element={<ProfilePage />} />
-          <Route
-            path={CLIENT_ROUTES.RESET_PASSWORD}
-            element={<MainPage />}
-          />
+          <Route path={CLIENT_ROUTES.RESET_PASSWORD} element={<MainPage />} />
           <Route
             path={CLIENT_ROUTES.CONFIRM_EMAIL}
             element={<ConfirmationEmailPage />}
@@ -32,6 +30,7 @@ export default function Router(): ReactElement {
             path={CLIENT_ROUTES.LOCATIONS_INFO}
             element={<LocationInfoPage />}
           />
+          <Route path={CLIENT_ROUTES.NOT_FOUND} element={<NotFoundPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
