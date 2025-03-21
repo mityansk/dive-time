@@ -10,6 +10,8 @@ enum USER_API_ENDPOINTS {
   REFRESH = '/auth/refreshTokens',
   SIGN_OUT = '/auth/signOut',
   CONFIRM_EMAIL = '/auth/confirmEmail',
+  RESET_PASSWORD = '/auth/resetPassword',
+  FORGOT_PASSWORD = '/auth/forgotPassword',
   DELETE_USER = '/auth',
 }
 
@@ -19,6 +21,8 @@ enum USER_THUNK_TYPES {
   REFRESH = 'user/refreshTokens',
   SIGN_OUT = 'user/signOut',
   CONFIRM_EMAIL = '/user/confirmEmail',
+  RESET_PASSWORD = '/user/resetPassword',
+  FORGOT_PASSWORD = '/user/forgotPassword',
   DELETE_USER = '/user/delete',
 }
 
@@ -90,15 +94,16 @@ export const deleteUserThunk = createAsyncThunk<
   { rejectValue: IServerResponse }
 >(USER_THUNK_TYPES.DELETE_USER, async (id, { rejectWithValue }) => {
   try {
-    const { data } = await axiosInstance.delete(`${USER_API_ENDPOINTS.DELETE_USER}/${id}`);
-    
+    const { data } = await axiosInstance.delete(
+      `${USER_API_ENDPOINTS.DELETE_USER}/${id}`
+    );
+
     setAccessToken('');
     return data;
   } catch (error) {
     return rejectWithValue(handleAxiosError(error));
   }
 });
-
 
 export const confirmEmailThunk = createAsyncThunk<
   IServerResponse<IAuthResponseData>,
@@ -114,3 +119,41 @@ export const confirmEmailThunk = createAsyncThunk<
     return rejectWithValue(handleAxiosError(error));
   }
 });
+
+// Санка для запроса на восстановление пароля
+export const forgotPasswordThunk = createAsyncThunk<
+  IServerResponse,
+  string,
+  { rejectValue: IServerResponse }
+>(USER_THUNK_TYPES.FORGOT_PASSWORD, async (email, { rejectWithValue }) => {
+  try {
+    const { data } = await axiosInstance.post(
+      USER_API_ENDPOINTS.FORGOT_PASSWORD,
+      { email }
+    );
+    return data;
+  } catch (error) {
+    return rejectWithValue(handleAxiosError(error));
+  }
+});
+
+// Санка для сброса пароля
+export const resetPasswordThunk = createAsyncThunk<
+  IServerResponse,
+  { token: string | undefined; newPassword: string },
+  { rejectValue: IServerResponse }
+>(
+  USER_THUNK_TYPES.RESET_PASSWORD,
+  async ({ token, newPassword }, { rejectWithValue }) => {
+    
+    try {
+      const { data } = await axiosInstance.post(
+        `${USER_API_ENDPOINTS.RESET_PASSWORD}/${token}`,
+        { token, newPassword }
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(handleAxiosError(error));
+    }
+  }
+);

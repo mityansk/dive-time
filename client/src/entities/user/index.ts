@@ -12,6 +12,8 @@ export {
   signOutThunk,
   confirmEmailThunk,
   deleteUserThunk,
+  resetPasswordThunk,
+  forgotPasswordThunk,
 } from './api';
 
 export { userReducer } from './slice/userSlice';

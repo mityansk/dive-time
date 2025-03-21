@@ -3,44 +3,44 @@ const bcrypt = require('bcrypt');
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up(queryInterface) {
-    const password1 = await bcrypt.hash('Qwerty123@', 10);
-    const password2 = await bcrypt.hash('Qwerty123@', 10);
-    const password3 = await bcrypt.hash('Qwerty1234!', 10);
+	async up(queryInterface) {
+		const password1 = await bcrypt.hash('Qwerty123@', 10);
+		const password2 = await bcrypt.hash('Qwerty123@', 10);
+		const password3 = await bcrypt.hash('Qwerty1234!', 10);
 
-    await queryInterface.bulkInsert(
-      'Users',
-      [
-        {
-          username: 'Пупа',
-          email: 'pupa@pupa.com',
-          password: password1,
-          isEmailConfirmed: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          username: 'Лупа',
-          email: 'lupa@lupa.com',
-          password: password2,
-          isEmailConfirmed: false,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-        {
-          username: 'Павел Подвохов',
-          email: 'pavel.scam@scam.com',
-          password: password3,
-          isEmailConfirmed: true,
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      ],
-      {}
-    );
-  },
+		await queryInterface.bulkInsert(
+			'Users',
+			[
+				{
+					username: 'Пупа',
+					email: 'pupa@pupa.com',
+					password: password1,
+					isEmailConfirmed: true,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					username: 'Лупа',
+					email: 'lupa@lupa.com',
+					password: password2,
+					isEmailConfirmed: false,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+				{
+					username: 'Павел Подвохов',
+					email: 'pavel.scam@scam.com',
+					password: password3,
+					isEmailConfirmed: true,
+					createdAt: new Date(),
+					updatedAt: new Date(),
+				},
+			],
+			{}
+		);
+	},
 
-  async down(queryInterface) {
-    await queryInterface.bulkDelete('Users', null, {});
-  },
+	async down(queryInterface) {
+		await queryInterface.bulkDelete('Users', null, {});
+	},
 };

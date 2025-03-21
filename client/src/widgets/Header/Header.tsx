@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@/shared/hooks/reduxHooks';
 import AuthModal from '@/features/auth/ui/AuthModal/AuthModal';
 import { signOutThunk } from '@/entities/user/api';
 import { CLIENT_ROUTES } from '@/shared/enums/clientRoutes';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import styles from './Header.module.css';
 
 const { Header } = Layout;
@@ -18,7 +18,14 @@ export const AppHeader: React.FC = () => {
   const user = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 700);
+  const location = useLocation();
+  const currentPath = location.pathname;
 
+  useEffect(() => {
+    if (currentPath.includes('reset')) {
+      dispatch(openModal());
+    }
+  }, [currentPath, dispatch]);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 750);
