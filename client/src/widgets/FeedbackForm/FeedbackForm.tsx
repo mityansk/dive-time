@@ -50,7 +50,7 @@ const FeedbackFormModal: React.FC = () => {
         type="primary"
         onClick={showModal}
       >
-        Есть правки или предложения
+        Есть правки или предложения?
       </Button>
       <Modal
         title="Обратная связь"
