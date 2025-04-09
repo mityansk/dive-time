@@ -1,6 +1,6 @@
 .footer {
   width: 100%;
-  background: rgba(0, 0, 0, 0.194); /* Прозрачность */
+  background: rgb(0 0 0 / 19.4%); /* Прозрачность */
   color: white;
   text-align: center;
   padding: 10px; /* Уменьшенный padding */

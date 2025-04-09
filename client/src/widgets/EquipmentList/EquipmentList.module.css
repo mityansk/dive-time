@@ -3,23 +3,22 @@
   justify-content: space-around;
   width: 98%;
   height: 200px;
-  background-color: rgba(8, 27, 78, 0.602);
+  background-color: rgb(8 27 78 / 60.2%);
   border-radius: 10px;
   border: none;
   overflow: hidden;
   padding: 1em;
   margin-left: 5px;
-  color: rgb(255, 255, 255);
+  color: rgb(255 255 255);
   transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
 .card:hover {
   transform: scale(1.02);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 10px rgb(0 0 0 / 20%);
 }
 
 .bookButton {
-  background-color: transparent;
   flex-direction: column;
   background-color: #ff9800;
   color: white;
@@ -32,8 +31,8 @@
 }
 
 .bookedButton {
-  background-color: rgb(116, 190, 240) !important;
-  color: rgb(136, 10, 10) !important;
+  background-color: rgb(116 190 240) !important;
+  color: rgb(136 10 10) !important;
   font-weight: 600;
   border-radius: 8px;
   cursor: not-allowed;
@@ -54,6 +53,7 @@ p {
   border-radius: 10px;
   margin: 10px;
 }
+
 .equipmentList {
   display: flex;
   flex-wrap: wrap;

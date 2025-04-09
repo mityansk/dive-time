@@ -30,17 +30,12 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgba(8, 27, 78, 0.6);
+  background-color: rgb(8 27 78 / 60%);
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   transform: scaleY(1.1) rotate(360deg);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 20%);
   transition: transform 0.2s, background-color 0.2s;
   z-index: -1;
-}
-
-.dropletLink:hover::before {
-  background-color: rgba(8, 27, 78, 0.8);
-  transform: scaleY(1.2) rotate(180deg);
 }
 
 .dropletLink:hover {
@@ -58,39 +53,38 @@
 .dropletText {
   font-size: 0.8em;
   text-align: center;
-  color: #ffffff;
+  color: #fff;
   margin-top: 5px;
   position: relative;
   z-index: 1;
 }
 
 .weatherTitle {
-  color: #ffffff;
+  color: #fff;
   font-size: 0.9em;
   margin-bottom: 15px;
   text-align: center;
-  background-color: rgba(8, 27, 78, 0.6);
+  background-color: rgb(8 27 78 / 60%);
   padding: 8px;
   border-radius: 10px;
 }
 
-@keyframes dropletWobble {
+@keyframes dropletwobble {
   0% {
     transform: rotate(180deg);
   }
+
   25% {
     transform: rotate(175deg);
   }
+
   75% {
     transform: rotate(185deg);
   }
+
   100% {
     transform: rotate(180deg);
   }
-}
-
-.dropletLink:hover::before {
-  animation: dropletWobble 1s ease-in-out infinite;
 }
 
 .dropletLink::after {
@@ -100,7 +94,7 @@
   height: 30%;
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.4) 0%,
+    rgb(255 255 255 / 40%) 0%,
     transparent 50%
   );
   border-radius: 50%;

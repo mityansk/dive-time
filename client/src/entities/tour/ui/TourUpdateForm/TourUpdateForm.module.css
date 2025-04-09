@@ -2,9 +2,9 @@
   max-width: 300px;
   margin:2%;
   padding: 20px;
-  background-color: #ffffff;
+  background-color: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
 }
 
 .ant-form-item-label > label {
@@ -33,7 +33,7 @@
 .ant-select-focused .ant-select-selector,
 .ant-picker-focused {
   border-color: #40a9ff;
-  box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+  box-shadow: 0 0 0 2px rgb(24 144 255 / 20%);
 }
 
 /* Стили для текстового поля */
@@ -65,7 +65,7 @@
 /* Стили для выпадающего списка локаций */
 .ant-select-dropdown {
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
 }
 
 .ant-select-item {
@@ -88,7 +88,7 @@
 }
 
 /* Адаптивные стили */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .formContainer {
     padding: 15px;
   }

@@ -2,7 +2,7 @@
   display: flex;
   align-items:center;
   justify-content: space-between;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgb(0 0 0 / 20%);
   padding: 0 20px;
   width: 100vw;
   min-width: 100%;
@@ -18,19 +18,20 @@
   justify-content: center;
   gap: 30px;
 }
+
 .rightContainer {
   white-space: nowrap;
-  color: rgb(255, 255, 255);
-  border-radius: 0px;
+  color: rgb(255 255 255);
+  border-radius: 0;
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
 
 .buttonReg {
-  color: rgb(255, 255, 255);
-  background: rgba(0, 0, 0, 0);
-  border-radius: 0px;
+  color: rgb(255 255 255);
+  background: rgb(0 0 0 / 0%);
+  border-radius: 0;
   margin-left: 25px;
   border: none;
   cursor: pointer;
@@ -38,14 +39,15 @@
 }
 
 .button {
-  color: rgb(255, 255, 255);
-  background-color: rgba(6, 40, 80, 0.84);
+  color: rgb(255 255 255);
+  background-color: rgb(6 40 80 / 84%);
   border-radius: 12px;
   padding: 10px 20px;
   border: none;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
 }
+
 .button:hover {
   transform: scale(1.15);
 }

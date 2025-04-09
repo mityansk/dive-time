@@ -1,9 +1,10 @@
 .container {
   margin-bottom: 10px;
-  padding: 0px 15px;
+  padding: 0 15px;
 }
+
 .addButton {
-  width: '200px';
+  width: 200px;
   margin-top: 15px;
   height: 35px;
 }

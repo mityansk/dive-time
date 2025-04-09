@@ -20,13 +20,13 @@
 .info {
   display: flex;
   flex-direction: column;
-  background-color: rgba(8, 27, 78, 0.602);
+  background-color: rgb(8 27 78 / 60.2%);
   padding: 0.5em;
   border-radius: 10px;
 }
 
 .description {
-  background-color: rgba(8, 27, 78, 0.602);
+  background-color: rgb(8 27 78 / 60.2%);
   padding: 1em;
   font-size: 1.2em;
   line-height: 1.5;
