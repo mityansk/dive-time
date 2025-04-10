@@ -30,6 +30,8 @@ const serverConfig = (app) => {
   //* парсит куки
   app.use(cookieParser());
 
+  app.use(express.static(path.join(__dirname, '..', 'public', 'dist')))
+  
   //* настройка статики, папка public ассоциирована с маршрутом запроса
   app.use(
     '/public/images',
